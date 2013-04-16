@@ -1,0 +1,37 @@
+{
+  "name": "sprayjs",
+  "version": "0.0.0",
+  "description": "Graphical model visualization rendered in JS for Spray.",
+  "keywords": [
+    "dom",
+    "visualization"
+  ],
+  "homepage": "None",
+  "author": {
+    "name": "None",
+    "url": "None"
+  },
+  "contributors": [
+    {
+      "name": "None",
+      "url": "None"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fafilipp/tprj-msi-ss13.git"
+  },
+  "main": "index.js",
+  "browserify": "index-browserify.js",
+  "dependencies": {
+    "jsdom": "~0.5.3"
+  },
+  "devDependencies": {
+    "smash": "~0.0.8",
+    "uglify-js": "git://github.com/mishoo/UglifyJS2.git#3bd7ca9961125b39dcd54d2182cb72bd1ca6006e",
+    "vows": "0.7.x"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/vows"
+  }
+}
