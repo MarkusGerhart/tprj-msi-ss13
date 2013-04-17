@@ -1,5 +1,5 @@
 {
-  "name": "sprayjs",
+  "name": "spray.js",
   "version": "0.0.0",
   "description": "Graphical model visualization rendered in JS for Spray.",
   "keywords": [
@@ -21,8 +21,7 @@
     "type": "git",
     "url": "https://github.com/fafilipp/tprj-msi-ss13.git"
   },
-  "main": "index.js",
-  "browserify": "index-browserify.js",
+  "main": null,
   "dependencies": {
     "jsdom": "~0.5.3"
   },
@@ -32,6 +31,7 @@
     "vows": "0.7.x"
   },
   "scripts": {
-    "test": "node_modules/.bin/vows"
+    "test": "node_modules/.bin/vows --spec",
+    "test:package": "node_modules/.bin/vows test/package/* --spec"
   }
 }
