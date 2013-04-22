@@ -8,6 +8,7 @@ suite.addBatch({
   "module.foo": {
     topic: load("package/module").document(),
     "returns the string 'bar'": function(spray) {
+      //spray.require("d3").select("body");
       assert.equal(spray.foo(), "bar");
     },
     "and has the length 3": function(spray) {

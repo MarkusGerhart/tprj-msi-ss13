@@ -1,6 +1,7 @@
 process.env.TZ = "Europe/Berlin";
 
 var smash = require("smash"),
+    d3 = require("d3"),
     jsdom = require("jsdom");
 
 //require("./XMLHttpRequest");
@@ -33,11 +34,14 @@ module.exports = function() {
       };
     };
 
+    var window = document.createWindow();
+    window.d3 = d3;
+
     sandbox = {
       console: console,
       //XMLHttpRequest: XMLHttpRequest,
       document: document,
-      window: document.createWindow(),
+      window: window,
       setTimeout: setTimeout,
       clearTimeout: clearTimeout,
       Date: Date // so we can override Date.now in tests

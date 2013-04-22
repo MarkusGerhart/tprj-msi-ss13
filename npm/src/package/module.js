@@ -1,4 +1,6 @@
-import "../core/document"
+import "../core/browser"
+
+var d3 = spray.require("d3");
 
 // function: foo
 

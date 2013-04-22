@@ -1,1 +1,1 @@
-import "document";
+import "browser";
