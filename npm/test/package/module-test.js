@@ -6,12 +6,17 @@ var suite = vows.describe("spray.module");
 
 suite.addBatch({
   "foo()": {
-    topic: load("package/module").expression("spray.foo"),
-    "returns the string 'bar'": function(f) {
-      assert.equal(f(), "bar");
+    topic: load("package/module").document(),
+    "returns the string 'bar'": function(spray) {
+      assert.equal(spray.foo(), "bar");
     },
-    "and has the length 3": function(f) {
-      assert.equal(f().length, 3)
+    "and has the length 3": function(spray) {
+      assert.equal(spray.foo().length, 3)
+    },
+    "adds #foo to the dom": function(spray) {
+      spray.foo();
+      var elem = spray.document.getElementById("foo");
+      assert.equal(elem.innerHTML, "bar");
     }
   }
 });
