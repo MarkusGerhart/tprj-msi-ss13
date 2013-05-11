@@ -5,13 +5,33 @@ var vows = require("vows"),
 var suite = vows.describe("spray.module");
 
 suite.addBatch({
-  "foo()": {
-    topic: load("package/module").expression("spray.foo"),
-    "returns the string 'bar'": function(f) {
-      assert.equal(f(), "bar");
+  "module.foo": {
+    topic: load("package/module").document(),
+    "returns the string 'bar'": function(spray) {
+      //spray.require("d3").select("body");
+      assert.equal(spray.foo(), "bar");
     },
-    "and has the length 3": function(f) {
-      assert.equal(f().length, 3)
+    "and has the length 3": function(spray) {
+      assert.equal(spray.foo().length, 3)
+    },
+    "adds #foo to the dom": function(spray) {
+      spray.foo();
+      var elem = spray.document.getElementById("foo");
+      assert.equal(elem.innerHTML, "bar");
+    }
+  }
+});
+
+suite.addBatch({
+  "module.FooBar": {
+    topic: load("package/module").document(),
+    "instance with constructor (1,2)": {
+      topic: function (spray) {
+        return new spray.FooBar(1, 2);
+      },
+      "mymethod should add the args with x": function (instance) {
+        assert.equal(instance.mymethod(3), 1+2+3);
+      }
     }
   }
 });
