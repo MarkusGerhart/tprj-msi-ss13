@@ -1,3 +1,7 @@
+function save() {
+	alert(data[0]['title']);
+}
+
 var width = 960,
     height = 50,
     margin = {top: 5, right: 40, bottom: 20, left: 120};
@@ -125,7 +129,7 @@ function make_editable(d, field)
                             var e = d3.event;
                             if (e.keyCode == 13)
                             {
-                                if (typeof(e.cancelBubble) !== 'undefined') // IE
+								if (typeof(e.cancelBubble) !== 'undefined') // IE
                                   e.cancelBubble = true;
                                 if (e.stopPropagation)
                                   e.stopPropagation();
