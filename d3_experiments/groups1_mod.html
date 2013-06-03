@@ -1,0 +1,80 @@
+<html>
+<head>
+<script type="text/javascript" src="d3.v3.min.js"></script>
+<title>Creating SVG groups with D3.js</title>
+</head>
+<body>
+<script type="text/javascript">
+
+// http://tutorials.jenkov.com/svg/g-element.html
+
+d3image = d3.select("body");
+
+// Add SVG canvas
+svgcanvas = d3image.append("svg:svg");
+
+svg1 = svgcanvas.append("svg:svg").attr("x", 100);
+
+// These attributes affect all
+// graphical elements in group1.
+// Add a circle to the group1
+circle1 = svg1.append("svg:circle")
+.attr("cx", 75)
+.attr("cy", 162.5)
+.attr("r", 37.5)
+.call(d3.behavior.drag().on("drag", move));
+
+// Add a rectangle to group1
+rect1 = svg1.append("svg:rect")
+.attr("x",25)
+.attr("y",25)
+.attr("width",100)
+.attr("height",75)
+.call(d3.behavior.drag().on("drag", move));
+
+// Add text to group1
+text1 = svg1.append("svg:text")
+.text("Group 1")
+.attr("x", 37.5)
+.attr("y", 237.5)
+.style("stroke", "orange")
+.style("stroke-width", 1)
+.style("font-size", "150%")
+.style("fill", "orange")
+.call(d3.behavior.drag().on("drag", move));
+
+
+
+function move(){
+    //this.parentNode.appendChild(this);
+	
+	/*var dragTarget = d3.select(this);
+	console.log(dragTarget);
+	dragTarget.attr("cx", function(){return d3.event.dx + parseInt(dragTarget.attr("cx"))})
+			.attr("cy", function(){return d3.event.dy + parseInt(dragTarget.attr("cy"))});*/
+	
+	var parent = d3.select(this.parentNode);
+	parent.attr("x", function(){return d3.event.dx + parseInt(parent.attr("x"))})
+			.attr("cy", function(){return d3.event.dy + parseInt(parent.attr("cy"))});
+			
+	/*var siblings = d3.selectAll(parent.childNodes);
+	
+	siblings
+			.attr("cx", function(){return d3.event.dx + parseInt(siblings.attr("cx"))})
+			.attr("cy", function(){return d3.event.dy + parseInt(siblings.attr("cy"))});
+			
+	
+	for (var i = 0; i < siblings.length; i++) {
+		//console.log(siblings[i]);
+		//console.log(dragTarget.attr("cx"));
+		
+		var sibling = d3.select(siblings[i]);
+		sibling
+			.attr("cx", function(){return d3.event.dx + parseInt(sibling.attr("cx"))})
+			.attr("cy", function(){return d3.event.dy + parseInt(sibling.attr("cy"))});
+	}*/
+};
+
+</script>
+</body>
+</html>
