@@ -30,6 +30,7 @@ group1 = svgcanvas.append("svg:g")
 .attr("stroke-width", 3)
 .attr("fill", "orange")
 .call(d3.behavior.drag().on("drag", move));
+//.call(d3.behavior.drag().on("move", move));
 
 // These attributes affect all
 // graphical elements in group1.
@@ -42,6 +43,8 @@ circle1 = group1.append("svg:circle")
 
 // Add a rectangle to group1
 rect1 = group1.append("svg:rect")
+.attr("rx", 6)
+.attr("ry", 6)
 .attr("x",25)
 .attr("y",25)
 .attr("width",100)
