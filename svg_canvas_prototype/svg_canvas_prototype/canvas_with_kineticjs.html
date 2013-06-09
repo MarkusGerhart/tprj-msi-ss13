@@ -6,17 +6,17 @@
         <link rel="stylesheet" type="text/css" href="reset.css" />
         <link rel="stylesheet" type="text/css" href="canvas.css" />
         <script type="text/javascript" src="jquery-1.8.1.min.js"></script>
-        <script type="text/javascript" src="jscolor/jscolor.js"></script>
-        <script type="text/javascript" src="kinetic.js"></script>
         <script type="text/javascript" src="canvas_stage.js"></script>
+        <script type="text/javascript" src="kinetic.js"></script>
         <script type="text/javascript" src="tools_canvas.js"></script>
+        <script type="text/javascript" src="jscolor/jscolor.js"></script>
     </head>
     <body>
         <header>
             <a href="index.php" id="logo"><span>PROTOTYPE</span>Canvas with Kinetic.js</a>
         </header>
         <div id="prototype">
-            <div id="toolbar">
+           <div id="toolbar">
                 <div id="tools" class="box">
                     <div class="header">Tools</div>
                     <div class="content">
@@ -44,13 +44,15 @@
                             <option style="font-family: Verdana" value="verdana">Verdana</option>
                         </select>
                         <select id="text_size" name="size" style="margin-left:7px;">
+                            <option value="10">10</option>
+                            <option value="11">11</option>
                             <option value="12">12</option>
+                            <option value="14">14</option>
                         </select>
                         <table>
                             <tr>
                                 <td title="Bold"><span id="tool_bold" class="tool_icon text">B</span></td>
                                 <td title="Italic"><span id="tool_italic" class="tool_icon text">&nbsp;I</span></td>
-                                <!--<td title="Underline"><span id="tool_underline" class="tool_icon text">U</span></td>-->
                                 <td title="Color" class="tool_color">
                                     <input class="color" id="tool_text_color" value="000000">
                                 </td>
@@ -59,7 +61,10 @@
                     </div>
                     <div class="content part tool_option" id="tool_line_options" style="display:none">
                         <select id="line_size" name="size">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
                             <option value="5">5</option>
+                            <option value="6">6</option>
                         </select>
                         <table>
                             <tr>
@@ -78,7 +83,10 @@
                                 <td class="tool_pen_size" title="Size">
                                     <span id="tool_pen_size">
                                       <select id="pen_size" name="size">
+                                          <option value="3">3</option>
+                                          <option value="4">4</option>
                                           <option value="5">5</option>
+                                          <option value="6">6</option>
                                       </select>
                                     </span>
                                 </td>
@@ -101,6 +109,11 @@
 
                                 <span id="tool_forms_size" class="tool_icon">
                                   <select id="forms_border_size" name="size">
+                                      <option value="1">1</option>
+                                      <option value="3">3</option>
+                                      <option value="5">5</option>
+                                      <option value="7">7</option>
+                                      <option value="9">9</option>
                                       <option value="10">10</option>
                                   </select>
                                 </span>
@@ -191,7 +204,6 @@
                 <div id='board' class='canvas'></div>
             </div>
         </div>
-
 
         <script type="text/javascript">
             $(document).ready(function(){
