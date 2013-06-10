@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>draw2d</title>
+
+<!-- meta information -->
+<meta charset="utf-8" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+
+<!-- import style -->
+<link rel="stylesheet" href="../css/flat-ui.css" />
+
+<style>
+#sandbox {
+  border: 1px solid #2a2a2a;
+};
+</style>
+
+</head>
+<body>
+
+<h1>Sandboxed draw2d</h1>
+
+<iframe
+  seamless
+  id="sandbox"
+  src="index.html"
+  sandbox="allow-forms allow-same-origin allow-scripts allow-top-navigation"
+  style="width: 961px; height: 594px;">
+</iframe>
+
+Because draw2d is an static object. Make it e.g. <code>relative</code>
+or sandbox it with an <code>iframe</code>.
+
+
+<script>
+console.log("Sandboxed draw2d");
+</script>
+
+
+</body>
+</html>
