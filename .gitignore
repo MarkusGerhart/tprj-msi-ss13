@@ -1,6 +1,6 @@
 .DS_Store
 
-npm/node_modules
+sprayServer/public/javascripts/spray/node_modules
 
 sprayServer/logs
 sprayServer/project/project
@@ -9,4 +9,13 @@ sprayServer/target
 sprayServer/tmp
 sprayServer/dist
 sprayServer/.cache
+sprayServer/.history
+sprayServer/.idea
+sprayServer/*.iml
+sprayServer/out
+sprayServer/.idea_modules
+sprayServer/.classpath
+sprayServer/.project
+sprayServer/RUNNING_PID
+sprayServer/.settings
 
