@@ -1,3 +1,12 @@
 .DS_Store
 
 npm/node_modules
+
+sprayServer/logs
+sprayServer/project/project
+sprayServer/project/target
+sprayServer/target
+sprayServer/tmp
+sprayServer/dist
+sprayServer/.cache
+
