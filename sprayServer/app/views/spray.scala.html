@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 
@@ -28,8 +28,6 @@
         @content
         <div id="drawArea" style="width: 961px; height:594px; position: relative;"></div>
         <script>
-            console.log("Welcome to spray.js");
-
             window.onload = function () {
               var canvas = new draw2d.Canvas("drawArea");
               var fig1 = new draw2d.shape.basic.Oval();
@@ -39,6 +37,13 @@
               canvas.addFigure(fig2, 100, 100);
               canvas.addFigure(fig3, 50, 50);
             }
-            </script>
+
+            var websocket = undefined;
+            var init = function() {
+                websocket = new spray.WebSocket("@routes.Application.websocket().webSocketURL()");
+            }
+
+            window.addEventListener("load", init, false);
+        </script>
     </body>
 </html>
