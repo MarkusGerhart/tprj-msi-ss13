@@ -18,17 +18,18 @@ spray = function() {
   spray.WebSocket = function(wsURI) {
     var WebSocket = spray.require("WebSocket");
     this.sock = new WebSocket(wsURI);
+    self = this;
     this.sock.onopen = function(evt) {
-      this.onopen(evt);
+      self.onopen(evt);
     };
     this.sock.onclose = function(evt) {
-      this.onclose(evt);
+      self.onclose(evt);
     };
     this.sock.onmessage = function(evt) {
-      this.onmessage(evt);
+      self.onmessage(evt);
     };
     this.sock.onerror = function(evt) {
-      this.onerror(evt);
+      self.onerror(evt);
     };
   };
   spray.WebSocket.prototype.onopen = function(event) {
@@ -37,8 +38,8 @@ spray = function() {
   spray.WebSocket.prototype.onclose = function(event) {
     console.log("WebSocket disconnected.");
   };
-  spray.WebSocket.prototype.onmessage = function(event) {
-    console.log("WebSocket got: " + event.data);
+  spray.WebSocket.prototype.onmessage = function(evt) {
+    console.log("WebSocket got: " + evt.data);
   };
   spray.WebSocket.prototype.onerror = function(event) {
     console.log("WebSocket got error: " + event.data);

@@ -5,10 +5,11 @@ import "../core/browser"
 spray.WebSocket = function (wsURI) {
   var WebSocket = spray.require("WebSocket")
   this.sock = new WebSocket(wsURI);
-  this.sock.onopen = function(evt) { this.onopen(evt) };
-  this.sock.onclose = function(evt) { this.onclose(evt) };
-  this.sock.onmessage = function(evt) { this.onmessage(evt) };
-  this.sock.onerror = function(evt) { this.onerror(evt) };
+  self = this;  // for correct closure
+  this.sock.onopen = function(evt) { self.onopen(evt) };
+  this.sock.onclose = function(evt) { self.onclose(evt) };
+  this.sock.onmessage = function(evt) { self.onmessage(evt) };
+  this.sock.onerror = function(evt) { self.onerror(evt) };
 }
 
 spray.WebSocket.prototype.onopen = function (event) {
@@ -19,8 +20,8 @@ spray.WebSocket.prototype.onclose = function (event) {
   console.log("WebSocket disconnected.");
 }
 
-spray.WebSocket.prototype.onmessage = function (event) {
-  console.log("WebSocket got: " + event.data);
+spray.WebSocket.prototype.onmessage = function (evt) {
+  console.log("WebSocket got: " + evt.data);
   //this.sock.close();
 }
 
