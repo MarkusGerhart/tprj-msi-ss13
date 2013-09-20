@@ -55,6 +55,15 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         }
     }),
 
+	LabelLocatorMethods: draw2d.layout.locator.Locator.extend({
+        init: function(parent) {
+            this._super(parent);
+        },
+        relocate: function(index, target) {
+            target.setPosition(2,52);
+        }
+    }),
+	
     /**
      * @constructor
      * Create a new instance
@@ -80,6 +89,7 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         console.log(this.getPorts());
 
         this.labelClass();
+		this.labelMethods();
     },
 
     labelClass:function() {
@@ -90,6 +100,18 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
       // add the new decoration to the connection with a position locator.
       //
       this.addFigure(this.label, new this.LabelLocator(this));
+      
+      this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+    },
+	
+	labelMethods:function() {
+      this.label = new draw2d.shape.basic.Label("I'm a Label");
+      this.label.setColor("#0d0d0d");
+      this.label.setFontColor("#0d0d0d");
+      
+      // add the new decoration to the connection with a position locator.
+      //
+      this.addFigure(this.label, new this.LabelLocatorMethods(this));
       
       this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
     },
