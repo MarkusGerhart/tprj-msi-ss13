@@ -1,0 +1,3 @@
+http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.draw2d.doc.isv/guide/guide.html
+http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.gef.doc.isv/guide/guide.html
+http://www.eclipse.org/articles/Article-GEF-Draw2d/GEF-Draw2d.html
