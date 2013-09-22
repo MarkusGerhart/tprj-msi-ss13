@@ -51,7 +51,7 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
             this._super(parent);
         },
         relocate: function(index, target) {
-            target.setPosition(2,2);
+            target.setPosition(2,-40);
         }
     }),
 
@@ -70,6 +70,15 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         },
         relocate: function(index, target) {
             target.setPosition(2, this.getParent().getHeight()-30);
+        }
+    }),
+	
+	RectLocator: draw2d.layout.locator.Locator.extend({
+        init: function(parent) {
+            this._super(parent);
+        },
+        relocate: function(index, target) {
+            target.setPosition(0, -50);
         }
     }),
 	
@@ -98,9 +107,13 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         console.log(this.getPorts());
 
 		this.line();
-        this.labelClass();
+        
 		this.labelAttributes();
 		this.labelMethods();
+		
+		
+		this.rectangle();
+		this.labelClass();
     },
 	
 	line:function() {
@@ -112,7 +125,7 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
 	},
 
     labelClass:function() {
-      this.label = new draw2d.shape.basic.Label("I'm a Label");
+      this.label = new draw2d.shape.basic.Label("<enter class name>");
       this.label.setColor("#0d0d0d");
       this.label.setFontColor("#0d0d0d");
       
@@ -146,6 +159,11 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
       
       this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
     },
+	
+	rectangle:function() {
+		this.rect = new draw2d.shape.basic.Rectangle(50, 50);
+		this.addFigure(this.rect, new this.RectLocator(this));
+	},
 
     getSVG: function(){
          return '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">'+
