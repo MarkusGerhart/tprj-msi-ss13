@@ -45,16 +45,43 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
             this.applyConsiderRotation(port,0, 0);
         }
     }),
-
-    LabelLocator: draw2d.layout.locator.Locator.extend({
+	
+	LabelLocator: draw2d.layout.locator.Locator.extend({
         init: function(parent) {
             this._super(parent);
         },
         relocate: function(index, target) {
-            target.setPosition(2,2);
+            target.setPosition(2,-40);
         }
     }),
 
+	LabelLocatorAttributes: draw2d.layout.locator.Locator.extend({
+        init: function(parent) {
+            this._super(parent);
+        },
+        relocate: function(index, target) {
+            target.setPosition(2,52);
+        }
+    }),
+	
+	LabelLocatorMethods: draw2d.layout.locator.Locator.extend({
+        init: function(parent) {
+            this._super(parent);
+        },
+        relocate: function(index, target) {
+            target.setPosition(2, this.getParent().getHeight()-30);
+        }
+    }),
+	
+	RectLocator: draw2d.layout.locator.Locator.extend({
+        init: function(parent) {
+            this._super(parent);
+        },
+        relocate: function(index, target) {
+            target.setPosition(0, -50);
+        }
+    }),
+	
     /**
      * @constructor
      * Create a new instance
@@ -79,11 +106,26 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
 
         console.log(this.getPorts());
 
-        this.labelClass();
+		this.line();
+        
+		this.labelAttributes();
+		this.labelMethods();
+		
+		
+		this.rectangle();
+		this.labelClass();
     },
+	
+	line:function() {
+		var line1 =  new draw2d.shape.basic.Line();
+		line1.setStartPoint(50,50);
+		line1.setEndPoint(150,50);
+
+		this.addFigure(line1, new this.LabelLocator(this));
+	},
 
     labelClass:function() {
-      this.label = new draw2d.shape.basic.Label("I'm a Label");
+      this.label = new draw2d.shape.basic.Label("<enter class name>");
       this.label.setColor("#0d0d0d");
       this.label.setFontColor("#0d0d0d");
       
@@ -93,11 +135,40 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
       
       this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
     },
+	
+	labelAttributes:function() {
+      this.label = new draw2d.shape.basic.Label("Attribute");
+      this.label.setColor("#0d0d0d");
+      this.label.setFontColor("#0d0d0d");
+      
+      // add the new decoration to the connection with a position locator.
+      //
+      this.addFigure(this.label, new this.LabelLocatorAttributes(this));
+      
+      this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+    },
+	
+	labelMethods:function() {
+      this.label = new draw2d.shape.basic.Label("Method");
+      this.label.setColor("#0d0d0d");
+      this.label.setFontColor("#0d0d0d");
+      
+      // add the new decoration to the connection with a position locator.
+      //
+      this.addFigure(this.label, new this.LabelLocatorMethods(this));
+      
+      this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+    },
+	
+	rectangle:function() {
+		this.rect = new draw2d.shape.basic.Rectangle(50, 50);
+		this.addFigure(this.rect, new this.RectLocator(this));
+	},
 
     getSVG: function(){
          return '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">'+
                   '<path d="M0 0 L200 0 L200 100 L0 100 L0 0" stroke="#1B1B1B" fill="none"/>' +
-                  '<line x1="0"  y1="50" x2="200"  y2="50" stroke="#010101" />'+
+                  //'<line x1="0"  y1="50" x2="200"  y2="50" stroke="#010101" />'+
                 '</svg>';
     },
     
