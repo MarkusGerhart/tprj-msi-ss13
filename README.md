@@ -20,11 +20,18 @@ You need node.js's packetmanager npm. (https://npmjs.org)
 
 To gather the dependencies, type:
 
+    cd sprayServer/public/javascripts/spray
+
     npm install
 
 To generate the compact `spray.js` out of `src/*`, type:
 
+    cd sprayServer/public/javascripts/spray
+    
     make spray.js
+
+Now is in sprayServer/public/javascripts/spray the
+complete spray.js file.
 
 ### Testsuite
 
