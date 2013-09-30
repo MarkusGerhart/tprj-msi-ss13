@@ -23,16 +23,18 @@
   },
   "main": null,
   "dependencies": {
-    "jsdom": "~0.5.3",
-    "d3": "~3.1.5"
+    //"jsdom": "~0.5.3",
+    //"d3": "~3.1.5"
   },
   "devDependencies": {
     "smash": "~0.0.8",
     "uglify-js": "git://github.com/mishoo/UglifyJS2.git#3bd7ca9961125b39dcd54d2182cb72bd1ca6006e",
-    "vows": "0.7.x"
+    //"vows": "0.7.x",
+    //"zombie": "2.0.x",
+    //"jasmine-standalone": "1.3.x"
   },
   "scripts": {
-    "test": "node_modules/.bin/vows --spec",
-    "test:package": "node_modules/.bin/vows test/package/* --spec"
+    //"test": "node_modules/.bin/vows --spec",
+    //"test:package": "node_modules/.bin/vows test/package/* --spec"
   }
 }
