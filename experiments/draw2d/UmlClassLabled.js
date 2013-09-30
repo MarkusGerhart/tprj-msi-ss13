@@ -12,8 +12,9 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         relocate:function(index, port) {
             var w = port.getParent().getWidth();
             var h = port.getParent().getHeight();
+			console.log("port locator 1, index=" + index);
             if (index == 1) {
-                this.applyConsiderRotation(port,w/2, 0);
+                this.applyConsiderRotation(port,w/2, -50);
             } else {
                 this.applyConsiderRotation(port,w/2, h);
             }
@@ -27,7 +28,10 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         relocate:function(index, port) {
             var w = port.getParent().getWidth();
             var h = port.getParent().getHeight();
-            if (index == 1) {
+			
+			console.log("port locator 2, index=" + index);
+			
+            if (index % 2 == 1) {
                 this.applyConsiderRotation(port,0, h/2);
             } else {
                 this.applyConsiderRotation(port,w, h/2);
@@ -35,23 +39,14 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         }
     }),
 
-    MyPortLocator3 : draw2d.layout.locator.PortLocator.extend({
-        init:function() {
-          this._super();
-        },    
-        relocate:function(index, port) {
-            var w = port.getParent().getWidth();
-            var h = port.getParent().getHeight();
-            this.applyConsiderRotation(port,0, 0);
-        }
-    }),
+    
 	
 	LabelLocator: draw2d.layout.locator.Locator.extend({
         init: function(parent) {
             this._super(parent);
         },
         relocate: function(index, target) {
-            target.setPosition(2,-40);
+            target.setPosition(2,-35);
         }
     }),
 
@@ -79,6 +74,7 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         },
         relocate: function(index, target) {
             target.setPosition(0, -50);
+			target.setDimension(this.getParent().getWidth(), 50);
         }
     }),
 	
@@ -93,20 +89,17 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
         }
         
         this._super(width,height);
-        this.inputLocator = new this.MyPortLocator1();
-        this.portLocator2 = new this.MyPortLocator2();
-        this.portLocator3 = new this.MyPortLocator3(); 
-        this.createPort("input", this.inputLocator);
-        this.createPort("input", this.inputLocator);
-        this.createPort("output", this.portLocator2);
-        this.createPort("output", this.portLocator2);
-        this.createPort("hybrid", this.portLocator3);
-        this.createPort("hybrid", this.portLocator3);
-        this.setBackgroundColor("#f0f0ff");
+        
+		this.createPort("hybrid", new this.MyPortLocator1());
+        this.createPort("hybrid", new this.MyPortLocator1());
+        this.createPort("hybrid", new this.MyPortLocator2());
+        this.createPort("hybrid", new this.MyPortLocator2());
+        
+		this.setBackgroundColor("#f0f0ff");
 
         console.log(this.getPorts());
 
-		this.line();
+		//this.line();
         
 		this.labelAttributes();
 		this.labelMethods();
@@ -133,7 +126,16 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
       //
       this.addFigure(this.label, new this.LabelLocator(this));
       
-      this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+      //this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+	  this.label.installEditor(new draw2d.ui.LabelInplaceEditor({
+		   // called after the value has been set to the LabelFigure
+		   onCommit: $.proxy(function(value){
+			   //alert("new value set to:"+value);
+		   },this),
+		   // called if the user abort the operation
+		   onCancel: function(){
+		   }
+		}));
     },
 	
 	labelAttributes:function() {
@@ -162,6 +164,7 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
 	
 	rectangle:function() {
 		this.rect = new draw2d.shape.basic.Rectangle(50, 50);
+		this.rect.setBackgroundColor("#f0f0ff");
 		this.addFigure(this.rect, new this.RectLocator(this));
 	},
 
