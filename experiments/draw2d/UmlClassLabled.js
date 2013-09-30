@@ -55,7 +55,7 @@ spray.UmlClassLabled = draw2d.SVGFigure.extend({
             this._super(parent);
         },
         relocate: function(index, target) {
-            target.setPosition(2,52);
+            target.setPosition(2, 40);
         }
     }),
 	
