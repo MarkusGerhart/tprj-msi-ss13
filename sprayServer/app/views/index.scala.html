@@ -1,7 +1,40 @@
-@(message: String)
+@(title: String)(implicit request: RequestHeader)
 
-@main("Welcome to Play 2.1") {
-    
-    @play20.welcome(message)
-    
+@import header._
+@import includes._
+
+@main(title) {
+
+    @header.javascripts()
+    @header.stylesheets()
+
+    <header>
+        <div id="left">
+            <a href="@routes.Application.index" id="logo"><span>Spray</span>JS</a>
+        </div>
+        <div id="right">
+            <!--<span class="username">ATuser</span>-->
+            <span class="username">Editor</span>
+            <span>Theme: </span>
+            <select name="theme" id="theme-changer">
+                <option value="eclipse">Eclipse</option>
+                <option value="pastel_on_dark">Dark</option>
+            </select>
+            <a id="logout" href="#">Logout</a>
+            <!--<a id="logout" href="ATroutes.Authentication.logout">Logout</a>-->
+        </div>
+    </header>
+
+    @includes.menu()
+
+    @includes.editor()
+
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            var SPRAY = SPRAY || {};
+            SPRAY.htwg = SPRAY.htwg || {};
+            SPRAY.htwg.websocket = new spray.WebSocket("@routes.Application.websocket().webSocketURL()");
+        });
+    </script>
+
 }

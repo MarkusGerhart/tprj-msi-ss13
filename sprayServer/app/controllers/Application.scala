@@ -9,9 +9,8 @@ import play.api.libs.iteratee._
 object Application extends Controller {
   
   def index = Action { implicit request =>
-    val html = Html("<h1>Spray.js</h1>")
     Ok(
-      views.html.spray("Welcome to spray")(html)
+      views.html.index("Welcome to spray")
     )
   }
 

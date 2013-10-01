@@ -1,0 +1,12 @@
+<div id="drawArea" style="width: 961px; height:594px; position: relative;"></div>
+<script>
+    window.onload = function () {
+      var canvas = new draw2d.Canvas("drawArea");
+      var fig1 = new draw2d.shape.basic.Oval();
+      var fig2 = new draw2d.shape.basic.Rectangle();
+      var fig3 = new draw2d.shape.analog.OpAmp();
+      canvas.addFigure(fig1, 10, 10);
+      canvas.addFigure(fig2, 100, 100);
+      canvas.addFigure(fig3, 50, 50);
+    }
+</script>

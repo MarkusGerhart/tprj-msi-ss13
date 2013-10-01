@@ -5,45 +5,12 @@
 <html>
     <head>
         <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/spray/spray.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/canvg.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/Class.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/jquery-1.8.1.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/jquery-1.8.1.min.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/jquery-touch_punch.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/jquery-ui-1.8.23.custom.min.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/jquery.autoresize.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/jquery.contextmenu.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/jquery.layout.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/json2.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/pathfinding-browser.min.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/raphael.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/rgbcolor.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/lib/shifty.js")"></script>
-        <script src="@routes.Assets.at("javascripts/draw2d-2.9.0.min/src/draw2d.js")"></script>
+
     </head>
     <body>
         @content
-        <div id="drawArea" style="width: 961px; height:594px; position: relative;"></div>
-        <script>
-            window.onload = function () {
-              var canvas = new draw2d.Canvas("drawArea");
-              var fig1 = new draw2d.shape.basic.Oval();
-              var fig2 = new draw2d.shape.basic.Rectangle();
-              var fig3 = new draw2d.shape.analog.OpAmp();
-              canvas.addFigure(fig1, 10, 10);
-              canvas.addFigure(fig2, 100, 100);
-              canvas.addFigure(fig3, 50, 50);
-            }
 
-            var websocket = undefined;
-            var init = function() {
-                websocket = new spray.WebSocket("@routes.Application.websocket().webSocketURL()");
-            }
-
-            window.addEventListener("load", init, false);
-        </script>
     </body>
 </html>
