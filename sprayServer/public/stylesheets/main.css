@@ -89,7 +89,14 @@ header #right select{
 }
 
 #toolbar ul { margin: 0; padding: 0; list-style-type: none; }
-#toolbar ul li { margin: 0 0 5px 0; color: #fff; display:inline;}
+#toolbar ul li {
+    margin: 5px 10px 0 5px;
+    color: #fff;
+    display:inline;
+    padding-bottom: 12px;
+    padding-left:21px;
+}
+
 #toolbar {
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
@@ -102,6 +109,30 @@ header #right select{
     padding: 3px 10px;
     color: #fff;
     height: 40px;
+}
+
+#toolbar .undo{
+    background-image: url("../images/toolbar.png");
+    background-position: 135px -131px;
+}
+
+#toolbar .redo{
+    background-image: url("../images/toolbar.png");
+    background-position: 166px -131px;
+}
+
+#toolbar .save{
+    background-image: url("../images/toolbar.png");
+    background-position: 201px 0px;
+}
+
+#toolbar .load{
+    background-image: url("../images/toolbar.png");
+    background-position: -12px 0px;
+}
+
+#toolbar li:hover{
+    cursor:pointer;
 }
 
 #contentwrap {
