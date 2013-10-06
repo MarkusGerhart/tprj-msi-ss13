@@ -1,4 +1,4 @@
-
+// class: View
 
 spray.View = draw2d.Canvas.extend({
 

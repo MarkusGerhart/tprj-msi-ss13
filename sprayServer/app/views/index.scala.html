@@ -40,9 +40,7 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function(){
-            var SPRAY = SPRAY || {};
-            SPRAY.htwg = SPRAY.htwg || {};
-            SPRAY.htwg.websocket = new spray.WebSocket("@routes.Application.websocket().webSocketURL()");
+            SPRAY.htwg.websocket = new SPRAY.htwg.spray.WebSocket("@routes.Application.websocket().webSocketURL()");
         });
     </script>
 
