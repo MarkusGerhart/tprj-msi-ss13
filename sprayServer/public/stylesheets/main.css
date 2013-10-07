@@ -209,3 +209,14 @@ footer a:hover { border-bottom: 1px dotted #ccc; color: #a9a9a9; }
     background: url("../images/raster.png") repeat scroll 0% 0% transparent;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
+
+.palette_node_element{
+    position:absolute;
+    margin:10px;
+    width: 60px;
+    height: 60px;
+}
+
+#menu{
+    position:relative;
+}

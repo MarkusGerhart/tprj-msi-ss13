@@ -1,6 +1,6 @@
+// class: View
 
-
-View = draw2d.Canvas.extend({
+spray.View = draw2d.Canvas.extend({
 
     init:function(id){
         this._super(id);
