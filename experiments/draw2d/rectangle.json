@@ -1,0 +1,5 @@
+jsonstr = [
+{"type": "draw2d.shape.basic.Rectangle", "id": "354fa3b9-a834-0221-2009-abc2d6bd852a", "x": 25, "y": 97, "width": 100, "height": 100, "group":1},
+{"type": "draw2d.shape.basic.Rectangle", "id": "354fa3b9-a834-0221-2009-abc2d6bd852a", "x": 125, "y": 97, "width": 100, "height": 100, "group":1},
+{"type": "draw2d.shape.basic.Rectangle", "id": "354fa3b9-a834-0221-2009-abc2d6bd852a", "x": 25, "y": 197, "width": 100, "height": 100, "group":2}
+]
