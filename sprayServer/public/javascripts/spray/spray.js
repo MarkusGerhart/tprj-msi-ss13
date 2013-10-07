@@ -19,7 +19,6 @@ SPRAY.htwg.spray = function() {
     return spray.window[dep];
   };
   spray.WebSocket = function(wsURI) {
-      alert("as");
     var WebSocket = spray.require("WebSocket");
     this.sock = new WebSocket(wsURI);
     this.ready = false;
