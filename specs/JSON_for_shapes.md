@@ -33,7 +33,7 @@ PI_Location_DashedLine = {
   params: {},
   shapes: [{
     name: "ellipse",
-    params: {width: 50, height: 50]},
+    params: {width: 50, height: 50},
     shapes: [
       {
         name: "line",
@@ -42,12 +42,12 @@ PI_Location_DashedLine = {
       },
       {
         name: "text",
-        params: {position: [0,5], width: 50, height: 20, align: {horizontal: "center", vertical: "middle"}, id: "shapeName"}
+        params: {position: [0,5], width: 50, height: 20, align: {horizontal: "center", vertical: "middle"}, id: "shapeName"},
         shapes: undefined
       },
       {
         name: "text",
-        params: {position: [0,30], width: 50, height: 20, align: {horizontal: "center", vertical: "middle"}, id: "valueName"}
+        params: {position: [0,30], width: 50, height: 20, align: {horizontal: "center", vertical: "middle"}, id: "valueName"},
         shapes: undefined
       }
     ]
