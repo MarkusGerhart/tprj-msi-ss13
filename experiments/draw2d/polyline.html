@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>draw2d</title>
+
+<!-- meta information -->
+<meta charset="utf-8" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+
+<!-- import style -->
+<link rel="stylesheet" href="style.css" />
+
+<!-- import draw2d.dependencies -->
+<script src="../draw2d_2.9.0-min/lib/canvg.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/Class.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/jquery-1.8.1.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/jquery-1.8.1.min.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/jquery-touch_punch.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/jquery-ui-1.8.23.custom.min.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/jquery.autoresize.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/jquery.contextmenu.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/jquery.layout.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/json2.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/pathfinding-browser.min.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/raphael.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/rgbcolor.js" charset="utf-8"></script>
+<script src="../draw2d_2.9.0-min/lib/shifty.js" charset="utf-8"></script>
+
+<!-- import draw2d -->
+<script src="../draw2d_2.9.0-min/src/draw2d.js" charset="utf-8"></script>
+<script src="UmlClass.js" charset="utf-8"></script>
+</head>
+<body>
+
+<div id="drawArea" style="width: 961px; height:594px;"></div>
+
+<script>
+console.log("Welcome to spray.js");
+
+window.onload = function () {
+  var canvas = new draw2d.Canvas("drawArea");
+
+  var line = new draw2d.shape.basic.Line();
+  line.setStartPoint(30,30);
+  line.setEndPoint(80,80);
+
+  canvas.addFigure(line, 0, 0);  // attention: is drawn "hard"
+
+  var pline = new draw2d.shape.basic.PolyLine();
+  pline.setStartPoint(60,30);
+  pline.addPoint(30,20);
+  pline.addPoint(60,30);
+  pline.setEndPoint(160,80);
+
+  canvas.addFigure(pline, 0, 0);
+
+}
+</script>
+
+
+</body>
+</html>
