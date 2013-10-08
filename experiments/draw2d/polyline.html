@@ -12,23 +12,23 @@
 <link rel="stylesheet" href="style.css" />
 
 <!-- import draw2d.dependencies -->
-<script src="../draw2d_2.9.0-min/lib/canvg.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/Class.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/jquery-1.8.1.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/jquery-1.8.1.min.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/jquery-touch_punch.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/jquery-ui-1.8.23.custom.min.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/jquery.autoresize.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/jquery.contextmenu.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/jquery.layout.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/json2.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/pathfinding-browser.min.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/raphael.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/rgbcolor.js" charset="utf-8"></script>
-<script src="../draw2d_2.9.0-min/lib/shifty.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/canvg.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/Class.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/jquery-1.8.1.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/jquery-1.8.1.min.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/jquery-touch_punch.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/jquery-ui-1.8.23.custom.min.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/jquery.autoresize.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/jquery.contextmenu.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/jquery.layout.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/json2.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/pathfinding-browser.min.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/raphael.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/rgbcolor.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/lib/shifty.js" charset="utf-8"></script>
 
 <!-- import draw2d -->
-<script src="../draw2d_2.9.0-min/src/draw2d.js" charset="utf-8"></script>
+<script src="../draw2d_2.10.1-min/src/draw2d.js" charset="utf-8"></script>
 <script src="UmlClass.js" charset="utf-8"></script>
 </head>
 <body>
@@ -45,15 +45,15 @@ window.onload = function () {
   line.setStartPoint(30,30);
   line.setEndPoint(80,80);
 
-  canvas.addFigure(line, 0, 0);  // attention: is drawn "hard"
+  canvas.addFigure(line);
 
   var pline = new draw2d.shape.basic.PolyLine();
   pline.setStartPoint(60,30);
-  pline.addPoint(30,20);
-  pline.addPoint(60,30);
+  pline.insertJunctionPointAt(1,100,60);
+  //pline.insertJunctionPointAt(60,30);
   pline.setEndPoint(160,80);
 
-  canvas.addFigure(pline, 0, 0);
+  canvas.addFigure(pline);
 
 }
 </script>
