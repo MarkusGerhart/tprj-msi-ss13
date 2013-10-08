@@ -395,7 +395,7 @@
 <SCRIPT src="../../../src/io/json/Writer.js"> </SCRIPT>
 <SCRIPT src="../../../src/io/json/Reader.js"> </SCRIPT>
 
-<SCRIPT src="../../../src/layout/locator/LocatorA.js"> </SCRIPT>
+<SCRIPT src="LocatorA.js"> </SCRIPT>
 
 
 </head>
@@ -407,14 +407,50 @@
 console.log("Welcome to spray.js");
 
 window.onload = function () {
-  var canvas = new draw2d.Canvas("drawArea");
-  var fig1 = new draw2d.shape.basic.Oval();
-  var fig2 = new draw2d.shape.basic.Rectangle();
-  var fig3 = new draw2d.shape.analog.OpAmp();
-    fig1.addFigure(fig3, new draw2d.layout.locator.LocatorA());
-  canvas.addFigure(fig1, 10, 10);
-  canvas.addFigure(fig2, 100, 100);
-  //canvas.addFigure(fig3, 50, 50);
+    var canvas = new draw2d.Canvas("drawArea");
+
+    var rect = new draw2d.shape.basic.Rectangle();
+    rect.setRadius(20);
+    rect.setDimension(100, 100);
+    rect.setPosition(0, 30);
+
+    var polyline = new draw2d.shape.basic.PolyLine();
+    /*polyline.addPoint(30.0, 0.0);
+    polyline.addPoint(30.0, 70.0);
+    polyline.addPoint(50.0, 50.0);
+    polyline.addPoint(70.0, 70.0);
+    polyline.addPoint(70.0, 0.0);*/
+    polyline.addPoint(24.908203125,45.49267578125);
+    polyline.addPoint(31.71875,38.68310546875);
+    polyline.addPoint(31.2119140625,36.98876953125);
+
+    /*text style TextStyle {
+        position(x=100,y=0)
+        size (width=100, height=20)
+        id = shapeName
+    }*/
+
+    var rect2 = new draw2d.shape.basic.Rectangle();
+    locatorA = new draw2d.layout.locator.LocatorA();
+    locatorA.setPos(rect, 25, 100);
+    rect.addFigure(rect2, locatorA);
+    rect2.setRadius(0);
+    rect2.setDimension(50, 20);
+    //rect2.setPosition(25, 100);
+
+    /*anchor {
+        position (x=30, y=0)
+        position (x=70, y=0)
+        position (x=25, y=110)
+        position (x=75, y=110)
+    }*/
+
+  //fig1.addFigure(fig3, new draw2d.layout.locator.LocatorA());
+
+    canvas.addFigure(rect);
+    //canvas.addFigure(polyline);
+    //canvas.addFigure(rect2);
+
 }
 
 
