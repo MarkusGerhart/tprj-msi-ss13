@@ -30,6 +30,8 @@
 <!-- import draw2d -->
 <script src="../draw2d_2.9.0-min/src/draw2d.js" charset="utf-8"></script>
 <script src="UmlClassLabled.js" charset="utf-8"></script>
+<script src="OurJsonReader.js" charset="utf-8"></script>
+
 </head>
 <body>
 
@@ -72,7 +74,7 @@ var jsonDocument =
 
 window.onload = function () {
   var canvas = new draw2d.Canvas("drawArea");
-  var reader = new draw2d.io.json.Reader();
+  var reader = new draw2d.io.json.OurJsonReader();
   reader.unmarshal(canvas, jsonDocument);
   
   // display the JSON document in the preview DIV
