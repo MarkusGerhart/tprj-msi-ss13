@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+*~
 
 sprayServer/public/javascripts/spray/node_modules
 
