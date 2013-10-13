@@ -38,18 +38,18 @@ of the shape hirarchie the name of the complex shape.
 
 The params proptery holds information about the current shape, like
 
-* position : [{x: Int, y: Int}*]
+* position : [{x: Int, y: Int, radius: Int, angle: Int, offset: Float}*]
 * size : {width: Int, height: Int}
+* stretching : {horizontal, vertical}
 * align : {horizontal, vertical}
   * horizontal : "left" | "center" | "right"
   * vertical :  "top" | "middle" | "center"
 * curve : {width: Int, height: Int}
 * size-min : {width: Int, height: Int}
 * size-max : {width: Int, height: Int}
-* stretching : {horizontal: Int, vertical: Int}
 * proportional : Bool
 * layout : {stretching | spacing : Int | margin : Int | invisible}
-* point : [{x: Int, y: Int}*]
+* point : [{x: Int, y: Int, curveBefore: Int, curveAfter: Int}*]
 * id : String
 
 The shapes property is a list. To build conjuncted shapes
