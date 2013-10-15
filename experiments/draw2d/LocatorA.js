@@ -12,9 +12,12 @@ draw2d.layout.locator.LocatorA= draw2d.layout.locator.Locator.extend({
     NAME : "draw2d.layout.locator.LocatorA",
 
     setPos:function(parent, x, y) {
-        console.log("x:" + x);
+        //console.log("total x:" + x);
+        //console.log("total y:" + y);
         this.x = x - parent.getX();
         this.y = y - parent.getY();
+        //console.log("relativ x:" + this.x);
+        //console.log("relativ y:" + this.y);
     },
 
     init: function(parent) {
@@ -22,7 +25,8 @@ draw2d.layout.locator.LocatorA= draw2d.layout.locator.Locator.extend({
     },
 
     relocate: function(index, target) {
-        console.log("x:" + this.x);
+        //console.log("x:" + this.x);
+        //console.log("y:" + this.y);
         target.setPosition(this.x, this.y);
     }
 });
