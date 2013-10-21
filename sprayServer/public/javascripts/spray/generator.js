@@ -117,38 +117,35 @@ SPRAY.htwg.spray.Generator = function($){
 
         this.convertSprayToDraw2dJSON(shapeExamples);
 
-        console.log(this.draw2dJSON);
-
         $.each(this.draw2dJSON[0], function(name,elem){
-            var funcObj = that.generateFigure(elem);
-            that.shapeElements[name] = funcObj;
-
             //TODO: probably more attributes like title
-            that.configMenu.push({"name": name})
+            that.configMenu.push({"name": name,
+                                  "id": name});
         });
 
         this.configMenu.push({});
-
-        //SPRAY.htwg.menu.buildMenu( this.configMenu );
     };
 
-    this.generateFigure = function(figure){
-        console.log(figure);
-        var draw2dFigure = eval("new "+figure.type+"();");
-        this.generateShape(draw2dFigure, figure.children);
+    this.drawFigure = function(figureName, canvas){
+        if ( this.draw2dJSON[0].hasOwnProperty(figureName) ){
+            var figure = this.draw2dJSON[0][figureName];
+            console.log(figure);
+            var draw2dFigure = eval("new "+figure.type+"();");
+            canvas.addFigure(draw2dFigure,new draw2d.layout.locator.CenterLocator(canvas));
+            //this.drawShape(draw2dFigure, figure.children);
+        }
     }
 
-    //TODO: diese fabrik mit diesem weg funktioniert so nicht, da addFigure ein repaint macht und repaint
-    //      voraussetzt, dass das element bereits auf einem canvas gezeichnet ist
-    //      anderer weg: das menu triggert das zeichnen (macht ja auch sinn...) aus dem JSON -> drag and drop muss man dann neu schreiben
-    this.generateShape = function( parentShape, shape ){
+    this.drawShape = function( parentShape, shape ){
         $.each(shape, function(i,childShape){
 
             var draw2dChildShape = eval("new "+childShape.type+"()");
+            console.log(childShape.type);
+            console.log(parentShape);
             parentShape.addFigure(draw2dChildShape, new draw2d.layout.locator.CenterLocator(parentShape));
 
             if ( childShape.hasOwnProperty("children")){
-                that.generateShape(childShape, childShape.children);
+                //that.drawShape(childShape, childShape.children);
             }
         });
     }
@@ -157,7 +154,7 @@ SPRAY.htwg.spray.Generator = function($){
         $.each(json, function(name,sprayShape){
             var draw2dShapeJSON = that.convertSprayToDraw2dShape(sprayShape.shapes);
             obj = {};
-            obj[name] = {"type": "draw2d.Figure",
+            obj[name] = {"type": "draw2d.shape.layout.HorizontalLayout",
                          "children": draw2dShapeJSON};
             that.draw2dJSON.push( obj );
         });
@@ -194,6 +191,7 @@ SPRAY.htwg.spray.Generator = function($){
                 draw2dElementObj['height'] = sprayShape.size.height;
                 //TODO: default for horizontal/vertical
                 draw2dElementObj['cssClass'] = "label_"+ sprayShape.align.horizontal+"_"+sprayShape.align.vertical;
+                break;
             case "line":
                 break;
             default:

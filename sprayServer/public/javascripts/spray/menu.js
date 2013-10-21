@@ -31,17 +31,12 @@ SPRAY.htwg.spray.Menu = function($){
 
     this.buildMenu = function( shapes ){
         $.each(shapes, function(i, item) {
-            try{
+
                 canvasElem = $("<div style='width: 60px; height: 60px; display:none;' id='"+ item.id +"'></div>");
                 that.menu.append(canvasElem);
                 canvas = new draw2d.Canvas(item.id);
-                console.log(item);
-
-                //TODO: hier zeichnen triggern!!!
-
-                figure = SPRAY.htwg.spray.Generator.shapeElements[item.name]();
-                figure.setDimension(30,30);
-                canvas.addFigure(figure,10,10);
+                SPRAY.htwg.generator.drawFigure(item.name, canvas);
+                var figure = canvas.getFigure(item.id);
                 shape = figure.getShapeElement();
                 var writer = new draw2d.io.svg.Writer();
                 svg = writer.marshal(canvas);
@@ -52,8 +47,7 @@ SPRAY.htwg.spray.Menu = function($){
                 topPosition = i*70;
                 $("#"+item.id).css("top", topPosition );
                 $("#"+item.id).css("z-index",1);
-            }
-            catch(e){console.log(e);}
+
         });
     }
 
