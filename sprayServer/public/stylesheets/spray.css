@@ -1,0 +1,36 @@
+.label_left_top{
+    text-align: left;
+    vertical-align: top;
+}
+.label_left_middle{
+    text-align: left;
+    vertical-align: middle;
+}
+.label_left_bottom{
+    text-align: left;
+    vertical-align: bottom;
+}
+.label_center_top{
+    text-align: center;
+    vertical-align: top;
+}
+.label_center_middle{
+    text-align: center;
+    vertical-align: middle;
+}
+.label_center_bottom{
+    text-align: center;
+    vertical-align: bottom;
+}
+.label_right_top{
+    text-align: right;
+    vertical-align: top;
+}
+.label_right_middle{
+    text-align: right;
+    vertical-align: middle;
+}
+.label_right_bottom{
+    text-align: right;
+    vertical-align: bottom;
+}
