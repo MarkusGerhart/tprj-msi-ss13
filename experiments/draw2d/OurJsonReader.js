@@ -16,9 +16,11 @@ draw2d.io.json.OurJsonReader = draw2d.io.Reader.extend({
     unmarshal: function(canvas, json){
         var node=null;
         var that=this;
+        this.draw2dObjects = new Array();
         $.each(json, function(i, element){
             var o = that.unmarshalElement(canvas, element);
             canvas.addFigure(o);
+            that.draw2dObjects[i] = o;
         });
         
         // recalculate all crossings and repaint the connections with 
@@ -29,6 +31,8 @@ draw2d.io.json.OurJsonReader = draw2d.io.Reader.extend({
             line.repaint();
         });
         canvas.linesToRepaintAfterDragDrop = canvas.getLines().clone();
+
+        return this.draw2dObjects;
     },
 
     test:function() {
@@ -38,10 +42,13 @@ draw2d.io.json.OurJsonReader = draw2d.io.Reader.extend({
 
     unmarshalElement : function(canvas, element) {
         var o = eval("new "+element.type+"()");
+        o.setPersistentAttributes(element);
+
+		if (element.type == "draw2d.shape.basic.Line") { return o; }
+
 		var source= null;
 		var target = null;
         var that = this;
-        o.setPersistentAttributes(element);
 
 		for(i in element){
 			var val = element[i];
@@ -68,12 +75,22 @@ draw2d.io.json.OurJsonReader = draw2d.io.Reader.extend({
 	setChildren : function(canvas, parent, childs) {
         var that = this;
         $.each(childs, function(i, element){
-            //var label = new draw2d.shape.basic.Label(e.label);
             var child = that.unmarshalElement(canvas, element);
-            var locator =  eval("new "+element.locator+"()");
+
+			var locator =  eval("new "+element.locator+"()");
             locator.setParent(parent);
-            locator.setPos(parent, child.x, child.y);
-            parent.addFigure(child, locator);
+
+			if (element.locator == "draw2d.layout.locator.LocatorA") {
+				//console.log("setPos locatorA");
+	            locator.setPos(parent, child.x, child.y);
+			} else {
+				//console.log("setPos locatorLine");
+                //console.log("startx : " + child.startX + " startY : " + child.startY + " endX:" + child.endX + " endY:" + child.endY);
+				locator.setPos(parent, child.startX, child.startY, child.endX, child.endY, child);
+			}
+
+			//if (element.type == "draw2d.shape.basic.Line") { return; }
+			parent.addFigure(child, locator);
         });
     }
 });

@@ -57,7 +57,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
         this.lineColor = this.DEFAULT_COLOR;
         this.stroke=1;
 
-        this.dasharray = null;//can be one of: [рс, р-с, р.с, р-.с, р-..с, р. с, р- с, р--с, р- .с, р--.с, р--..с] 
+        this.dasharray = null;//can be one of: [О©╫О©╫, О©╫-О©╫, О©╫.О©╫, О©╫-.О©╫, О©╫-..О©╫, О©╫. О©╫, О©╫- О©╫, О©╫--О©╫, О©╫- .О©╫, О©╫--.О©╫, О©╫--..О©╫] 
         
         if(typeof endY ==="number"){
             this.startX = startX;
@@ -109,7 +109,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * Set the line style for this object.
     * 
     * experimental only.
-    * @param dash can be one of this [рс, р-с, р.с, р-.с, р-..с, р. с, р- с, р--с, р- .с, р--.с, р--..с] 
+    * @param dash can be one of this [О©╫О©╫, О©╫-О©╫, О©╫.О©╫, О©╫-.О©╫, О©╫-..О©╫, О©╫. О©╫, О©╫- О©╫, О©╫--О©╫, О©╫- .О©╫, О©╫--.О©╫, О©╫--..О©╫] 
     */
    setDashArray: function(dash){
        this.dasharray = dash;
@@ -547,6 +547,21 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
        }
        if(typeof memento.color !=="undefined"){
            this.setColor(memento.color);
+       }
+
+       if(typeof memento.startX !=="undefined"){
+           this.startX = memento.startX;
+       } else {
+           console.log("memento.startX  is undefined !? : " + memento.startX);
+       }
+       if(typeof memento.startY !=="undefined"){
+           this.startY = memento.startY;
+       }
+       if(typeof memento.endX !=="undefined"){
+           this.endX   = memento.endX;
+       }
+       if(typeof memento.endY !=="undefined"){
+           this.endY   = memento.endY;
        }
    }
 });

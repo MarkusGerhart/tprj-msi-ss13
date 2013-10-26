@@ -25,6 +25,7 @@ draw2d.layout.locator.LocatorLine = draw2d.layout.locator.Locator.extend({
         y2 = _y2 - parent.getY();
 		//console.log("relativ x:" + x);
         //console.log("relativ y:" + y);
+        //console.log("Relativ startX:" + x + " startY:" + y + " endX" + x2 + " endY" + y2);
     },
 
     init: function(parent) {
@@ -34,13 +35,21 @@ draw2d.layout.locator.LocatorLine = draw2d.layout.locator.Locator.extend({
     relocate: function(index, target) {
         //console.log("x:" + x);
         //console.log("y:" + y);
-        //target.setPosition(this.x, this.y);
-		//console.log(this.NAME + " x:" + this.x + " y:" + this.y + "  target: " + target.startX + "  targetA: " + targetA.startX);
+        //console.log(this.NAME + " x:" + this.x + " y:" + this.y + "  target: " + target.startX + "  targetA: " + targetA.startX);
 		//console.log(this.NAME + " x: " + x + this.getParent().getX());
-		target.startX = this.getParent().getX() + x;
+        //console.log(this.NAME + " target x" + target.startX + "  target height: " + target.getWidth());
+
+        target.startX = this.getParent().getX() + x;
 	    target.startY = this.getParent().getY() + y;
 		target.endX = this.getParent().getX() + x2;
 		target.endY = this.getParent().getY() + y2;
         target.repaint();
+
+        /*console.log("startX:" + target.startX + " startY:" + target.startY + " endX" + target.endX + " endY" + target.endY);
+        var output = '';
+        for (property in target) {
+            output += property + ': ' + target[property]+'; ';
+        }
+        console.log(output);*/
     }
 });

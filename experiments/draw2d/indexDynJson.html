@@ -396,6 +396,7 @@
 <SCRIPT src="../../draw2d-framework/src/io/json/Reader.js"> </SCRIPT>
 
 <SCRIPT src="LocatorA.js"> </SCRIPT>
+<SCRIPT src="LocatorLine.js"> </SCRIPT>
 <script src="OurJsonReader.js" charset="utf-8"></script>
 
 </head>
@@ -427,7 +428,17 @@ window.onload = function () {
                     "y": 100,
                     "width": 50,
                     "height": 20
-                }]
+                },
+				{
+                    "type": "draw2d.shape.basic.Line",
+                    "id": "ebfb35bb-5767-8155-c804-14bda7759dc3",
+                    "locator" : "draw2d.layout.locator.LocatorLine",
+                    "startX": 10,
+                    "startY": 40,
+                    "endX": 50,
+                    "endY": 40
+                }
+            ]
         }
     ];
 
@@ -465,7 +476,8 @@ window.onload = function () {
     //canvas.addFigure(rect2);
 
     var reader = new draw2d.io.json.OurJsonReader();
-    reader.unmarshal(canvas, jsonDocument);
+	reader.unmarshal(canvas, jsonDocument);
+
 
     // display the JSON document in the preview DIV
     displayJSON(canvas);
