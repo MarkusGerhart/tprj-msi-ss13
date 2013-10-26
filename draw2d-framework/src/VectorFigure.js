@@ -76,9 +76,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
 
         attributes.x = this.getAbsoluteX();
         attributes.y = this.getAbsoluteY();
-
-        //console.log("attributes: " + JSON.stringify(attributes));
-
+        
         if(typeof attributes.stroke==="undefined"){
             if(this.color === null || this.stroke ===0){
                 attributes.stroke = "none";
@@ -151,7 +149,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
    },
 
    /**
-    * @me�hod
+    * @method
     * Set the color of the line.
     * This method fires a <i>document dirty</i> event.
     * 
@@ -167,7 +165,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
 
    /**
     * @method
-    * The current used forground color
+    * The current used foreground color
     * 
     * @returns {draw2d.util.Color}
     */

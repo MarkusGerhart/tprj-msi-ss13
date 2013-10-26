@@ -34,9 +34,20 @@ draw2d.Canvas = Class.extend(
      */
     init : function(canvasId)
     {
-        if ($.browser.msie  && parseInt($.browser.version, 10) === 8) {
-            this.fromDocumentToCanvasCoordinate = this._fromDocumentToCanvasCoordinate_IE8_HACK;
+        // Hook the canvas calculation for IE8
+        //
+        if (navigator.appName == 'Microsoft Internet Explorer')
+        {
+          var ua = navigator.userAgent;
+          var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+          if (re.exec(ua) != null){
+            rv = parseInt( RegExp.$1 );
+            if(rv===8){
+                this.fromDocumentToCanvasCoordinate = this._fromDocumentToCanvasCoordinate_IE8_HACK;
+            }
+          }
         }
+
         
         this.setScrollArea(document.body);
         this.canvasId = canvasId;
@@ -50,46 +61,49 @@ draw2d.Canvas = Class.extend(
         this.html.css({"-webkit-tap-highlight-color": "rgba(0,0,0,0)"});
         
         // Drag&Drop Handling from foreign DIV into the Canvas
+        // Only available in combination with jQuery-UI
         //
         // Create the droppable area for the css class "draw2d_droppable"
         // This can be done by a palette of toolbar or something else.
         // For more information see : http://jqueryui.com/demos/droppable/
         //
-        this.html.droppable({
-            accept: '.draw2d_droppable',
-            over: $.proxy(function(event, ui) {
-                this.onDragEnter(ui.draggable);
-            },this),
-            out: $.proxy(function(event, ui) {
-                this.onDragLeave(ui.draggable);
-            },this),
-            drop:$.proxy(function(event, ui){
-                event = this._getEvent(event);
-                var pos = this.fromDocumentToCanvasCoordinate(event.clientX, event.clientY);
-                this.onDrop(ui.draggable, pos.getX(), pos.getY());
-            },this)
-        });
+        if(typeof this.html.droppable !=="undefined"){
+            this.html.droppable({
+                accept: '.draw2d_droppable',
+                over: $.proxy(function(event, ui) {
+                    this.onDragEnter(ui.draggable);
+                },this),
+                out: $.proxy(function(event, ui) {
+                    this.onDragLeave(ui.draggable);
+                },this),
+                drop:$.proxy(function(event, ui){
+                    event = this._getEvent(event);
+                    var pos = this.fromDocumentToCanvasCoordinate(event.clientX, event.clientY);
+                    this.onDrop(ui.draggable, pos.getX(), pos.getY());
+                },this)
+            });
         
-        // Create the jQuery-Draggable for the palette -> canvas drag&drop interaction
-        //
-        $(".draw2d_droppable").draggable({
-            appendTo:"body",
-            stack:"body",
-            zIndex: 27000,
-            helper:"clone",
-            drag: $.proxy(function(event, ui){
-                event = this._getEvent(event);
-                var pos = this.fromDocumentToCanvasCoordinate(event.clientX, event.clientY);
-                this.onDrag(ui.draggable, pos.getX(), pos.getY());
-            },this),
-            stop: function(e, ui){
-                this.isInExternalDragOperation=false;
-            },
-            start: function(e, ui){
-                this.isInExternalDragOperation=true;
-                $(ui.helper).addClass("shadow");
-            }
-       });
+            // Create the jQuery-Draggable for the palette -> canvas drag&drop interaction
+            //
+            $(".draw2d_droppable").draggable({
+                appendTo:"body",
+                stack:"body",
+                zIndex: 27000,
+                helper:"clone",
+                drag: $.proxy(function(event, ui){
+                    event = this._getEvent(event);
+                    var pos = this.fromDocumentToCanvasCoordinate(event.clientX, event.clientY);
+                    this.onDrag(ui.draggable, pos.getX(), pos.getY());
+                },this),
+                stop: function(e, ui){
+                    this.isInExternalDragOperation=false;
+                },
+                start: function(e, ui){
+                    this.isInExternalDragOperation=true;
+                    $(ui.helper).addClass("shadow");
+                }
+           });
+        }
 
         // painting stuff
         //
@@ -209,7 +223,7 @@ draw2d.Canvas = Class.extend(
                var diffXAbs = (event.clientX - this.mouseDownX)*this.zoomFactor;
                var diffYAbs = (event.clientY - this.mouseDownY)*this.zoomFactor;
                this.editPolicy.each($.proxy(function(i,policy){
-                   policy.onMouseDrag(this,diffXAbs, diffYAbs, this.mouseDragDiffX-diffXAbs, this.mouseDragDiffY-diffYAbs);
+                   policy.onMouseDrag(this,diffXAbs, diffYAbs, diffXAbs-this.mouseDragDiffX, diffYAbs-this.mouseDragDiffY);
                },this));
                this.mouseDragDiffX = diffXAbs;
                this.mouseDragDiffY = diffYAbs;
@@ -298,6 +312,7 @@ draw2d.Canvas = Class.extend(
      * @private
      */
     calculateConnectionIntersection: function(){
+
         this.lineIntersections = new draw2d.util.ArrayList();
         var lines = this.getLines().clone();
         while(lines.getSize()>0){
@@ -774,6 +789,7 @@ draw2d.Canvas = Class.extend(
      */
     getIntersection:function(line){
        var result = new draw2d.util.ArrayList();
+       
        this.lineIntersections.each($.proxy(function(i, entry){
            if(entry.line ===line){
                entry.intersection.each(function(i,p){
@@ -781,6 +797,7 @@ draw2d.Canvas = Class.extend(
                });
            }
        },this));
+       
        return result;
     },
     

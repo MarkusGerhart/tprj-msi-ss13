@@ -3,7 +3,7 @@
  *   Copyright (c) 2012 Andreas Herz
  ****************************************//**
  * @class draw2d.InputPort
- * A OutputPort is the end anchor for a {@link draw2d.Connection}.
+ * A InputPort is the start anchor for a {@link draw2d.Connection}.
  * 
  * @author Andreas Herz
  * @extend draw2d.Port
@@ -85,12 +85,12 @@ draw2d.InputPort = draw2d.Port.extend({
          // InputPort can only connect to an OutputPort. InputPort->InputPort make no sense
          if(request.source instanceof draw2d.OutputPort){
             // This is the different to the OutputPort implementation of createCommand
-            return new draw2d.command.CommandConnect(request.canvas,request.source,request.target);
+            return new draw2d.command.CommandConnect(request.canvas,request.source,request.target, request.source);
          }
          
          if(request.source instanceof draw2d.HybridPort){
              // This is the different to the OutputPort implementation of createCommand
-             return new draw2d.command.CommandConnect(request.canvas,request.source,request.target);
+             return new draw2d.command.CommandConnect(request.canvas,request.source,request.target, request.source);
          }
       
          return null;

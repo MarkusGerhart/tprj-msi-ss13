@@ -49,9 +49,6 @@ draw2d.layout.anchor.ShortesPathConnectionAnchor = draw2d.layout.anchor.Connecti
 			if(result.getSize()==1){
 				return result.get(0);
 			}
-			else{
-			    console.log("error");
-			}
 		}
 		
 		/*    0 | 1 | 2

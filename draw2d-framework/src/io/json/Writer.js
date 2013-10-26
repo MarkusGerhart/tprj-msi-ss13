@@ -11,14 +11,16 @@
  *      // Create a JSON writer and convert it into a JSON-String representation.
  *      //
  *      var writer = new draw2d.io.json.Writer();
- *      var json = writer.marshal(canvas);
+ *      writer.marshal(canvas, function(json){
+ *         // convert the json object into string representation
+ *         var jsonTxt = JSON.stringify(json,null,2);
  *      
- *      // convert the json object into string repesentation
- *      var jsonTxt = JSON.stringify(json,null,2);
+ *         // insert the json string into a DIV for preview or post
+ *         // it via ajax to the server....
+ *         $("#json").text(jsonTxt);
  *      
- *      // insert the json string into a DIV for preview or post
- *      // it via ajax to the server....
- *      $("#json").text(jsonTxt);
+ *      });
+ *      
  *
  * 
  * @author Andreas Herz
@@ -34,11 +36,22 @@ draw2d.io.json.Writer = draw2d.io.Writer.extend({
      * @method
      * Export the content to the implemented data format. Inherit class implements
      * content specific writer.
+     * <br>
+     * <br>
      * 
-      * @param {draw2d.Canvas} canvas
-     * @returns {Object}
+     * Method signature has been changed from version 2.10.1 to version 3.0.0.<br>
+     * The parameter <b>resultCallback</b> is required and new. The method calls
+     * the callback instead of return the result.
+     * 
+     * @param {draw2d.Canvas} canvas
+     * @param {Function} resultCallback the method to call on success. The first argument is the result object
      */
-    marshal: function(canvas){
+    marshal: function(canvas, resultCallback){
+        // I change the API signature from version 2.10.1 to 3.0.0. Throw an exception
+        // if any application not care about this changes.
+        if(typeof resultCallback === "undefined"){
+            throw "Writer.marshal method signature has been change from version 2.10.1 to version 3.0.0. Please consult the API documentation about this issue.";
+        }
         
         var result = [];
         var figures = canvas.getFigures();
@@ -59,6 +72,6 @@ draw2d.io.json.Writer = draw2d.io.Writer.extend({
             result.push(element.getPersistentAttributes());
         });
         
-        return result;
+        resultCallback(result);
     }
 });

@@ -63,7 +63,7 @@ draw2d.Figure = Class.extend({
         
         // generic handle for the JSON read/write of user defined data
         this.userData = null;
-        
+       
         // appearance, position and dim properties
         //
         this.x = 0;
@@ -71,7 +71,8 @@ draw2d.Figure = Class.extend({
         this.minHeight = 5;
         this.minWidth = 5;
         this.rotationAngle = 0;
-        this.cssClass = null;
+        // add the name of the class to the css attribute
+        this.cssClass = this.NAME.replace(new RegExp("[.]","g"), "_");
        
         if(typeof height !== "undefined"){
             this.width  = width;
@@ -86,7 +87,6 @@ draw2d.Figure = Class.extend({
         // internal status flags for the Drag&Drop operation handling and other stuff
         // 
         this.isInDragDrop =false;
-        this.isMoving = false;
         this.originalAlpha = this.alpha;
         this.ox = 0;
         this.oy = 0;
@@ -265,6 +265,11 @@ draw2d.Figure = Class.extend({
         return this;
     },
 
+    /**
+     * Remove the given css class name from the figure
+     * 
+     * @param {String} className the css class name to add
+     */
     removeCssClass:function(className) {
         className = $.trim(className);
         var newClass = ' ' + this.cssClass.replace( /[\t\r\n]/g, ' ') + ' ';
@@ -278,6 +283,11 @@ draw2d.Figure = Class.extend({
         return this;
     },
     
+    /**
+     * Add or remove the given css class name from the figure
+     * 
+     * @param {String} className the class name to toggle
+     */
     toggleCssClass:function( className) {
         className = $.trim(className);
         var newClass = ' ' + this.cssClass.replace( /[\t\r\n]/g, ' ' ) + ' ';
@@ -589,8 +599,6 @@ draw2d.Figure = Class.extend({
     onDragStart : function(relativeX, relativeY )
     {
       this.isInDragDrop =false;
-      this.isMoving = false;
-      this.originalAlpha = this.getAlpha();
 
       this.command = this.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.MOVE));
 
@@ -618,12 +626,15 @@ draw2d.Figure = Class.extend({
      * Don't call them manually. This will be done by the framework.<br>
      * Will be called if the object are moved via drag and drop.
      * Sub classes can override this method to implement additional stuff. Don't forget to call
-     * the super implementation via <code>Figure.prototype.onDrag.call(this);</code>
+     * the super implementation via <code>this._super(dx, dy, dx2, dy2);</code>
+     * 
      * @private
      * @param {Number} dx the x difference between the start of the drag drop operation and now
      * @param {Number} dy the y difference between the start of the drag drop operation and now
+     * @param {Number} dx2 The x diff since the last call of this dragging operation
+     * @param {Number} dy2 The y diff since the last call of this dragging operation
      **/
-    onDrag : function( dx,  dy)
+    onDrag : function( dx,  dy, dx2, dy2)
     {
       // apply all EditPolicy for DragDrop Operations
       //
@@ -658,14 +669,6 @@ draw2d.Figure = Class.extend({
               e.onDrag(this.canvas, this);
           }
       },this));
-
-      // enable the alpha blending of the first real move of the object
-      //
-      if(this.isMoving===false)
-      {
-       this.isMoving = true;
-       this.setAlpha(this.originalAlpha*0.7);
-      }
     },
 
     /**
@@ -676,9 +679,11 @@ draw2d.Figure = Class.extend({
      * 
      * @param {Number} dx the x difference between the mouse down operation and now
      * @param {Number} dy the y difference between the mouse down operation and now
+     * @param {Number} dx2 The x diff since the last call of this dragging operation
+     * @param {Number} dy2 The y diff since the last call of this dragging operation
      * @template
      */
-    onPanning: function(dx, dy){
+    onPanning: function(dx, dy, dx2, dy2){
         
     },
     
@@ -703,8 +708,7 @@ draw2d.Figure = Class.extend({
 
       this.canvas.getCommandStack().execute(this.command);
       this.command = null;
-      this.isMoving = false;
-      
+     
       // notify all installed policies
       //
       this.editPolicy.each($.proxy(function(i,e){

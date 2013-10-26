@@ -16,7 +16,7 @@
  *     
  * @author Andreas Herz
  * 
- * @class draw2d.SetFigure
+ * @extends draw2d.SetFigure
  */
 draw2d.shape.basic.Label= draw2d.SetFigure.extend({
 
@@ -105,8 +105,8 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
             return;
         }
 
- // PERFORMANCE     Problem. Warum muss der Cache bei jedem zeichnen gelöscht werden....?
- // Macht keinen Sinn. Andere Lösung muss her. 
+ // PERFORMANCE     Problem. Warum muss der Cache bei jedem zeichnen gel√∂scht werden....?
+ // Macht keinen Sinn. Andere L√∂sung muss her. 
  // Dummerweise zeichnen sich sonst die Labels nicht in der korrekte Breite
         this.cachedWidth=null;
         this.cachedHeight=null;
@@ -174,7 +174,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
 
     /**
      * @method
-     * Set the label to <b>bold/b> or <b>normal</b> font weight.
+     * Set the label to <b>bold</b> or <b>normal</b> font weight.
      *
      * @param {Boolean} bold The bold flag for the label
      * @since 2.4.1
@@ -234,30 +234,30 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * 
      * <b>Serif Fonts</b>
      * <ul>
-     *  <li><b>Georgia</b>, serif   
-     *  <li><b>Palatino Linotype</b>, "Book Antiqua", Palatino, serif    
-     *  <li><b>Times New Roman</b>, Times, serif     
+     *  <li><b>Georgia</b>, serif   </li>
+     *  <li><b>Palatino Linotype</b>, "Book Antiqua", Palatino, serif    </li>
+     *  <li><b>Times New Roman</b>, Times, serif  </li>   
      * </ul>
      * 
      * <b>Sans-Serif Fonts</b>
      * <ul>
-     *  <li><b>Arial</b>, Helvetica, sans-serif    
-     *  <li><b>Arial Black</b>, Gadget, sans-serif   
-     *  <li><b>Comic Sans MS</b>, cursive, sans-serif    
-     *  <li><b>Impact, Charcoal</b>, sans-serif    
-     *  <li><b>Lucida Sans Unicode</b>, "Lucida Grande", sans-serif  
-     *  <li><b>Tahoma, Geneva</b>, sans-serif  
-     *  <li><b>Trebuchet MS</b>, Helvetica, sans-serif   
-     *  <li><b>Verdana</b>, Geneva, sans-serif     
+     *  <li><b>Arial</b>, Helvetica, sans-serif   </li> 
+     *  <li><b>Arial Black</b>, Gadget, sans-serif </li>  
+     *  <li><b>Comic Sans MS</b>, cursive, sans-serif   </li> 
+     *  <li><b>Impact, Charcoal</b>, sans-serif   </li> 
+     *  <li><b>Lucida Sans Unicode</b>, "Lucida Grande", sans-serif </li> 
+     *  <li><b>Tahoma, Geneva</b>, sans-serif  </li>
+     *  <li><b>Trebuchet MS</b>, Helvetica, sans-serif </li>  
+     *  <li><b>Verdana</b>, Geneva, sans-serif   </li>  
      * </ul>
      * 
      * <b>Monospace Fonts</b>
      * <ul>
-     *  <li><b>Courier New</b>, Courier, monospace   
-     *  <li><b>Lucida Console</b>, Monaco, monospace
+     *  <li><b>Courier New</b>, Courier, monospace   </li>
+     *  <li><b>Lucida Console</b>, Monaco, monospace</li>
      * </ul>
      *
-     * @param {font} font The font to use
+     * @param {String} font The font to use
      **/
     setFontFamily: function( font)
     {
@@ -268,7 +268,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
       
       // check for fallback
       //
-      if(this.FONT_FALLBACK[font]!== "undefined"){
+      if((typeof font!=="undefined") && font!==null && typeof this.FONT_FALLBACK[font] !== "undefined"){
           font=this.FONT_FALLBACK[font];
       }
       

@@ -1,3 +1,4 @@
+
 /**
  * @class draw2d
  * global namespace declarations
@@ -35,6 +36,7 @@ var draw2d =
     
     policy : {
         canvas:{},
+        line:{},
         port:{},
         figure:{}
     },

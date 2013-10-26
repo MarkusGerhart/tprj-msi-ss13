@@ -44,7 +44,7 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
     onDoubleClick:function(){
         var w = this.getWidth();
         var h = this.getHeight();
-        // rotate in 90� increment steps..
+        // rotate in 90° increment steps..
         this.setRotationAngle((this.getRotationAngle()+90)%360);
         // ..and toggle the orientation of the shape (portrait / landscape)
         this.setDimension(h,w);
@@ -69,10 +69,7 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
           this.cachedPorts.addAll(this.hybridPorts);
           
           this.children.each($.proxy(function(i,e){
-              //console.log("name: " + e.figure.NAME);
-              if (e.figure.NAME != "draw2d.shape.basic.Line") {
-                this.cachedPorts.addAll( e.figure.getPorts());
-              }
+              this.cachedPorts.addAll( e.figure.getPorts());
           },this));
       }
               

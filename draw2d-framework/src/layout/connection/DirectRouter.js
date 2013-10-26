@@ -67,8 +67,9 @@ draw2d.layout.connection.DirectRouter = draw2d.layout.connection.ConnectionRoute
      * Routes the Connection in air line (beeline).
      * 
      * @param {draw2d.Connection} connection The Connection to route
+     * @param {draw2d.util.ArrayList} oldJunctionPoints old/existing junction points of the Connection
      */
-    route:function( connection)
+    route:function( connection, oldJunctionPoints)
     {
        var start =connection.getStartPoint();
        var end = connection.getEndPoint();

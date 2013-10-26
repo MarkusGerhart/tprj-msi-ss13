@@ -346,16 +346,22 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      **/
     onDragStart : function()
     {
-        // just allow the DragOperation i the port didn'T have reached the max fanOut
+        // just allow the DragOperation if the port didn't have reached the max fanOut
         // limit.
         if(this.getConnections().getSize() >= this.maxFanOut){
             return false;
         }
         
+        // this can happen if the user release the mouse button outside the window during a drag&drop
+        // operation
+        if(this.isInDragDrop ===true){
+            this.onDragEnd();
+        }
+                
         this.getShapeElement().toFront();
-        // don't call the super method. This creates a command and this is not necessary for a port
-        this.ox = this.x;
-        this.oy = this.y;
+       // don't call the super method. This creates a command and this is not necessary for a port
+       this.ox = this.x;
+       this.oy = this.y;
 
         // notify all installed policies
         //
@@ -478,9 +484,9 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         // dropTarget did have a corona
         var request = new draw2d.command.CommandType(draw2d.command.CommandType.CONNECT);
         request.canvas = this.parent.getCanvas();
-        request.source = draggedFigure;
-        request.target = this;
-        var command = this.createCommand(request);
+        request.source = this;
+        request.target = draggedFigure;
+        var command = draggedFigure.createCommand(request);
 
         if (command === null) {
             return null;
@@ -573,7 +579,6 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      * @method
      * Return the name of this port.
      *
-     * @see draw2d.shape.node.Node#getPort
      * @return {String}
      **/
     getName:function()
@@ -669,9 +674,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
          if(request.source.parent.id === request.target.parent.id){
             return null;
          }
-         else{
-            return new draw2d.command.CommandConnect(request.canvas,request.source,request.target);
-         }
+
+         return new draw2d.command.CommandConnect(request.canvas,request.source,request.target, request.source);
        }
     
        return null;

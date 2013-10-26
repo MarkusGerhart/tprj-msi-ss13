@@ -106,9 +106,7 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
          if(this.label!==null){
              return Math.max(this.label.getMinWidth(), this._super());
          }
-         else{
-             return this._super();
-         }
+         return this._super();
      },
      
 
@@ -146,9 +144,9 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
       * <br>
       * 
       * <ul>
-      * <li>0 - Use the best/shortest direction (UP/RIGHT/DOWN/LEFT) for the connection routing (default)
-      * <li>1 - Use UP/DOWN for the connection direction
-      * <li>2 - Use LEFT/RIGHT
+      * <li>0 - Use the best/shortest direction (UP/RIGHT/DOWN/LEFT) for the connection routing (default)</li>
+      * <li>1 - Use UP/DOWN for the connection direction</li>
+      * <li>2 - Use LEFT/RIGHT</li>
       * </ul>
       * @param {Number} strategy the connection routing strategy to use
       * @since 2.4.3
@@ -191,6 +189,4 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
          }
      }
      
-     
-
 });
