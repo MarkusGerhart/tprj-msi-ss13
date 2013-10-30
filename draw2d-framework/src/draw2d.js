@@ -75,7 +75,9 @@ var draw2d =
 //
 document.ontouchmove = function(e){e.preventDefault();};
 // hide context menu
-document.oncontextmenu = function() {return false;};
+//document.oncontextmenu = function() {return false;};
+document.oncontextmenu = function() {return true;};
+
 
 // hacking RaphaelJS to support groups of elements
 //
