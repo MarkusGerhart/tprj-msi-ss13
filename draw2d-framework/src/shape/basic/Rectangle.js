@@ -37,7 +37,7 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
     init: function( width, height) {
        // corner radius
        this.radius = 2;
-       this.dasharray = null;//can be one of: [��, �-�, �.�, �-.�, �-..�, �. �, �- �, �--�, �- .�, �--.�, �--..�] 
+       this.dasharray = null;
        
       this._super();
 
@@ -73,7 +73,6 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
         attributes.width = this.getWidth();
         attributes.height = this.getHeight();
         attributes.r = this.radius;
-
         this._super(attributes);
     },
     
@@ -124,13 +123,15 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
     
     /**
      * @method
+     * set the line style for dot/dash styling. Possible values are
      * 
+     * ["", "-", ".", "-.", "-..", ". ", "- ", "--", "- .", "--.", "--.."]
      * experimental only.
      * @param dash
-     * @private
      */
     setDashArray: function(dash){
         this.dasharray = dash;
+        this.repaint();
     },
     
     /**

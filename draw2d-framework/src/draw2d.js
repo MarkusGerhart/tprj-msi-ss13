@@ -1,3 +1,4 @@
+
 /**
  * @class draw2d
  * global namespace declarations
@@ -35,6 +36,7 @@ var draw2d =
     
     policy : {
         canvas:{},
+        line:{},
         port:{},
         figure:{}
     },
@@ -73,7 +75,9 @@ var draw2d =
 //
 document.ontouchmove = function(e){e.preventDefault();};
 // hide context menu
-document.oncontextmenu = function() {return false;};
+//document.oncontextmenu = function() {return false;};
+document.oncontextmenu = function() {return true;};
+
 
 // hacking RaphaelJS to support groups of elements
 //
