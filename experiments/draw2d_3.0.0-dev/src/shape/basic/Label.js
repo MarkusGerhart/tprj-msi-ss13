@@ -100,7 +100,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * @template
      **/
     repaint: function(attributes)
-    {
+    {console.log("pain");
         if(this.repaintBlocked===true || this.shape===null){
             return;
         }
@@ -116,7 +116,10 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
         // style the label
         var lattr = {};
         lattr.text = this.text;
-        lattr.x = this.padding;
+
+        //hier mit css anpassen z.B. top -> x = 0...
+
+        lattr.x = this.getWidth()/2;
         lattr.y = this.getHeight()/2;
         lattr["font-weight"] = (this.bold===true)?"bold":"normal";
         lattr["text-anchor"] = "start";

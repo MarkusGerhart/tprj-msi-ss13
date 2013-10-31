@@ -399,6 +399,53 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/io/json/Writer.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/io/json/Reader.js"> </SCRIPT>
 
+<SCRIPT src="../spray2d/src/shape/basic/Rectangle.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Label.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/layout/locator/FigureLocator.js"> </SCRIPT>
+
+<style>
+
+    .label_left_top{
+        text-align: left;
+        vertical-align: top;
+    }
+    .label_left_middle{
+        text-align: left;
+        vertical-align: middle;
+    }
+    .label_left_bottom{
+        text-align: left;
+        vertical-align: bottom;
+    }
+    .label_center_top{
+        text-align: center;
+        vertical-align: top;
+    }
+    .label_center_middle{
+        text-align: center;
+        vertical-align: middle;
+        width: 100px;
+        height: 20px;
+        position:absolute;
+    }
+    .label_center_bottom{
+        text-align: center;
+        vertical-align: bottom;
+    }
+    .label_right_top{
+        text-align: right;
+        vertical-align: top;
+    }
+    .label_right_middle{
+        text-align: right;
+        vertical-align: middle;
+    }
+    .label_right_bottom{
+        text-align: right;
+        vertical-align: bottom;
+    }
+
+</style>
 
 <script type="text/javascript">
 
@@ -411,21 +458,44 @@
 
         //PI_Vessel_Horizontal
         /*shape PI_Vessel_Vertical {
-         rounded-rectangle {
-         size (width=120, height=60)
-         curve (width=50, height=50)
-         text style TextStyle {
-         size (width=100, height=20)
-         position (x=3, y=20)
-         align (horizontal=center, vertical=middle)
-         id = shapeName
-         }
-         }
+             rounded-rectangle {
+                 size (width=120, height=60)
+                 curve (width=50, height=50)
+                 text style TextStyle {
+                     size (width=100, height=20)
+                     position (x=3, y=20)
+                     align (horizontal=center, vertical=middle)
+                     id = shapeName
+                 }
+             }
          }*/
-        var PI_Vessel_Vertical = new draw2d.shape.basic.Rectangle(100,100);
-        canvas.addFigure(PI_Vessel_Vertical);
 
-        //PI_Vessel_Vertical.setBackgroundColor("#000000");
+        var PI_Vessel_Vertical = new spray2d.shape.basic.Rectangle(120,60);
+        PI_Vessel_Vertical.setAlpha(0);
+
+        var rect = new spray2d.shape.basic.Rectangle(120,60);
+        rect.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth() );
+        rect.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/rect.getHeight() );
+        rect.setRadius(50);
+        rect.setBackgroundColor("#ffffff");
+
+        var text = new spray2d.shape.basic.Label("Text");
+        text.setDimension(100,20);
+        text.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/100 );
+        text.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/20 );
+        text.setStroke(0);
+        text.setBackgroundColor("#f0f0f0");
+        text.setPosition(3,20);
+        text.setUserData({"type":"Label","textAlign":"center", "verticalAlign":"middle"});
+
+        rect.addFigure(text, new spray2d.layout.locator.FigureLocator(rect));
+        rect.attachResizeListener(text);
+
+        PI_Vessel_Vertical.addFigure(rect,  new spray2d.layout.locator.FigureLocator(PI_Vessel_Vertical));
+        PI_Vessel_Vertical.attachResizeListener(rect);
+
+
+        canvas.addFigure(PI_Vessel_Vertical);
 
 
 
