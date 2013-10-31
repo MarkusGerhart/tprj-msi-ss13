@@ -70,7 +70,7 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
           
           this.children.each($.proxy(function(i,e){
               //console.log("name: " + e.figure.NAME);
-              if (e.figure.NAME != "draw2d.shape.basic.Line") {
+              if (e.figure.NAME != "draw2d.shape.basic.OurLine") {
                 this.cachedPorts.addAll( e.figure.getPorts());
               }
           },this));
