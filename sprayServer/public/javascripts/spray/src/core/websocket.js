@@ -3,7 +3,7 @@ import "../core/browser"
 // class: Websocket
 
 spray.WebSocket = function (wsURI) {
-  var WebSocket = spray.require("WebSocket")
+  var WebSocket = htwg.spray.require("WebSocket")
   this.sock = new WebSocket(wsURI);
   this.ready = false;
   self = this;  // for correct closure

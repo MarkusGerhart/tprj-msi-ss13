@@ -4,11 +4,11 @@
     <script>
         jQuery(document).ready(function() {
 
-            SPRAY.htwg.view = new SPRAY.htwg.spray.View("drawArea");
-            SPRAY.htwg.menu = new SPRAY.htwg.spray.Menu(jQuery);
-            SPRAY.htwg.generator = new SPRAY.htwg.spray.Generator(jQuery);
-            SPRAY.htwg.toolbar = new SPRAY.htwg.spray.Toolbar(jQuery);
-            SPRAY.htwg.menu.buildMenu( SPRAY.htwg.generator.configMenu );
+            htwg.view = new htwg.spray.View("drawArea");
+            htwg.menu = new htwg.spray.Menu(jQuery);
+            htwg.generator = new htwg.spray.Generator(jQuery);
+            htwg.toolbar = new htwg.spray.Toolbar(jQuery);
+            htwg.menu.buildMenu( htwg.generator.configMenu );
         });
     </script>
 

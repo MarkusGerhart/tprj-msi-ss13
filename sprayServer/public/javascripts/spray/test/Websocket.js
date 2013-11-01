@@ -8,7 +8,7 @@ describe("WebsocketSpec", function() {
   it("should be able to send a message to the server", function() {
 
     runs(function() {
-      sock = new spray.WebSocket("ws://localhost:9000/websocket/");
+      sock = new htwg.spray.WebSocket("ws://localhost:9000/websocket/");
     });
 
     waitsFor(function() {

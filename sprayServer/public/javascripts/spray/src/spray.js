@@ -1,6 +1,9 @@
 import "start";
 
 import "core/";
-import "package/";
+//import "package/";
+import "shapes/";
+import "ui/";
+import "locators/";
 
 import "end";

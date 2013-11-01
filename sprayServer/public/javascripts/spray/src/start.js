@@ -1,6 +1,9 @@
-var SPRAY = SPRAY || {};
-SPRAY.htwg = SPRAY.htwg || {};
+var htwg = htwg || {};
 
-SPRAY.htwg.spray = (function(){
-  var spray = {version: "0.0.0"};
+htwg.spray = (function() {
+  var spray = {
+    version: "0.0.0",
+    shapes: {},
+    locators: {}
+  };
   console.log("Welcome to spray.js " + spray.version);
