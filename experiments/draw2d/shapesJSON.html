@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
-<title>draw2d</title>
-
-<!-- meta information -->
-<meta charset="utf-8" />
+<title></title>
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<!-- import style -->
-<link rel="stylesheet" href="../css/reset.css" />
-
-<!-- import draw2d.dependencies -->
 <link type="text/css" rel="stylesheet" href="./css/example.css" />
-<link type="text/css" rel="stylesheet" href="../../../css/contextmenu.css" />
+
+<link type="text/css" rel="stylesheet" href="../draw2d_3.0.0-dev/css/contextmenu.css" />
+
 
 <SCRIPT src="../draw2d_3.0.0-dev/lib/shifty.js"></SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/lib/raphael.js"></SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/lib/jquery-1.10.2.min.js"></SCRIPT>
-<SCRIPT src="../draw2d_3.0.0-dev/lib/jquery.layout.js"></SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/lib/jquery.autoresize.js"></SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/lib/jquery-touch_punch.js"></SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/lib/jquery.contextmenu.js"></SCRIPT>
@@ -26,7 +20,9 @@
 <SCRIPT src="../draw2d_3.0.0-dev/lib/canvg.js"></SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/lib/Class.js"></SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/lib/json2.js"></SCRIPT>
-<SCRIPT src="../draw2d_3.0.0-dev/src/draw2d.js"></SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/lib/pathfinding-browser.min.js"></SCRIPT>
+
+<SCRIPT src="../draw2d_3.0.0-dev/src/draw2d_modified.js"></SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/util/Color.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/util/ArrayList.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/util/SVGUtil.js"> </SCRIPT>
@@ -38,6 +34,7 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/geo/PositionConstants.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/geo/Point.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/geo/Rectangle.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/geo/Ray.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandType.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/Command.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandCollection.js"> </SCRIPT>
@@ -46,19 +43,24 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandStackEventListener.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandMove.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandMoveLine.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandMoveJunction.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandResize.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandConnect.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandReconnect.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandDelete.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandAdd.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandAddJunctionPoint.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/command/CommandRemoveJunctionPoint.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/ConnectionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/DirectRouter.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/JunctionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/ManhattanConnectionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/ManhattanBridgedConnectionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/CircuitConnectionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/SplineConnectionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/FanConnectionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/MazeConnectionRouter.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/MuteableManhattanConnectionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/connection/SketchConnectionRouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/mesh/MeshLayouter.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/layout/mesh/ExplodeLayouter.js"> </SCRIPT>
@@ -94,7 +96,6 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/HorizontalEditPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/VerticalEditPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/SelectionFeedbackPolicy.js"> </SCRIPT>
-<SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/LineSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/RectangleSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/BigRectangleSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/RoundRectangleSelectionFeedbackPolicy.js"> </SCRIPT>
@@ -104,6 +105,8 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/AntSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/GlowSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/SlimSelectionFeedbackPolicy.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/policy/line/LineSelectionFeedbackPolicy.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/policy/line/JunctionSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/port/PortFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/port/ElasticStrapFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/port/IntrusivePortsFeedbackPolicy.js"> </SCRIPT>
@@ -129,9 +132,11 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/Connection.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/VectorFigure.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/ResizeHandle.js"> </SCRIPT>
-<SCRIPT src="../draw2d_3.0.0-dev/src/LineResizeHandle.js"> </SCRIPT>
-<SCRIPT src="../draw2d_3.0.0-dev/src/LineStartResizeHandle.js"> </SCRIPT>
-<SCRIPT src="../draw2d_3.0.0-dev/src/LineEndResizeHandle.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/shape/basic/LineResizeHandle.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/shape/basic/LineStartResizeHandle.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/shape/basic/LineEndResizeHandle.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/shape/basic/JunctionResizeHandle.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/shape/basic/GhostJunctionResizeHandle.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/Port.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/InputPort.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/OutputPort.js"> </SCRIPT>
@@ -394,114 +399,164 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/io/json/Writer.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/io/json/Reader.js"> </SCRIPT>
 
-<SCRIPT src="LocatorA.js"> </SCRIPT>
-<SCRIPT src="LocatorLine.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Rectangle.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Label.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/layout/locator/FigureLocator.js"> </SCRIPT>
+
 <script src="OurJsonReader.js" charset="utf-8"></script>
-<SCRIPT src="../draw2d_3.0.0-dev/src/shape/basic/OurLine.js"> </SCRIPT>
+<SCRIPT src="LocatorA.js"> </SCRIPT>
 
-</head>
-<body>
+<style>
 
-<div id="drawArea" style="width: 961px; height:594px; position: relative;"></div>
+    .label_left_top{
+        text-align: left;
+        vertical-align: top;
+    }
+    .label_left_middle{
+        text-align: left;
+        vertical-align: middle;
+    }
+    .label_left_bottom{
+        text-align: left;
+        vertical-align: bottom;
+    }
+    .label_center_top{
+        text-align: center;
+        vertical-align: top;
+    }
+    .label_center_middle{
+        text-align: center;
+        vertical-align: middle;
+        width: 100px;
+        height: 20px;
+        position:absolute;
+    }
+    .label_center_bottom{
+        text-align: center;
+        vertical-align: bottom;
+    }
+    .label_right_top{
+        text-align: right;
+        vertical-align: top;
+    }
+    .label_right_middle{
+        text-align: right;
+        vertical-align: middle;
+    }
+    .label_right_bottom{
+        text-align: right;
+        vertical-align: bottom;
+    }
 
-<script>
-console.log("Welcome to spray.js");
+</style>
 
-window.onload = function () {
-    var canvas = new draw2d.Canvas("drawArea");
+<script type="text/javascript">
 
-    var jsonDocument =
-    [
-        {
-            "type": "draw2d.shape.basic.Rectangle",
-            //"id": "354fa3b9-a834-0221-2009-abc2d6bd852a",
-            "x": 0,
-            "y": 30,
-            "width": 100,
-            "height": 100,
-            "children" : [
-                {
-                    "type": "draw2d.shape.basic.Rectangle",
-                    //"id": "ebfb35bb-5767-8155-c804-14bda7759dc2",
-                    "locator" : "draw2d.layout.locator.LocatorA",
-                    "x": 25,
-                    "y": 100,
-                    "width": 50,
-                    "height": 20
-                },
-				{
-                    "type": "draw2d.shape.basic.OurLine",
-                    //"id": "ebfb35bb-5767-8155-c804-14bda7759dc3",
-                    "locator" : "draw2d.layout.locator.LocatorLine",
-                    "startX": 10,
-                    "startY": 40,
-                    "endX": 50,
-                    "endY": 40
-                }
-            ]
-        }
-    ];
+    $(window).load(function () {
+        // create the canvas for the user interaction
+        var canvas = new draw2d.Canvas("gfx_holder");
 
-    // TODO rect.setRadius(20);
+        //PI_Vessel_Horizontal
+        /*shape PI_Vessel_Vertical {
+             rounded-rectangle {
+                 size (width=120, height=60)
+                 curve (width=50, height=50)
+                 text style TextStyle {
+                     size (width=100, height=20)
+                     position (x=3, y=20)
+                     align (horizontal=center, vertical=middle)
+                     id = shapeName
+                 }
+             }
+         }*/
 
-    /*var polyline = new draw2d.shape.basic.PolyLine();
-    polyline.addPoint(30.0, 0.0);
-    polyline.addPoint(30.0, 70.0);
-    polyline.addPoint(50.0, 50.0);
-    polyline.addPoint(70.0, 70.0);
-    polyline.addPoint(70.0, 0.0);
-    polyline.addPoint(24.908203125,45.49267578125);
-    polyline.addPoint(31.71875,38.68310546875);
-    polyline.addPoint(31.2119140625,36.98876953125);*/
+        var jsonDocument =
+                [
+                    {
+                        "type": "draw2d.shape.basic.Rectangle",
+                        //"id": "354fa3b9-a834-0221-2009-abc2d6bd852a",
+                        "x": 0,
+                        "y": 0,
+                        "width": 120,
+                        "height": 60,
+                        "radius": 50,
+                        "alpha": 0,
+                        "children" : [
+                            {
+                                "type": "spray2d.shape.basic.Label",
+                                //"id": "ebfb35bb-5767-8155-c804-14bda7759dc2",
+                                "locator" : "draw2d.layout.locator.LocatorA",
+                                "x": 3,
+                                "y": 20,
+                                "width": 50,
+                                "height": 20
+                            }
+                        ]
+                    }
+                ];
 
-    /*text style TextStyle {
-        position(x=100,y=0)
-        size (width=100, height=20)
-        id = shapeName
-    }*/
+        /*var PI_Vessel_Vertical = new spray2d.shape.basic.Rectangle(120,60);
+        PI_Vessel_Vertical.setAlpha(0);
 
-    // TODO rect2.setRadius(0);
+        var rect = new spray2d.shape.basic.Rectangle(120,60);
+        rect.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth() );
+        rect.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/rect.getHeight() );
+        rect.setRadius(50);
+        rect.setBackgroundColor("#ffffff");
 
-    /*anchor {
-        position (x=30, y=0)
-        position (x=70, y=0)
-        position (x=25, y=110)
-        position (x=75, y=110)
-    }*/
+        var text = new spray2d.shape.basic.Label("Text");
+        text.setDimension(100,20);
+        text.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/100 );
+        text.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/20 );
+        text.setStroke(0);
+        text.setBackgroundColor("#f0f0f0");
+        text.setPosition(3,20);
+        text.setUserData({"type":"Label","textAlign":"center", "verticalAlign":"middle"});
 
-  //fig1.addFigure(fig3, new draw2d.layout.locator.LocatorA());
+        rect.addFigure(text, new spray2d.layout.locator.FigureLocator(rect));
+        rect.attachResizeListener(text);
 
-    //canvas.addFigure(rect);
-    //canvas.addFigure(polyline);
-    //canvas.addFigure(rect2);
-
-    var reader = new draw2d.io.json.OurJsonReader();
-	reader.unmarshal(canvas, jsonDocument);
+        PI_Vessel_Vertical.addFigure(rect,  new spray2d.layout.locator.FigureLocator(PI_Vessel_Vertical));
+        PI_Vessel_Vertical.attachResizeListener(rect);
 
 
-    // display the JSON document in the preview DIV
-    displayJSON(canvas);
+        canvas.addFigure(PI_Vessel_Vertical);*/
 
-    // add an event listener to the Canvas for change notifications.
-    // We just dump the current canvas document into the DIV
-    //
-    canvas.getCommandStack().addEventListener(function(e){
-        if(e.isPostChangeEvent()){
-            displayJSON(canvas);
-        }
+
+        var reader = new draw2d.io.json.OurJsonReader();
+        reader.unmarshal(canvas, jsonDocument);
+
+        // display the SVG into the preview DIV
+        //
+        displayJSON(canvas);
+
+
+        // add an event listener to the Canvas for change notifications.
+        // We just dump the current canvas document into the DIV
+        //
+        canvas.getCommandStack().addEventListener(function(e){
+            if(e.isPostChangeEvent()){
+                displayJSON(canvas);
+            }
+        });
     });
-}
 
-function displayJSON(canvas){
-    var writer = new draw2d.io.json.Writer();
-    $("#json").text(JSON.stringify(writer.marshal(canvas),null,2));
-}
-
+    function displayJSON(canvas){
+        var writer = new draw2d.io.json.Writer();
+        writer.marshal(canvas,function(json){
+            $("#json").text(JSON.stringify(json, null, 2));
+        });
+    }
 
 </script>
 
+</head>
 
-<div id="json" style="width: 400px; height:500px; position: relative;"></div>
+<body>
+<div  onselectstart="javascript:/*IE8 hack*/return false" id="gfx_holder" style="width:1500px; height:1500px;-webkit-tap-highlight-color: rgba(0,0,0,0); ">
+</div>
 
+<pre id="json" style="overflow:auto;position:absolute; top:10px; right:10px; width:450; height:500;background:white;border:1px solid gray">
+</pre>
 </body>
 </html>
