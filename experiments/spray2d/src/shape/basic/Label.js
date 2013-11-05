@@ -27,20 +27,28 @@ spray2d.shape.basic.Label = draw2d.shape.basic.Label.extend({
         // corner radius
         this._super( width, height );
 
-        this.widthDimensionRatioToRoot = 1;
-        this.heightDimensionRatioToRoot = 1;
+        this.dimensionRatioToRoot = { "x": 1, "y": 1};
+        this.positionRatioToRoot = { "x": 1, "y": 1};
     },
 
-    setWidthDimensionRatioToRoot:function(ratio){
-        this.widthDimensionRatioToRoot = ratio;
+    setDimensionRatioToRoot:function(x,y){
+        this.dimensionRatioToRoot = { "x": x, "y": y};
     },
 
-    setHeightDimensionRatioToRoot:function(ratio){
-        this.heightDimensionRatioToRoot = ratio;
+    setPositionRatioToRoot:function(x,y){
+        this.positionRatioToRoot = { "x": x, "y": y};
+    },
+
+    getDimensionRatioToRoot:function(){
+        return this.dimensionRatioToRoot;
+    },
+
+    getPositionRatioToRoot:function(){
+        return this.positionRatioToRoot;
     },
 
     onOtherFigureIsResizing:function(figure){
-        this.setDimension( figure.getWidth()/this.widthDimensionRatioToRoot, figure.getHeight()/this.heightDimensionRatioToRoot);
+        this.setDimension( figure.getWidth()/this.dimensionRatioToRoot.x, figure.getHeight()/this.dimensionRatioToRoot.y);
         this.repaint();
     }
 });

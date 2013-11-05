@@ -27,19 +27,27 @@ spray2d.shape.basic.Rectangle = draw2d.shape.basic.Rectangle.extend({
         // corner radius
         this._super( width, height );
 
-        this.widthDimensionRatioToRoot = 1;
-        this.heightDimensionRatioToRoot = 1;
+        this.dimensionRatioToRoot = { "x": 1, "y": 1};
+        this.positionRatioToRoot = { "x": 1, "y": 1};
     },
 
-    setWidthDimensionRatioToRoot:function(ratio){
-        this.widthDimensionRatioToRoot = ratio;
+    setDimensionRatioToRoot:function(x,y){
+        this.dimensionRatioToRoot = { "x": x, "y": y};
     },
 
-    setHeightDimensionRatioToRoot:function(ratio){
-        this.heightDimensionRatioToRoot = ratio;
+    setPositionRatioToRoot:function(x,y){
+        this.positionRatioRoot = { "x": x, "y": y};
+    },
+
+    getDimensionRatioToRoot:function(){
+        return this.dimensionRatioToRoot;
+    },
+
+    getPositionRatioRoot:function(){
+        return this.positionRatioToRoot;
     },
 
     onOtherFigureIsResizing:function(figure){
-        this.setDimension( figure.getWidth()/this.widthDimensionRatioToRoot, figure.getHeight()/this.heightDimensionRatioToRoot);
+        this.setDimension( figure.getWidth()/this.dimensionRatioToRoot.x, figure.getHeight()/this.dimensionRatioToRoot.y);
     }
 });

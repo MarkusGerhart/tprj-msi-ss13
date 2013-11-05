@@ -474,19 +474,21 @@
         PI_Vessel_Vertical.setAlpha(0);
 
         var rect = new spray2d.shape.basic.Rectangle(120,60);
-        rect.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth() );
-        rect.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/rect.getHeight() );
+        rect.setDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth(), PI_Vessel_Vertical.getHeight()/rect.getHeight() );
         rect.setRadius(50);
         rect.setBackgroundColor("#ffffff");
 
         var text = new spray2d.shape.basic.Label("Text");
         text.setDimension(100,20);
-        text.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/100 );
-        text.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/20 );
+        text.setPosition(3,20);
+        text.setDimensionRatioToRoot( rect.getWidth()/100, rect.getHeight()/20 );
+        text.setPositionRatioToRoot( rect.getWidth()/text.getPosition().x, rect.getHeight()/text.getPosition().y );
         text.setStroke(0);
         text.setBackgroundColor("#f0f0f0");
-        text.setPosition(3,20);
-        text.setUserData({"type":"Label","textAlign":"center", "verticalAlign":"middle"});
+        text.setUserData({"type":"Label",
+                          "textAlign":"center",
+                          "verticalAlign":"middle"
+                          });
 
         rect.addFigure(text, new spray2d.layout.locator.FigureLocator(rect));
         rect.attachResizeListener(text);

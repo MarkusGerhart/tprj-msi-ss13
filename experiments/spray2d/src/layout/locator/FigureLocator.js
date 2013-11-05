@@ -52,15 +52,18 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
 
         if ( userData != null ){
             if ( userData.hasOwnProperty('type')){
-                var talign = userData.textAlign;
-                var valign = userData.verticalAlign;
 
                 switch ( userData.type ){
                     case "Label":
-                        if ( talign == "center" && valign == "middle" ){
-                            console.log(target);
-                        }
-                        //target.svgNodes[0][0].childNodes[0].dx(50);
+                        var positionX = target.getPosition().x;
+                        var positionY = target.getPosition().y;
+
+                        target.setPosition(parseInt(target.parent.getWidth()/target.getPositionRatioToRoot().x),
+                                           parseInt(target.parent.getHeight()/target.getPositionRatioToRoot().y));
+
+                        console.log(target.getPositionRatioToRoot().x);
+                        console.log(target.getPosition());
+
                         break;
                     default: target.setPosition(0,0);
                 }

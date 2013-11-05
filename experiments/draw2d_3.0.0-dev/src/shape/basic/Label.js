@@ -100,7 +100,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * @template
      **/
     repaint: function(attributes)
-    {console.log("pain");
+    {
         if(this.repaintBlocked===true || this.shape===null){
             return;
         }
