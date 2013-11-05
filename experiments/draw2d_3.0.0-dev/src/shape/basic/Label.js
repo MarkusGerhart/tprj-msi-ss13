@@ -117,10 +117,41 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
         var lattr = {};
         lattr.text = this.text;
 
-        //hier mit css anpassen z.B. top -> x = 0...
+        var userData = this.getUserData();
+        var tAlign = "left";
+        var vAlign = "top";
+        if ( userData.hasOwnProperty("textAlign") )
+        {
+            tAlign = userData.textAlign;
+        }
+        if ( userData.hasOwnProperty("verticalAlign") )
+        {
+            vAlign = userData.verticalAlign;
+        }
 
-        lattr.x = this.getWidth()/2;
-        lattr.y = this.getHeight()/2;
+        //0.2 constant number for width of single letter
+        var letterWidth = parseInt(this.fontSize*0.5);
+
+        switch ( tAlign ){
+            case "left": lattr.x = 0;
+                break;
+            case "center": lattr.x = this.getWidth()/2 - this.text.length * letterWidth;
+                break;
+            case "right": lattr.x = this.getWidth() - this.text.length * letterWidth;
+                break;
+            default: lattr.x = 0;
+        }
+
+        switch ( vAlign ){
+            case "top": lattr.y = parseInt(this.fontSize/2);
+                break;
+            case "middle": lattr.y = this.getHeight()/2;
+                break;
+            case "bottom": lattr.y = this.getHeight() - parseInt(this.fontSize/2);
+                break;
+            default: lattr.y = 0;
+        }
+
         lattr["font-weight"] = (this.bold===true)?"bold":"normal";
         lattr["text-anchor"] = "start";
         lattr["font-size"] = this.fontSize;
