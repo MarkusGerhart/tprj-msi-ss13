@@ -3,20 +3,20 @@
  *   Copyright (c) 2013 Simon Schneeberger
  ****************************************/
 /**
- * @class spray2d.shape.basic.Label
- * A Spray Label Figure.
+ * @class spray2d.shapes.Ellipse
+ * A Spray Ellipse Figure.
  *
  * @author Simon Schneeberger
- * @extends spray2d.Label
+ * @extends spray2d.Ellipse
  */
 
 var spray2d = spray2d || {};
 spray2d.shape = spray2d.shape || {};
 spray2d.shape.basic = spray2d.shape.basic || {};
 
-spray2d.shape.basic.Label = draw2d.shape.basic.Label.extend({
+spray2d.shape.basic.Ellipse = draw2d.shape.basic.Oval.extend({
 
-    NAME : "spray2d.shape.basic.Label",
+    NAME : "spray2d.shape.basic.Ellipse",
 
     /**
      * @constructor
@@ -30,35 +30,34 @@ spray2d.shape.basic.Label = draw2d.shape.basic.Label.extend({
     },
 
     setDimensionRatioToRoot:function(x,y){
-        if ( isNaN(x) || !( x > 0 ) ){
+        if ( !( x > 0 ) ){
             x = 1;
         }
-        if ( isNaN(y) || !( y > 0 ) ){
+        if ( !( y > 0 ) ){
             y = 1;
         }
         this.dimensionRatioToRoot = { "x": x, "y": y};
     },
 
     setPositionRatioToRoot:function(x,y){
-        if ( isNaN(x) || !( x > 0 ) ){
+        if ( !( x > 0 ) ){
             x = 1;
         }
-        if ( isNaN(y) || !( y > 0 ) ){
+        if ( !( y > 0 ) ){
             y = 1;
         }
-        this.positionRatioToRoot = { "x": x, "y": y};
+        this.positionRatioRoot = { "x": x, "y": y};
     },
 
     getDimensionRatioToRoot:function(){
         return this.dimensionRatioToRoot;
     },
 
-    getPositionRatioToRoot:function(){
+    getPositionRatioRoot:function(){
         return this.positionRatioToRoot;
     },
 
     onOtherFigureIsResizing:function(figure){
-        this.setDimension( parseInt(figure.getWidth()/this.dimensionRatioToRoot.x), parseInt(figure.getHeight()/this.dimensionRatioToRoot.y));
-        this.repaint();
+        this.setDimension( figure.getWidth()/this.dimensionRatioToRoot.x, figure.getHeight()/this.dimensionRatioToRoot.y);
     }
 });

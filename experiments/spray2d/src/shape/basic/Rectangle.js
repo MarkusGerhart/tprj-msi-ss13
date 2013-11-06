@@ -24,18 +24,28 @@ spray2d.shape.basic.Rectangle = draw2d.shape.basic.Rectangle.extend({
      *
      */
     init: function( width, height) {
-        // corner radius
         this._super( width, height );
-
         this.dimensionRatioToRoot = { "x": 1, "y": 1};
         this.positionRatioToRoot = { "x": 1, "y": 1};
     },
 
     setDimensionRatioToRoot:function(x,y){
+        if ( isNaN(x) || !( x > 0 ) ){
+            x = 1;
+        }
+        if ( isNaN(y) || !( y > 0 ) ){
+            y = 1;
+        }
         this.dimensionRatioToRoot = { "x": x, "y": y};
     },
 
     setPositionRatioToRoot:function(x,y){
+        if ( isNaN(x) || !( x > 0 ) ){
+            x = 1;
+        }
+        if ( isNaN(y) || !( y > 0 ) ){
+            y = 1;
+        }
         this.positionRatioRoot = { "x": x, "y": y};
     },
 

@@ -135,7 +135,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
         switch ( tAlign ){
             case "left": lattr.x = 0;
                 break;
-            case "center": lattr.x = this.getWidth()/2 - this.text.length * letterWidth;
+            case "center": lattr.x = this.getWidth()/2 - parseInt(this.text.length/2) * letterWidth;
                 break;
             case "right": lattr.x = this.getWidth() - this.text.length * letterWidth;
                 break;

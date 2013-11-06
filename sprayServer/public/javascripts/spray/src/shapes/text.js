@@ -1,3 +1,15 @@
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2013 Simon Schneeberger
+ ****************************************/
+/**
+ * @class spray2d.shapes.Text
+ * A Spray Text Figure.
+ *
+ * @author Simon Schneeberger
+ * @extends spray2d.Label
+ */
+
 spray.shapes.Text = draw2d.shape.basic.Label.extend({
 
     NAME : "spray.shapes.Label",

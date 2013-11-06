@@ -57,12 +57,12 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
                     case "Label":
                         var positionX = target.getPosition().x;
                         var positionY = target.getPosition().y;
-
                         target.setPosition(parseInt(target.parent.getWidth()/target.getPositionRatioToRoot().x),
                                            parseInt(target.parent.getHeight()/target.getPositionRatioToRoot().y));
+                        target.repaint();
 
-                        console.log(target.getPositionRatioToRoot().x);
-                        console.log(target.getPosition());
+                        break;
+                    case "Line":
 
                         break;
                     default: target.setPosition(0,0);
@@ -71,9 +71,7 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
         }
         else{
             target.setPosition(0,0);
-
+            target.repaint();
         }
-
-        target.repaint();
     }
 });

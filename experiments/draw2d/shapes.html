@@ -401,51 +401,9 @@
 
 <SCRIPT src="../spray2d/src/shape/basic/Rectangle.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Label.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Ellipse.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Line.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/layout/locator/FigureLocator.js"> </SCRIPT>
-
-<style>
-
-    .label_left_top{
-        text-align: left;
-        vertical-align: top;
-    }
-    .label_left_middle{
-        text-align: left;
-        vertical-align: middle;
-    }
-    .label_left_bottom{
-        text-align: left;
-        vertical-align: bottom;
-    }
-    .label_center_top{
-        text-align: center;
-        vertical-align: top;
-    }
-    .label_center_middle{
-        text-align: center;
-        vertical-align: middle;
-        width: 100px;
-        height: 20px;
-        position:absolute;
-    }
-    .label_center_bottom{
-        text-align: center;
-        vertical-align: bottom;
-    }
-    .label_right_top{
-        text-align: right;
-        vertical-align: top;
-    }
-    .label_right_middle{
-        text-align: right;
-        vertical-align: middle;
-    }
-    .label_right_bottom{
-        text-align: right;
-        vertical-align: bottom;
-    }
-
-</style>
 
 <script type="text/javascript">
 
@@ -472,6 +430,7 @@
 
         var PI_Vessel_Vertical = new spray2d.shape.basic.Rectangle(120,60);
         PI_Vessel_Vertical.setAlpha(0);
+        PI_Vessel_Vertical.setPosition(0,0);
 
         var rect = new spray2d.shape.basic.Rectangle(120,60);
         rect.setDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth(), PI_Vessel_Vertical.getHeight()/rect.getHeight() );
@@ -486,7 +445,7 @@
         text.setStroke(0);
         text.setBackgroundColor("#f0f0f0");
         text.setUserData({"type":"Label",
-                          "textAlign":"right",
+                          "textAlign":"center",
                           "verticalAlign":"middle"
                           });
 
@@ -500,7 +459,269 @@
         canvas.addFigure(PI_Vessel_Vertical);
 
 
+        /*shape PI_Vessel_Horizontal {
+            rounded-rectangle {
+                size (width=60, height=120)
+                curve (width=50, height=50)
+                text style TextStyle {
+                    size (width=60, height=20)
+                    position (x=3, y=50)
+                    id = shapeName
+                }
+            }
+            description {
+                align (horizontal=center, vertical=middle)
+                id = descriptionName
+            }
+        }*/
 
+        var PI_Vessel_Horizontal = new spray2d.shape.basic.Rectangle(60,120);
+        PI_Vessel_Horizontal.setAlpha(0);
+        PI_Vessel_Horizontal.setPosition(0,150);
+
+        var rect2 = new spray2d.shape.basic.Rectangle(60,120);
+        rect2.setDimensionRatioToRoot( PI_Vessel_Horizontal.getWidth()/rect2.getWidth(), PI_Vessel_Horizontal.getHeight()/rect2.getHeight() );
+        rect2.setRadius(50);
+        rect2.setBackgroundColor("#ffffff");
+
+        var text2 = new spray2d.shape.basic.Label("Text");
+        text2.setDimension(60,20);
+        text2.setPosition(3,50);
+        text2.setDimensionRatioToRoot( rect2.getWidth()/60, rect2.getHeight()/20 );
+        text2.setPositionRatioToRoot( rect2.getWidth()/text2.getPosition().x, rect2.getHeight()/text2.getPosition().y );
+        text2.setStroke(0);
+        text2.setBackgroundColor("#f0f0f0");
+        text2.setUserData({"type":"Label",
+            "textAlign":"center",
+            "verticalAlign":"middle"
+        });
+
+        rect2.addFigure(text2, new spray2d.layout.locator.FigureLocator(rect2));
+        rect2.attachResizeListener(text2);
+
+        PI_Vessel_Horizontal.addFigure(rect2,  new spray2d.layout.locator.FigureLocator(PI_Vessel_Horizontal));
+        PI_Vessel_Horizontal.attachResizeListener(rect2);
+
+
+        canvas.addFigure(PI_Vessel_Horizontal);
+
+
+
+        /*shape PI_Location_NoLine {
+            ellipse {
+                size (width=50, height=50)
+                text style TextStyle {
+                    position (x=0, y=5)
+                    size (width=50, height=20)
+                    align (horizontal=center, vertical=middle)
+                    id = shapeName
+                }
+                text style TextStyle {
+                    position (x=0, y=30)
+                    size (width=50, height=20)
+                    align (horizontal=center, vertical=middle)
+                    id = valueName
+                }
+            }
+        }*/
+
+        var PI_Location_NoLine = new spray2d.shape.basic.Rectangle(50,50);
+        PI_Location_NoLine.setAlpha(0);
+        PI_Location_NoLine.setPosition(0,300);
+
+        var oval = new spray2d.shape.basic.Ellipse(50,50);
+        oval.setDimensionRatioToRoot( PI_Location_NoLine.getWidth()/oval.getWidth(), PI_Location_NoLine.getHeight()/oval.getHeight() );
+        oval.setBackgroundColor("#ffffff");
+
+        PI_Location_NoLine.addFigure(oval,  new spray2d.layout.locator.FigureLocator(PI_Location_NoLine));
+        PI_Location_NoLine.attachResizeListener(oval);
+
+        var text3 = new spray2d.shape.basic.Label("Text");
+        text3.setDimension(50,20);
+        text3.setPosition(0,5);
+        text3.setDimensionRatioToRoot( oval.getWidth()/50, oval.getHeight()/20 );
+        text3.setPositionRatioToRoot( oval.getWidth()/text3.getPosition().x, oval.getHeight()/text3.getPosition().y );
+        text3.setStroke(0);
+        text3.setBackgroundColor("#f0f0f0");
+        text3.setUserData({"type":"Label",
+            "textAlign":"center",
+            "verticalAlign":"middle"
+        });
+
+        oval.addFigure(text3, new spray2d.layout.locator.FigureLocator(oval));
+        oval.attachResizeListener(text3);
+
+        var text4 = new spray2d.shape.basic.Label("Text");
+        text4.setDimension(50,20);
+        text4.setPosition(0,30);
+        text4.setDimensionRatioToRoot( oval.getWidth()/50, oval.getHeight()/20 );
+        text4.setPositionRatioToRoot( oval.getWidth()/text4.getPosition().x, oval.getHeight()/text4.getPosition().y );
+        text4.setStroke(0);
+        text4.setBackgroundColor("#f0f0f0");
+        text4.setUserData({"type":"Label",
+            "textAlign":"center",
+            "verticalAlign":"middle"
+        });
+
+        oval.addFigure(text4, new spray2d.layout.locator.FigureLocator(oval));
+        oval.attachResizeListener(text4);
+
+        canvas.addFigure(PI_Location_NoLine);
+
+
+        /*shape PI_Location_SolidLine {
+            ellipse {
+                size (width=50, height=50)
+                line {
+                    point (x=0, y=25)
+                    point (x=50, y=25)
+                }
+                text style TextStyle {
+                    position (x=0, y=5)
+                    size (width=50, height=20)
+                    align (horizontal=center, vertical=middle)
+                    id = shapeName
+                }
+                text style TextStyle {
+                    position (x=0, y=30)
+                    size (width=50, height=20)
+                    align (horizontal=center, vertical=middle)
+                    id = valueName
+                }
+            }
+        }*/
+
+
+        var PI_Location_SolidLine = new spray2d.shape.basic.Rectangle(50,50);
+        PI_Location_SolidLine.setAlpha(0);
+        PI_Location_SolidLine.setPosition(0,450);
+
+        var oval2 = new spray2d.shape.basic.Ellipse(50,50);
+        oval2.setDimensionRatioToRoot( PI_Location_SolidLine.getWidth()/oval2.getWidth(), PI_Location_SolidLine.getHeight()/oval2.getHeight() );
+        oval2.setBackgroundColor("#ffffff");
+
+        PI_Location_SolidLine.addFigure(oval2, new spray2d.layout.locator.FigureLocator(PI_Location_SolidLine));
+        PI_Location_SolidLine.attachResizeListener(oval2);
+
+        var text5 = new spray2d.shape.basic.Label("Text");
+        text5.setDimension(50,20);
+        text5.setPosition(0,5);
+        text5.setAlpha(0);
+        text5.setDimensionRatioToRoot( oval2.getWidth()/50, oval2.getHeight()/20 );
+        text5.setPositionRatioToRoot( oval2.getWidth()/text5.getPosition().x, oval2.getHeight()/text5.getPosition().y );
+        text5.setStroke(0);
+        text5.setBackgroundColor("#f0f0f0");
+        text5.setUserData({"type":"Label",
+            "textAlign":"center",
+            "verticalAlign":"middle"
+        });
+
+        oval2.addFigure(text5, new spray2d.layout.locator.FigureLocator(oval2));
+        oval2.attachResizeListener(text5);
+
+        var text6 = new spray2d.shape.basic.Label("Text");
+        text6.setDimension(50,20);
+        text6.setAlpha(0);
+        text6.setPosition(0,30);
+        text6.setDimensionRatioToRoot( oval2.getWidth()/50, oval2.getHeight()/20 );
+        text6.setPositionRatioToRoot( oval2.getWidth()/text6.getPosition().x, oval2.getHeight()/text6.getPosition().y );
+        text6.setStroke(0);
+        text6.setBackgroundColor("#f0f0f0");
+        text6.setUserData({"type":"Label",
+            "textAlign":"center",
+            "verticalAlign":"middle"
+        });
+
+        oval2.addFigure(text6, new spray2d.layout.locator.FigureLocator(oval2));
+        oval2.attachResizeListener(text6);
+
+        var line = new spray2d.shape.basic.Line(0,25,50,25);
+        line.setStartRatioToRoot( oval2.getWidth(), oval2.getHeight() );
+        line.setEndRatioToRoot( oval2.getWidth(), oval2.getHeight() );
+        line.setUserData({"type":"Line"});
+        oval2.addFigure(line, new spray2d.layout.locator.FigureLocator(oval2));
+        oval2.attachResizeListener(line);
+        oval2.attachMoveListener(line);
+
+        canvas.addFigure(PI_Location_SolidLine);
+
+
+        /*shape PI_Location_DashedLine {
+            ellipse {
+                size (width=50, height=50)
+                line {
+                    point (x=0, y=25)
+                    point (x=50, y=25)
+                    style (line-style=dash)
+                }
+                text style TextStyle {
+                    position (x=0, y=5)
+                    size (width=50, height=20)
+                    align (horizontal=center, vertical=middle)
+                    id = shapeName
+                }
+                text style TextStyle {
+                    position (x=0, y=30)
+                    size (width=50, height=20)
+                    align (horizontal=center, vertical=middle)
+                    id = valueName
+                }
+            }
+        }*/
+
+        var PI_Location_DashedLine = new spray2d.shape.basic.Rectangle(50,50);
+        PI_Location_DashedLine.setAlpha(0);
+        PI_Location_DashedLine.setPosition(0,600);
+
+        var oval3 = new spray2d.shape.basic.Ellipse(50,50);
+        oval3.setDimensionRatioToRoot( PI_Location_DashedLine.getWidth()/oval3.getWidth(), PI_Location_DashedLine.getHeight()/oval3.getHeight() );
+        oval3.setBackgroundColor("#ffffff");
+
+        PI_Location_DashedLine.addFigure(oval3, new spray2d.layout.locator.FigureLocator(PI_Location_DashedLine));
+        PI_Location_DashedLine.attachResizeListener(oval3);
+
+        var text7 = new spray2d.shape.basic.Label("Text");
+        text7.setDimension(50,20);
+        text7.setPosition(0,5);
+        text7.setAlpha(0);
+        text7.setDimensionRatioToRoot( oval3.getWidth()/50, oval3.getHeight()/20 );
+        text7.setPositionRatioToRoot( oval3.getWidth()/text7.getPosition().x, oval3.getHeight()/text7.getPosition().y );
+        text7.setStroke(0);
+        text7.setBackgroundColor("#f0f0f0");
+        text7.setUserData({"type":"Label",
+            "textAlign":"center",
+            "verticalAlign":"middle"
+        });
+
+        oval3.addFigure(text7, new spray2d.layout.locator.FigureLocator(oval3));
+        oval3.attachResizeListener(text7);
+
+        var text8 = new spray2d.shape.basic.Label("Text");
+        text8.setDimension(50,20);
+        text8.setAlpha(0);
+        text8.setPosition(0,30);
+        text8.setDimensionRatioToRoot( oval3.getWidth()/50, oval3.getHeight()/20 );
+        text8.setPositionRatioToRoot( oval3.getWidth()/text8.getPosition().x, oval3.getHeight()/text8.getPosition().y );
+        text8.setStroke(0);
+        text8.setBackgroundColor("#f0f0f0");
+        text8.setUserData({"type":"Label",
+            "textAlign":"center",
+            "verticalAlign":"middle"
+        });
+
+        oval3.addFigure(text8, new spray2d.layout.locator.FigureLocator(oval3));
+        oval3.attachResizeListener(text8);
+
+        var line2 = new spray2d.shape.basic.Line(0,25,50,25);
+        line2.setStartRatioToRoot( oval3.getWidth(), oval3.getHeight() );
+        line2.setEndRatioToRoot( oval3.getWidth(), oval3.getHeight() );
+        line2.setUserData({"type":"Line"});
+        line2.setDashArray("--");
+        oval3.addFigure(line2, new spray2d.layout.locator.FigureLocator(oval3));
+        oval3.attachResizeListener(line2);
+        oval3.attachMoveListener(line2);
+
+        canvas.addFigure(PI_Location_DashedLine);
 
         // display the SVG into the preview DIV
         //

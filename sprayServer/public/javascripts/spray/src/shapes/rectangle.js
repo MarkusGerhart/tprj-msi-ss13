@@ -1,3 +1,15 @@
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2013 Simon Schneeberger
+ ****************************************/
+/**
+ * @class spray2d.shapes.Rectangle
+ * A Spray Rectangle Figure.
+ *
+ * @author Simon Schneeberger
+ * @extends spray2d.Rectangle
+ */
+
 spray.shapes.Rectangle = draw2d.shape.basic.Rectangle.extend({
 
     NAME : "spray.shapes.Rectangle",
