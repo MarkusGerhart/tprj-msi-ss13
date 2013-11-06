@@ -640,6 +640,7 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
     },
 
     onOtherFigureIsMoving:function(figure){
+
         var positionStartX = parseInt(this.absoluteStartPoint.x * figure.getWidth()/this.startRatioToRoot.x);
         var positionStartY = parseInt(this.absoluteStartPoint.y * figure.getHeight()/this.startRatioToRoot.y);
 
@@ -650,6 +651,9 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
         positionStartY = parseInt( positionStartY + figure.getAbsolutePosition().y);
         positionEndX = parseInt( positionEndX + figure.getAbsolutePosition().x);
         positionEndY = parseInt( positionEndY + figure.getAbsolutePosition().y);
+
+        console.log(positionStartX+","+positionStartY);
+
         this.setStartPoint(positionStartX,positionStartY);
         this.setEndPoint(positionEndX,positionEndY);
     }
