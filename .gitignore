@@ -21,3 +21,22 @@ sprayServer/.project
 sprayServer/RUNNING_PID
 sprayServer/.settings
 
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Xtext
+xtext-workspace/.metadata/*
+
+xtext-workspace/org.eclipselabs.spray.shapes.tests/src-gen/*
+xtext-workspace/org.eclipselabs.spray.shapes.ui/src-gen/*
+xtext-workspace/org.eclipselabs.spray.shapes/src-gen/*
+xtext-workspace/org.eclipselabs.spray.shapes.tests/xtend-gen/*
+xtext-workspace/org.eclipselabs.spray.shapes/bin/*
+xtext-workspace/org.eclipselabs.spray.shapes.tests/bin/*
+xtext-workspace/org.eclipselabs.spray.shapes.ui/bin/*
+xtext-workspace/org.eclipselabs.spray.shapes/xtend-gen/*
+
+runtime-EclipseXtext/*
+
