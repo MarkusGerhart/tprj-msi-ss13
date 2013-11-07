@@ -49,6 +49,10 @@ spray2d.shape.basic.Rectangle = draw2d.shape.basic.Rectangle.extend({
         this.positionRatioRoot = { "x": x, "y": y};
     },
 
+    setProportional:function(bool){
+        this.proportional = bool;
+    },
+
     getDimensionRatioToRoot:function(){
         return this.dimensionRatioToRoot;
     },
