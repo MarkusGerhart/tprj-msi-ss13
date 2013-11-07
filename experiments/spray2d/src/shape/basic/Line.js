@@ -586,7 +586,7 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
      * Read all attributes from the serialized properties and transfer them into the shape.
      *
      * @param {Object} memento
-     * @returns
+     * @returns nothing
      */
     setPersistentAttributes : function(memento)
     {
@@ -604,7 +604,7 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
     },
 
     setStartRatioToRoot:function(x,y){
-        if ( isNaN(x) || ( x > 0 ) ){
+        if ( isNaN(x) || !( x > 0 ) ){
             x = 1;
         }
         if ( isNaN(y) || !( y > 0 ) ){
@@ -643,7 +643,6 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
 
         var positionStartX = parseInt(this.absoluteStartPoint.x * figure.getWidth()/this.startRatioToRoot.x);
         var positionStartY = parseInt(this.absoluteStartPoint.y * figure.getHeight()/this.startRatioToRoot.y);
-
         var positionEndX = parseInt(this.absoluteEndPoint.x * figure.getWidth()/this.endRatioToRoot.x);
         var positionEndY = parseInt(this.absoluteEndPoint.y* figure.getHeight()/this.endRatioToRoot.y);
 
@@ -651,8 +650,6 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
         positionStartY = parseInt( positionStartY + figure.getAbsolutePosition().y);
         positionEndX = parseInt( positionEndX + figure.getAbsolutePosition().x);
         positionEndY = parseInt( positionEndY + figure.getAbsolutePosition().y);
-
-        console.log(positionStartX+","+positionStartY);
 
         this.setStartPoint(positionStartX,positionStartY);
         this.setEndPoint(positionEndX,positionEndY);
@@ -668,7 +665,7 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
  * @param {draw2d.geo.Point} a2
  * @param {draw2d.geo.Point} b1
  * @param {draw2d.geo.Point} b2
- * @returns
+ * @returns nothing
  */
 draw2d.shape.basic.Line.intersection = function(a1, a2, b1, b2) {
     var result=null;

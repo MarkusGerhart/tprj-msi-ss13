@@ -399,6 +399,7 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/io/json/Writer.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/io/json/Reader.js"> </SCRIPT>
 
+<SCRIPT src="../spray2d/src/shape/basic/BoundingBox.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Rectangle.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Label.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Ellipse.js"> </SCRIPT>
@@ -426,9 +427,9 @@
                      id = shapeName
                  }
              }
-         }*/
+         } */
 
-        var PI_Vessel_Vertical = new spray2d.shape.basic.Rectangle(120,60);
+        var PI_Vessel_Vertical = new spray2d.shape.basic.BoundingBox(120,60);
         PI_Vessel_Vertical.setAlpha(0);
         PI_Vessel_Vertical.setPosition(0,0);
 
@@ -473,9 +474,9 @@
                 align (horizontal=center, vertical=middle)
                 id = descriptionName
             }
-        }*/
+        } */
 
-        var PI_Vessel_Horizontal = new spray2d.shape.basic.Rectangle(60,120);
+        var PI_Vessel_Horizontal = new spray2d.shape.basic.BoundingBox(60,120);
         PI_Vessel_Horizontal.setAlpha(0);
         PI_Vessel_Horizontal.setPosition(0,150);
 
@@ -523,9 +524,9 @@
                     id = valueName
                 }
             }
-        }*/
+        } */
 
-        var PI_Location_NoLine = new spray2d.shape.basic.Rectangle(50,50);
+        var PI_Location_NoLine = new spray2d.shape.basic.BoundingBox(50,50);
         PI_Location_NoLine.setAlpha(0);
         PI_Location_NoLine.setPosition(0,300);
 
@@ -589,10 +590,10 @@
                     id = valueName
                 }
             }
-        }*/
+        } */
 
 
-        var PI_Location_SolidLine = new spray2d.shape.basic.Rectangle(50,50);
+        var PI_Location_SolidLine = new spray2d.shape.basic.BoundingBox(50,50);
         PI_Location_SolidLine.setAlpha(0);
         PI_Location_SolidLine.setPosition(0,450);
 
@@ -667,9 +668,9 @@
                     id = valueName
                 }
             }
-        }*/
+        } */
 
-        var PI_Location_DashedLine = new spray2d.shape.basic.Rectangle(50,50);
+        var PI_Location_DashedLine = new spray2d.shape.basic.BoundingBox(50,50);
         PI_Location_DashedLine.setAlpha(0);
         PI_Location_DashedLine.setPosition(0,600);
 
@@ -743,7 +744,7 @@
             }
         }*/
 
-        var PI_Pump = new spray2d.shape.basic.Rectangle(60,60);
+        var PI_Pump = new spray2d.shape.basic.BoundingBox(60,60);
         PI_Pump.setAlpha(0);
         PI_Pump.setPosition(0,700);
 
@@ -788,6 +789,10 @@
 
 
         /*shape PI_Pump_Vacuum {
+            size-min( width = 60, height=60 )
+            size-max( width = 120, height=120 )
+            proportional=true
+            stretching(horizontal=true, vertical=true)
             ellipse {
                 size (width=60, height=60)
                 line {
@@ -806,7 +811,13 @@
             }
         }*/
 
-        var PI_Pump_Vacuum = new spray2d.shape.basic.Rectangle(60,60);
+        var PI_Pump_Vacuum = new spray2d.shape.basic.BoundingBox(60,60);
+        PI_Pump_Vacuum.setMinWidth(60);
+        PI_Pump_Vacuum.setMinHeight(60);
+        PI_Pump_Vacuum.setMaxWidth(120);
+        PI_Pump_Vacuum.setMaxHeight(120);
+        PI_Pump_Vacuum.setProportional(false);
+        PI_Pump_Vacuum.setStretchingHorizontal(true);
         PI_Pump_Vacuum.setAlpha(0);
         PI_Pump_Vacuum.setPosition(0,780);
 
@@ -836,7 +847,6 @@
         line5.setUserData({"type":"Line"});
 
         oval5.addFigure(line5, new spray2d.layout.locator.FigureLocator(oval5));
-        oval5.attachResizeListener(line5);
         oval5.attachMoveListener(line5);
 
         var line6 = new spray2d.shape.basic.Line(8,50,57,40);
@@ -844,7 +854,6 @@
         line6.setEndRatioToRoot( oval5.getWidth(), oval5.getHeight() );
         line6.setUserData({"type":"Line"});
         oval5.addFigure(line6, new spray2d.layout.locator.FigureLocator(oval5));
-        oval5.attachResizeListener(line6);
         oval5.attachMoveListener(line6);
 
         canvas.addFigure(PI_Pump_Vacuum);
