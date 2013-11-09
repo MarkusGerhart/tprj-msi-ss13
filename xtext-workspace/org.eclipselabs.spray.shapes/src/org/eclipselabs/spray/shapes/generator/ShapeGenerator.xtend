@@ -10,6 +10,11 @@ import org.eclipselabs.spray.shapes.shape.ShapeDefinition
 import org.eclipselabs.spray.shapes.shape.Shape
 import org.eclipselabs.spray.shapes.shape.Line
 import org.eclipselabs.spray.shapes.shape.RoundedRectangle
+import org.eclipselabs.spray.shapes.shape.Polyline
+import org.eclipselabs.spray.shapes.shape.Rectangle
+import org.eclipselabs.spray.shapes.shape.Polygon
+import org.eclipselabs.spray.shapes.shape.Ellipse
+import org.eclipselabs.spray.shapes.shape.Text
 
 /**
  * Generates code from your model files on save.
@@ -37,27 +42,96 @@ class ShapeGenerator implements IGenerator {
 		params: {«d.shapeLayout»},
 		shapes: [
 			«FOR s: d.shape»
-				«switchShape(s)»
-			«ENDFOR»,]
+				«switchShape(s)»,
+			«ENDFOR»]
 	}
 	'''
 	
 	def switchShape(Shape s) {
 		switch s {
+			case s.eClass.name == "Line" : innerShape(s.eClass.name, (s as Line))
+			case s.eClass.name == "PolyLine" : innerShape(s.eClass.name, (s as Polyline))
+			case s.eClass.name == "Rectangle" : innerShape(s.eClass.name, (s as Rectangle))
 			case s.eClass.name == "RoundedRectangle" : innerShape(s.eClass.name, (s as RoundedRectangle))
+			case s.eClass.name == "Polygon" : innerShape(s.eClass.name, (s as Polygon))
+			case s.eClass.name == "Ellipse" : innerShape(s.eClass.name, (s as Ellipse))
+			case s.eClass.name == "Text" : innerShape(s.eClass.name, (s as Text))
 			default : "undefined"
 		}
 	}
 
-	def innerShape(String name, RoundedRectangle d) '''
+	def innerShape(String name, Line d) '''
 	{
-		name: «name»,
+		name: "«name»",
+		params: {«d.layout»},
+		shapes: [undefined]
+	}
+	'''
+
+	def innerShape(String name, Polyline d) '''
+	{
+		name: "«name»",
+		params: {«d.layout»},
+		shapes: [undefined]
+	}
+	'''
+
+	def innerShape(String name, Text d) '''
+	{
+		name: "«name»",
+		params: {«d.layout»},
+		shapes: [undefined]
+	}
+	'''
+
+	def innerShape(String name, Rectangle d) '''
+	{
+		name: "«name»",
 		params: {«d.layout»},
 		shapes: [
 			«FOR s: d.shape»
-				«switchShape(s)»
-			«ENDFOR»,]
+				«switchShape(s)»,
+			«ENDFOR»]
 	}
 	'''
-	
+
+	def innerShape(String name, RoundedRectangle d) '''
+	{
+		name: "«name»",
+		params: {
+			«IF d.layout.common.xcor != null && d.layout.common.ycor != null»
+			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
+			«ENDIF»
+			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
+			curve: {width: «d.layout.curveWidth», height: «d.layout.curveHeight»}
+		},
+		shapes: [
+			«FOR s: d.shape»
+				«switchShape(s)»,
+			«ENDFOR»]
+	}
+	'''
+
+	def innerShape(String name, Polygon d) '''
+	{
+		name: "«name»",
+		params: {«d.layout»},
+		shapes: [
+			«FOR s: d.shape»
+				«switchShape(s)»,
+			«ENDFOR»]
+	}
+	'''
+
+	def innerShape(String name, Ellipse d) '''
+	{
+		name: "«name»",
+		params: {«d.layout»},
+		shapes: [
+			«FOR s: d.shape»
+				«switchShape(s)»,
+			«ENDFOR»]
+	}
+	'''
+
 }
