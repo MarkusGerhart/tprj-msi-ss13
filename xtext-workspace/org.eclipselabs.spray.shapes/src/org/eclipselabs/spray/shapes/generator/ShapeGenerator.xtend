@@ -6,6 +6,10 @@ package org.eclipselabs.spray.shapes.generator
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipselabs.spray.shapes.shape.ShapeDefinition
+import org.eclipselabs.spray.shapes.shape.Shape
+import org.eclipselabs.spray.shapes.shape.Line
+import org.eclipselabs.spray.shapes.shape.RoundedRectangle
 
 /**
  * Generates code from your model files on save.
@@ -15,10 +19,45 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 class ShapeGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
+		val e = resource.allContents.toIterable.filter(ShapeDefinition);
+		fsa.generateFile('genshapes.js', e.compile)
 	}
+	
+	def CharSequence compile(Iterable<ShapeDefinition> d_s) '''
+	var shapedefs = [
+		«FOR d: d_s»
+			«recursion(d)»
+		«ENDFOR»
+	]
+	'''
+	
+	def recursion(ShapeDefinition d) '''
+	{ // recursion
+		name: "«d.name»",
+		params: {«d.shapeLayout»},
+		shapes: [
+			«FOR s: d.shape»
+				«switchShape(s)»
+			«ENDFOR»,]
+	}
+	'''
+	
+	def switchShape(Shape s) {
+		switch s {
+			case s.eClass.name == "RoundedRectangle" : innerShape(s.eClass.name, (s as RoundedRectangle))
+			default : "undefined"
+		}
+	}
+
+	def innerShape(String name, RoundedRectangle d) '''
+	{
+		name: «name»,
+		params: {«d.layout»},
+		shapes: [
+			«FOR s: d.shape»
+				«switchShape(s)»
+			«ENDFOR»,]
+	}
+	'''
+	
 }
