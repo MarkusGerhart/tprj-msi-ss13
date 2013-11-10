@@ -28,22 +28,37 @@ class ShapeGenerator implements IGenerator {
 		fsa.generateFile('genshapes.js', e.compile)
 	}
 	
-	def CharSequence compile(Iterable<ShapeDefinition> d_s) '''
+	def compile(Iterable<ShapeDefinition> d_s) '''
 	var shapedefs = [
 		«FOR d: d_s»
-			«recursion(d)»
+			«outerShape(d)»,
 		«ENDFOR»
 	]
 	'''
 	
-	def recursion(ShapeDefinition d) '''
-	{ // recursion
+	def outerShape(ShapeDefinition d) '''
+	{
 		name: "«d.name»",
-		params: {«d.shapeLayout»},
+		params: {
+			minwidth: «d.shapeLayout.minwidth»,
+			minheight: «d.shapeLayout.minheight»,
+			maxwidth: «d.shapeLayout.maxwidth»,
+			maxheight: «d.shapeLayout.maxheight»,
+			«IF d.shapeLayout.stretchH != null»
+			stretchH: «d.shapeLayout.stretchH»,
+			«ENDIF»
+			«IF d.shapeLayout.stretchV != null»
+			stretchV: «d.shapeLayout.stretchV»,
+			«ENDIF»
+			«IF d.shapeLayout.proportional != null»
+			proportional: «d.shapeLayout.proportional»
+			«ENDIF»
+		},
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
-			«ENDFOR»]
+			«ENDFOR»
+		]
 	}
 	'''
 	
@@ -63,35 +78,72 @@ class ShapeGenerator implements IGenerator {
 	def innerShape(String name, Line d) '''
 	{
 		name: "«name»",
-		params: {«d.layout»},
-		shapes: [undefined]
+		params: {
+			points: [
+				«FOR point: d.layout.point»
+				{
+					x: «point.xcor»,
+					y: «point.ycor»,
+					curveBefore: «point.curveBefore»,
+					curveAfter: «point.curveAfter»
+				},
+				«ENDFOR»
+			]
+		},
+		shapes: []
 	}
 	'''
 
 	def innerShape(String name, Polyline d) '''
 	{
 		name: "«name»",
-		params: {«d.layout»},
-		shapes: [undefined]
+		params: {
+			points: [
+				«FOR point: d.layout.point»
+				{
+					x: «point.xcor»,
+					y: «point.ycor»,
+					curveBefore: «point.curveBefore»,
+					curveAfter: «point.curveAfter»
+				},
+				«ENDFOR»
+			]
+		},
+		shapes: []
 	}
 	'''
 
 	def innerShape(String name, Text d) '''
 	{
 		name: "«name»",
-		params: {«d.layout»},
-		shapes: [undefined]
+		params: {
+			«IF d.layout.common.xcor != null && d.layout.common.ycor != null»
+			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
+			«ENDIF»
+			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
+			align: {
+				horizontal: "«d.layout.HAlign»",
+				vertical: "«d.layout.VAlign»"
+			},
+		},
+		shapes: []
 	}
 	'''
 
 	def innerShape(String name, Rectangle d) '''
 	{
 		name: "«name»",
-		params: {«d.layout»},
+		params: {
+			«IF d.layout.common.xcor != null && d.layout.common.ycor != null»
+			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
+			«ENDIF»
+			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
+		},
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
-			«ENDFOR»]
+			«ENDFOR»
+		]
 	}
 	'''
 
@@ -108,29 +160,48 @@ class ShapeGenerator implements IGenerator {
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
-			«ENDFOR»]
+			«ENDFOR»
+		]
 	}
 	'''
 
 	def innerShape(String name, Polygon d) '''
 	{
 		name: "«name»",
-		params: {«d.layout»},
+		params: {
+			points: [
+				«FOR point: d.layout.point»
+				{
+					x: «point.xcor»,
+					y: «point.ycor»,
+					curveBefore: «point.curveBefore»,
+					curveAfter: «point.curveAfter»
+				},
+				«ENDFOR»
+			]
+		},
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
-			«ENDFOR»]
+			«ENDFOR»
+		]
 	}
 	'''
 
 	def innerShape(String name, Ellipse d) '''
 	{
 		name: "«name»",
-		params: {«d.layout»},
+		params: {
+			«IF d.layout.common.xcor != null && d.layout.common.ycor != null»
+			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
+			«ENDIF»
+			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
+		},
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
-			«ENDFOR»]
+			«ENDFOR»
+		]
 	}
 	'''
 
