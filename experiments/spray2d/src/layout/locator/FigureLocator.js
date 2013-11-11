@@ -62,15 +62,24 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
                         target.repaint();
 
                         break;
-                    case "Line":
-
+                    case "Rectangle":
+                        var positionX = target.getPosition().x;
+                        var positionY = target.getPosition().y;
+                        target.setPosition(parseInt(target.parent.getWidth()/target.getPositionRatioRoot().x),
+                                           parseInt(target.parent.getHeight()/target.getPositionRatioRoot().y));
                         break;
-                    default: target.setPosition(0,0);
+                    case "Ellipse":
+                        var positionX = target.getPosition().x;
+                        var positionY = target.getPosition().y;
+                        target.setPosition(parseInt(target.parent.getWidth()/target.getPositionRatioRoot().x),
+                            parseInt(target.parent.getHeight()/target.getPositionRatioRoot().y));
+                        break;
+                    default: target.setPosition(target.getPosition().x,target.getPosition().y);
                 }
             }
         }
         else{
-            target.setPosition(0,0);
+            target.setPosition(target.getPosition().x,target.getPosition().y);
             target.repaint();
         }
     }

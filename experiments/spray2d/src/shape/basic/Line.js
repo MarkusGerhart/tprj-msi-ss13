@@ -307,8 +307,6 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
             return;
         }
 
-        console.log("x: " +  x + " y: " + y );
-
         this.start.setPosition(x, y);
         this.repaint();
 

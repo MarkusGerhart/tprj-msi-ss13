@@ -46,7 +46,7 @@ spray2d.shape.basic.Rectangle = draw2d.shape.basic.Rectangle.extend({
         if ( isNaN(y) || !( y > 0 ) ){
             y = 1;
         }
-        this.positionRatioRoot = { "x": x, "y": y};
+        this.positionRatioToRoot = { "x": x, "y": y};
     },
 
     setProportional:function(bool){

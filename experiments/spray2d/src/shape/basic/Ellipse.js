@@ -46,7 +46,7 @@ spray2d.shape.basic.Ellipse = draw2d.shape.basic.Oval.extend({
         if ( !( y > 0 ) ){
             y = 1;
         }
-        this.positionRatioRoot = { "x": x, "y": y};
+        this.positionRatioToRoot = { "x": x, "y": y};
     },
 
     getDimensionRatioToRoot:function(){

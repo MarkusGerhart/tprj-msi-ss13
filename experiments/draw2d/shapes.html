@@ -404,6 +404,8 @@
 <SCRIPT src="../spray2d/src/shape/basic/Label.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Ellipse.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Line.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Polyline.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Polygon.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/layout/locator/FigureLocator.js"> </SCRIPT>
 
 <script type="text/javascript">
@@ -789,27 +791,23 @@
 
 
         /*shape PI_Pump_Vacuum {
-            size-min( width = 60, height=60 )
-            size-max( width = 120, height=120 )
-            proportional=true
-            stretching(horizontal=true, vertical=true)
-            ellipse {
-                size (width=60, height=60)
-                line {
-                    point (x=8, y=10)
-                    point (x=57, y=20)
-                }
-                line {
-                    point (x=8, y=50)
-                    point (x=57, y=40)
-                }
-                text style TextStyle {
-                    position (x=5, y=20)
-                    size (width=60, height=20)
-                    id = shapeName
-                }
-            }
-        }*/
+             ellipse {
+                 size (width=60, height=60)
+                 line {
+                     point (x=8, y=10)
+                     point (x=57, y=20)
+                 }
+                 line {
+                     point (x=8, y=50)
+                     point (x=57, y=40)
+                 }
+                 text style TextStyle {
+                     position (x=5, y=20)
+                     size (width=60, height=20)
+                     id = shapeName
+                 }
+             }
+         }*/
 
         var PI_Pump_Vacuum = new spray2d.shape.basic.BoundingBox(60,60);
         PI_Pump_Vacuum.setMinWidth(60);
@@ -847,16 +845,299 @@
         line5.setUserData({"type":"Line"});
 
         oval5.addFigure(line5, new spray2d.layout.locator.FigureLocator(oval5));
+        oval5.attachResizeListener(line5);
         oval5.attachMoveListener(line5);
 
         var line6 = new spray2d.shape.basic.Line(8,50,57,40);
         line6.setStartRatioToRoot( oval5.getWidth(), oval5.getHeight() );
         line6.setEndRatioToRoot( oval5.getWidth(), oval5.getHeight() );
         line6.setUserData({"type":"Line"});
+
         oval5.addFigure(line6, new spray2d.layout.locator.FigureLocator(oval5));
+        oval5.attachResizeListener(line6);
         oval5.attachMoveListener(line6);
 
         canvas.addFigure(PI_Pump_Vacuum);
+
+
+        /*shape PI_HeatExchanger {
+            ellipse {
+                position (x=0, y=20)
+                size (width=60, height=60)
+            }
+            polyline {
+                point (x=90, y=70)
+                point (x=30, y=70)
+                point (x=50, y=50)
+                point (x=30, y=30)
+                point (x=90, y=30)
+            }
+            text style TextStyle {
+                size (width=100, height=20)
+                id = shapeName
+            }
+            anchor {
+                position (x=0, y=50)
+                position (x=90, y=30)
+                position (x=90, y=70)
+            }
+        }*/
+
+        var PI_HeatExchanger = new spray2d.shape.basic.BoundingBox(100,80);
+        PI_HeatExchanger.setAlpha(0);
+        PI_HeatExchanger.setPosition(0,850);
+
+        var oval6 = new spray2d.shape.basic.Ellipse(60,60);
+        oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
+        oval6.setBackgroundColor("#ffffff");
+        oval6.setPosition(0,20);
+        PI_HeatExchanger.addFigure(oval6, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
+        PI_HeatExchanger.attachResizeListener(oval6);
+
+        var polyline = new spray2d.shape.basic.PolyLine(PI_HeatExchanger);
+        polyline.addPoint(new draw2d.geo.Point(90,70), new draw2d.geo.Point(30,70));
+        polyline.addPoint(new draw2d.geo.Point(30,70), new draw2d.geo.Point(50,50));
+        polyline.addPoint(new draw2d.geo.Point(50,50), new draw2d.geo.Point(30,30));
+        polyline.addPoint(new draw2d.geo.Point(30,30), new draw2d.geo.Point(90,30));
+
+        var text11 = new spray2d.shape.basic.Label("Text");
+        text11.setDimension(100,20);
+        text11.setAlpha(0);
+        text11.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/60, PI_HeatExchanger.getHeight()/20 );
+        text11.setPositionRatioToRoot( PI_HeatExchanger.getWidth()/text11.getPosition().x, PI_HeatExchanger.getHeight()/text11.getPosition().y );
+        text11.setStroke(0);
+        text11.setBackgroundColor("#f0f0f0");
+        text11.setUserData({"type":"Label"});
+
+        PI_HeatExchanger.addFigure(text11, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
+        PI_HeatExchanger.attachResizeListener(text11);
+
+        canvas.addFigure(PI_HeatExchanger);
+
+
+        /*shape PI_Valve_Manual {
+            polygon {
+                point (x=0, y=60)
+                point (x=120, y=120)
+                point (x=120, y=60)
+                point (x=0, y=120)
+            }
+            line {
+                point (x=60, y=30)
+                point (x=60, y=90)
+            }
+            line {
+                point (x=40, y=30)
+                point (x=80, y=30)
+            }
+            text style TextStyle {
+                position (x=30, y=100)
+                size (width=60, height=20)
+                id = shapeName
+            }
+        }*/
+
+        var PI_Valve_Manual = new spray2d.shape.basic.BoundingBox(120,120);
+        PI_Valve_Manual.setAlpha(0);
+        PI_Valve_Manual.setPosition(0,950);
+
+        var polygon = new spray2d.shape.basic.Polygon(PI_Valve_Manual);
+        polygon.addPoint(new draw2d.geo.Point(0,60), new draw2d.geo.Point(120,120));
+        polygon.addPoint(new draw2d.geo.Point(120,120), new draw2d.geo.Point(120,60));
+        polygon.addPoint(new draw2d.geo.Point(120,60), new draw2d.geo.Point(0,120));
+        /*Attention: automatic line to startpoint */
+        polygon.addPoint(new draw2d.geo.Point(0,120), new draw2d.geo.Point(0,60));
+
+        var line7 = new spray2d.shape.basic.Line(60,30,60,90);
+        line7.setStartRatioToRoot( PI_Valve_Manual.getWidth(), PI_Valve_Manual.getHeight() );
+        line7.setEndRatioToRoot( PI_Valve_Manual.getWidth(), PI_Valve_Manual.getHeight() );
+        line7.setUserData({"type":"Line"});
+
+        PI_Valve_Manual.addFigure(line7, new spray2d.layout.locator.FigureLocator(line7));
+        PI_Valve_Manual.attachResizeListener(line7);
+        PI_Valve_Manual.attachMoveListener(line7);
+
+        var line8 = new spray2d.shape.basic.Line(40,30,80,30);
+        line8.setStartRatioToRoot( PI_Valve_Manual.getWidth(), PI_Valve_Manual.getHeight() );
+        line8.setEndRatioToRoot( PI_Valve_Manual.getWidth(), PI_Valve_Manual.getHeight() );
+        line8.setUserData({"type":"Line"});
+
+        PI_Valve_Manual.addFigure(line8, new spray2d.layout.locator.FigureLocator(line8));
+        PI_Valve_Manual.attachResizeListener(line8);
+        PI_Valve_Manual.attachMoveListener(line8);
+
+        var text12 = new spray2d.shape.basic.Label("Text");
+        text12.setPosition(30,100);
+        text12.setDimension(60,20);
+        text12.setAlpha(0);
+        text12.setDimensionRatioToRoot( PI_Valve_Manual.getWidth()/60, PI_Valve_Manual.getHeight()/20 );
+        text12.setPositionRatioToRoot( PI_Valve_Manual.getWidth()/text12.getPosition().x, PI_Valve_Manual.getHeight()/text12.getPosition().y );
+        text12.setStroke(0);
+        text12.setBackgroundColor("#f0f0f0");
+        text12.setUserData({"type":"Label"});
+
+        PI_Valve_Manual.addFigure(text12, new spray2d.layout.locator.FigureLocator(PI_Valve_Manual));
+        PI_Valve_Manual.attachResizeListener(text12);
+
+        canvas.addFigure(PI_Valve_Manual);
+
+
+        /*shape PI_Valve_Manual_SIMON_TEST {
+             polygon {
+                     point (x=0, y=60)
+                     point (x=120, y=120)
+                     point (x=120, y=60)
+                     point (x=0, y=120)
+             }
+             line {
+                 point (x=60, y=30)
+                 point (x=60, y=90)
+             }
+             line {
+                 point (x=40, y=30)
+                 point (x=80, y=30)
+             }
+             text style TextStyle {
+                 position (x=30, y=100)
+                 size (width=60, height=20)
+                 id = shapeName
+             }
+         }*/
+
+        var PI_Valve_Manual_SIMON_TEST = new spray2d.shape.basic.BoundingBox(120,120);
+        PI_Valve_Manual_SIMON_TEST.setAlpha(0);
+        PI_Valve_Manual_SIMON_TEST.setPosition(0,1100);
+
+        var polygon2 = new spray2d.shape.basic.Polygon(PI_Valve_Manual_SIMON_TEST);
+        polygon2.addPoint(new draw2d.geo.Point(0,60), new draw2d.geo.Point(120,120));
+        polygon2.addPoint(new draw2d.geo.Point(120,120), new draw2d.geo.Point(120,60));
+        polygon2.addPoint(new draw2d.geo.Point(120,60), new draw2d.geo.Point(0,120));
+        /*Attention: automatic line to startpoint */
+        polygon2.addPoint(new draw2d.geo.Point(0,120), new draw2d.geo.Point(0,60));
+
+        var ovaltest = new spray2d.shape.basic.Ellipse(60,60);
+        ovaltest.setPosition(0,40);
+        ovaltest.setDimensionRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth()/ovaltest.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight()/ovaltest.getHeight() );
+        ovaltest.setBackgroundColor("#ffffff");
+        polygon2.addFigure(ovaltest);
+
+        var ovaltest2 = new spray2d.shape.basic.Ellipse(30,30);
+        ovaltest2.setUserData({"type":"Ellipse"});
+        ovaltest2.setPosition(10,0);
+        ovaltest2.setDimensionRatioToRoot( ovaltest.getWidth()/ovaltest2.getWidth(), ovaltest.getHeight()/ovaltest2.getHeight() );
+        ovaltest2.setPositionRatioToRoot( ovaltest.getWidth()/ovaltest2.getPosition().x, ovaltest.getHeight()/ovaltest2.getPosition().y );
+        ovaltest2.setBackgroundColor("#ffffff");
+        ovaltest.addFigure(ovaltest2, new spray2d.layout.locator.FigureLocator());
+        ovaltest.attachResizeListener(ovaltest2);
+
+        var line9 = new spray2d.shape.basic.Line(60,30,60,90);
+        line9.setStartRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight() );
+        line9.setEndRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight() );
+        line9.setUserData({"type":"Line"});
+
+        PI_Valve_Manual_SIMON_TEST.addFigure(line9, new spray2d.layout.locator.FigureLocator(line9));
+        PI_Valve_Manual_SIMON_TEST.attachResizeListener(line9);
+        PI_Valve_Manual_SIMON_TEST.attachMoveListener(line9);
+
+        var line10 = new spray2d.shape.basic.Line(40,30,80,30);
+        line10.setStartRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight() );
+        line10.setEndRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight() );
+        line10.setUserData({"type":"Line"});
+
+        PI_Valve_Manual_SIMON_TEST.addFigure(line10, new spray2d.layout.locator.FigureLocator(line10));
+        PI_Valve_Manual_SIMON_TEST.attachResizeListener(line10);
+        PI_Valve_Manual_SIMON_TEST.attachMoveListener(line10);
+
+        var text13 = new spray2d.shape.basic.Label("Text");
+        text13.setPosition(30,100);
+        text13.setDimension(60,20);
+        text13.setAlpha(0);
+        text13.setDimensionRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth()/60, PI_Valve_Manual_SIMON_TEST.getHeight()/20 );
+        text13.setPositionRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth()/text13.getPosition().x, PI_Valve_Manual_SIMON_TEST.getHeight()/text13.getPosition().y );
+        text13.setStroke(0);
+        text13.setBackgroundColor("#f0f0f0");
+        text13.setUserData({"type":"Label"});
+
+        PI_Valve_Manual_SIMON_TEST.addFigure(text13, new spray2d.layout.locator.FigureLocator(PI_Valve_Manual_SIMON_TEST));
+        PI_Valve_Manual_SIMON_TEST.attachResizeListener(text13);
+
+        canvas.addFigure(PI_Valve_Manual_SIMON_TEST);
+
+
+        /*shape PI_CentralHeatingUnit {
+            rounded-rectangle {
+                curve(width=20,height=20)
+                position (x=0, y=30)
+                size (width=100, height=100)
+            }
+            polyline {
+                point (x=30, y=0)
+                point (x=30, y=70)
+                point (x=50, y=50)
+                point (x=70, y=70)
+                point (x=70, y=0)
+            }
+            text style TextStyle {
+                position(x=100,y=0)
+                size (width=100, height=20)
+                id = shapeName
+            }
+            rectangle {
+                position (x=25,y=100)
+                size(width=50,height=20)
+            }
+            anchor {
+                position (x=30, y=0)
+                position (x=70, y=0)
+                position (x=25, y=110)
+                position (x=75, y=110)
+            }
+        }*/
+
+
+        var PI_CentralHeatingUnit = new spray2d.shape.basic.BoundingBox(200,130);
+        PI_CentralHeatingUnit.setAlpha(0);
+        PI_CentralHeatingUnit.setPosition(0,1250);
+
+        var rect3 = new spray2d.shape.basic.Rectangle(100,100);
+        rect3.setDimensionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect3.getWidth(), PI_CentralHeatingUnit.getHeight()/rect3.getHeight() );
+        rect3.setRadius(20);
+        rect3.setPosition(0,30);
+        rect3.setBackgroundColor("#ffffff");
+
+        PI_CentralHeatingUnit.addFigure(rect3, new spray2d.layout.locator.FigureLocator());
+        PI_CentralHeatingUnit.attachResizeListener(rect3);
+
+        var polyline2 = new spray2d.shape.basic.PolyLine(PI_CentralHeatingUnit);
+        polyline2.addPoint(new draw2d.geo.Point(30,0), new draw2d.geo.Point(30,70));
+        polyline2.addPoint(new draw2d.geo.Point(30,70), new draw2d.geo.Point(50,50));
+        polyline2.addPoint(new draw2d.geo.Point(50,50), new draw2d.geo.Point(70,70));
+        polyline2.addPoint(new draw2d.geo.Point(70,70), new draw2d.geo.Point(70,0));
+
+        var text14 = new spray2d.shape.basic.Label("Text");
+        text14.setPosition(100,0);
+        text14.setDimension(100,20);
+        text14.setAlpha(0);
+        text14.setDimensionRatioToRoot( PI_CentralHeatingUnit.getWidth()/60, PI_CentralHeatingUnit.getHeight()/20 );
+        text14.setPositionRatioToRoot( PI_CentralHeatingUnit.getWidth()/text14.getPosition().x, PI_CentralHeatingUnit.getHeight()/text14.getPosition().y );
+        text14.setStroke(0);
+        text14.setBackgroundColor("#f0f0f0");
+        text14.setUserData({"type":"Label"});
+
+        PI_CentralHeatingUnit.addFigure(text14, new spray2d.layout.locator.FigureLocator());
+        PI_CentralHeatingUnit.attachResizeListener(text14);
+
+        var rect4 = new spray2d.shape.basic.Rectangle(50,20);
+        rect4.setUserData({"type": "Rectangle"});
+        rect4.setPosition(25,100);
+        rect4.setDimensionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect4.getWidth(), PI_CentralHeatingUnit.getHeight()/rect4.getHeight() );
+        rect4.setPositionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect4.getPosition().x, PI_CentralHeatingUnit.getHeight()/rect4.getPosition().y );
+        rect4.setBackgroundColor("#ffffff");
+
+        PI_CentralHeatingUnit.addFigure(rect4, new spray2d.layout.locator.FigureLocator());
+        PI_CentralHeatingUnit.attachResizeListener(rect4);
+
+        canvas.addFigure(PI_CentralHeatingUnit);
 
         // display the SVG into the preview DIV
         //

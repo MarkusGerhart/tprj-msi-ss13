@@ -101,5 +101,9 @@ spray2d.shape.basic.BoundingBox = draw2d.shape.basic.Rectangle.extend({
 
     getStretchingVertical:function(){
         return this.stretchingVertical;
+    },
+
+    onOtherFigureIsResizing:function(figure){
+        this.setDimension( figure.getWidth()/this.dimensionRatioToRoot.x, figure.getHeight()/this.dimensionRatioToRoot.y);
     }
 });
