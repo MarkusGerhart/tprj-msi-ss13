@@ -1,3 +1,0 @@
-SVG Groups
-
- - http://tutorials.jenkov.com/svg/g-element.html
