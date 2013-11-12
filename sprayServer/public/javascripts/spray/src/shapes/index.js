@@ -1,2 +1,0 @@
-import "rectangle";
-import "text";
