@@ -399,132 +399,55 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/io/json/Writer.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/io/json/Reader.js"> </SCRIPT>
 
+<SCRIPT src="../spray2d/src/shape/basic/BoundingBox.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Rectangle.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Label.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Ellipse.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Line.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Polyline.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/shape/basic/Polygon.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/layout/locator/FigureLocator.js"> </SCRIPT>
-
-<script src="OurJsonReader.js" charset="utf-8"></script>
-<SCRIPT src="LocatorA.js"> </SCRIPT>
-
-<style>
-
-    .label_left_top{
-        text-align: left;
-        vertical-align: top;
-    }
-    .label_left_middle{
-        text-align: left;
-        vertical-align: middle;
-    }
-    .label_left_bottom{
-        text-align: left;
-        vertical-align: bottom;
-    }
-    .label_center_top{
-        text-align: center;
-        vertical-align: top;
-    }
-    .label_center_middle{
-        text-align: center;
-        vertical-align: middle;
-        width: 100px;
-        height: 20px;
-        position:absolute;
-    }
-    .label_center_bottom{
-        text-align: center;
-        vertical-align: bottom;
-    }
-    .label_right_top{
-        text-align: right;
-        vertical-align: top;
-    }
-    .label_right_middle{
-        text-align: right;
-        vertical-align: middle;
-    }
-    .label_right_bottom{
-        text-align: right;
-        vertical-align: bottom;
-    }
-
-</style>
 
 <script type="text/javascript">
 
     $(window).load(function () {
+
+
         // create the canvas for the user interaction
+        //
         var canvas = new draw2d.Canvas("gfx_holder");
 
-        //PI_Vessel_Horizontal
-        /*shape PI_Vessel_Vertical {
-             rounded-rectangle {
-                 size (width=120, height=60)
-                 curve (width=50, height=50)
-                 text style TextStyle {
-                     size (width=100, height=20)
-                     position (x=3, y=20)
-                     align (horizontal=center, vertical=middle)
-                     id = shapeName
-                 }
-             }
-         }*/
+        var PI_HeatExchanger = new spray2d.shape.basic.BoundingBox(100,80);
+        PI_HeatExchanger.setAlpha(0);
+        PI_HeatExchanger.setPosition(0,850);
 
-        var jsonDocument =
-                [
-                    {
-                        "type": "draw2d.shape.basic.Rectangle",
-                        //"id": "354fa3b9-a834-0221-2009-abc2d6bd852a",
-                        "x": 0,
-                        "y": 0,
-                        "width": 120,
-                        "height": 60,
-                        "radius": 50,
-                        "alpha": 0,
-                        "children" : [
-                            {
-                                "type": "spray2d.shape.basic.Label",
-                                //"id": "ebfb35bb-5767-8155-c804-14bda7759dc2",
-                                "locator" : "draw2d.layout.locator.LocatorA",
-                                "x": 3,
-                                "y": 20,
-                                "width": 50,
-                                "height": 20
-                            }
-                        ]
-                    }
-                ];
+        var oval6 = new spray2d.shape.basic.Ellipse(60,60);
+        oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
+        oval6.setBackgroundColor("#ffffff");
+        oval6.setPosition(0,20);
+        PI_HeatExchanger.addFigure(oval6, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
+        PI_HeatExchanger.attachResizeListener(oval6);
 
-        /*var PI_Vessel_Vertical = new spray2d.shape.basic.Rectangle(120,60);
-        PI_Vessel_Vertical.setAlpha(0);
+        var polyline = new spray2d.shape.basic.PolyLine(PI_HeatExchanger);
+        polyline.addPoint(new draw2d.geo.Point(90,70), new draw2d.geo.Point(30,70));
+        polyline.addPoint(new draw2d.geo.Point(30,70), new draw2d.geo.Point(50,50));
+        polyline.addPoint(new draw2d.geo.Point(50,50), new draw2d.geo.Point(30,30));
+        polyline.addPoint(new draw2d.geo.Point(30,30), new draw2d.geo.Point(90,30));
 
-        var rect = new spray2d.shape.basic.Rectangle(120,60);
-        rect.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth() );
-        rect.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/rect.getHeight() );
-        rect.setRadius(50);
-        rect.setBackgroundColor("#ffffff");
+        var text11 = new spray2d.shape.basic.Label("Text");
+        text11.setDimension(100,20);
+        text11.setAlpha(0);
+        text11.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/60, PI_HeatExchanger.getHeight()/20 );
+        text11.setPositionRatioToRoot( PI_HeatExchanger.getWidth()/text11.getPosition().x, PI_HeatExchanger.getHeight()/text11.getPosition().y );
+        text11.setStroke(0);
+        text11.setBackgroundColor("#f0f0f0");
+        text11.setUserData({"type":"Label"});
 
-        var text = new spray2d.shape.basic.Label("Text");
-        text.setDimension(100,20);
-        text.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/100 );
-        text.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/20 );
-        text.setStroke(0);
-        text.setBackgroundColor("#f0f0f0");
-        text.setPosition(3,20);
-        text.setUserData({"type":"Label","textAlign":"center", "verticalAlign":"middle"});
+        PI_HeatExchanger.addFigure(text11, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
+        PI_HeatExchanger.attachResizeListener(text11);
 
-        rect.addFigure(text, new spray2d.layout.locator.FigureLocator(rect));
-        rect.attachResizeListener(text);
+        canvas.addFigure(PI_HeatExchanger);
 
-        PI_Vessel_Vertical.addFigure(rect,  new spray2d.layout.locator.FigureLocator(PI_Vessel_Vertical));
-        PI_Vessel_Vertical.attachResizeListener(rect);
-
-
-        canvas.addFigure(PI_Vessel_Vertical);*/
-
-
-        var reader = new draw2d.io.json.OurJsonReader();
-        reader.unmarshal(canvas, jsonDocument);
 
         // display the SVG into the preview DIV
         //
