@@ -408,7 +408,12 @@
 <SCRIPT src="../spray2d/src/shape/basic/Polygon.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/layout/locator/FigureLocator.js"> </SCRIPT>
 
+<SCRIPT src="LocatorA.js"> </SCRIPT>
+<SCRIPT src="CustomPortLocator.js"> </SCRIPT>
+
 <script type="text/javascript">
+
+
 
     $(window).load(function () {
 
@@ -419,7 +424,7 @@
 
         var PI_HeatExchanger = new spray2d.shape.basic.BoundingBox(100,80);
         PI_HeatExchanger.setAlpha(0);
-        PI_HeatExchanger.setPosition(0,850);
+        PI_HeatExchanger.setPosition(0,150);
 
         var oval6 = new spray2d.shape.basic.Ellipse(60,60);
         oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
@@ -445,6 +450,12 @@
 
         PI_HeatExchanger.addFigure(text11, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
         PI_HeatExchanger.attachResizeListener(text11);
+
+        //this.portLocator = new draw2d.layout.locator.LocatorA(PI_HeatExchanger, 90, 180);
+        //PI_HeatExchanger.createPort("hybrid", this.portLocator);
+        var locator = new draw2d.layout.locator.CustomPortLocator();
+        locator.setPortY(10);
+        PI_HeatExchanger.createPort("hybrid", locator);
 
         canvas.addFigure(PI_HeatExchanger);
 
