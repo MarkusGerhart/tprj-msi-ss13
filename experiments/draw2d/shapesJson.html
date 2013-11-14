@@ -422,22 +422,22 @@
         //
         var canvas = new draw2d.Canvas("gfx_holder");
 
-        var PI_HeatExchanger = new spray2d.shape.basic.BoundingBox(100,80);
+        var PI_HeatExchanger = new spray2d.shape.basic.BoundingBox(60,60);
         PI_HeatExchanger.setAlpha(0);
         PI_HeatExchanger.setPosition(0,150);
 
         var oval6 = new spray2d.shape.basic.Ellipse(60,60);
         oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
         oval6.setBackgroundColor("#ffffff");
-        oval6.setPosition(0,20);
+        oval6.setPosition(0,0);
         PI_HeatExchanger.addFigure(oval6, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
         PI_HeatExchanger.attachResizeListener(oval6);
 
         var polyline = new spray2d.shape.basic.PolyLine(PI_HeatExchanger);
-        polyline.addPoint(new draw2d.geo.Point(90,70), new draw2d.geo.Point(30,70));
-        polyline.addPoint(new draw2d.geo.Point(30,70), new draw2d.geo.Point(50,50));
-        polyline.addPoint(new draw2d.geo.Point(50,50), new draw2d.geo.Point(30,30));
-        polyline.addPoint(new draw2d.geo.Point(30,30), new draw2d.geo.Point(90,30));
+        polyline.addPoint(new draw2d.geo.Point(90,50), new draw2d.geo.Point(30,50));
+        polyline.addPoint(new draw2d.geo.Point(30,50), new draw2d.geo.Point(50,30));
+        polyline.addPoint(new draw2d.geo.Point(50,30), new draw2d.geo.Point(30,10));
+        polyline.addPoint(new draw2d.geo.Point(30,10), new draw2d.geo.Point(90,10));
 
         var text11 = new spray2d.shape.basic.Label("Text");
         text11.setDimension(100,20);
@@ -453,15 +453,15 @@
 
         //this.portLocator = new draw2d.layout.locator.LocatorA(PI_HeatExchanger, 90, 180);
         //PI_HeatExchanger.createPort("hybrid", this.portLocator);
-        var locator1 = new draw2d.layout.locator.CustomPortLocator(90, 30);
+        var locator1 = new draw2d.layout.locator.CustomPortLocator(90, 10);
         locator1.setScalable(PI_HeatExchanger);
         PI_HeatExchanger.createPort("hybrid", locator1);
 
-        var locator2 = new draw2d.layout.locator.CustomPortLocator(90, 70);
+        var locator2 = new draw2d.layout.locator.CustomPortLocator(90, 50);
         locator2.setScalable(PI_HeatExchanger);
         PI_HeatExchanger.createPort("hybrid", locator2);
 
-        var locator3 = new draw2d.layout.locator.CustomPortLocator(0, 70);
+        var locator3 = new draw2d.layout.locator.CustomPortLocator(0, 50);
         locator3.setScalable(PI_HeatExchanger);
         PI_HeatExchanger.createPort("hybrid", locator3);
 

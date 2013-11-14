@@ -16,7 +16,9 @@ draw2d.layout.locator.CustomPortLocator = draw2d.layout.locator.PortLocator.exte
 
         var tmpX = this.portX;
         if (tmpX != 0 && typeof this.initWidth !== "undefined") {
-            tmpX = this.portX + parent.getWidth() - this.initWidth;
+            //tmpX = this.portX + parent.getWidth() - this.initWidth;
+            var percentX = this.portX / this.initWidth;
+            tmpX = parent.getWidth() * percentX;
         }
 
         var tmpY = this.portY;
