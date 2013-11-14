@@ -453,9 +453,17 @@
 
         //this.portLocator = new draw2d.layout.locator.LocatorA(PI_HeatExchanger, 90, 180);
         //PI_HeatExchanger.createPort("hybrid", this.portLocator);
-        var locator = new draw2d.layout.locator.CustomPortLocator();
-        locator.setPortY(10);
-        PI_HeatExchanger.createPort("hybrid", locator);
+        var locator1 = new draw2d.layout.locator.CustomPortLocator(90, 30);
+        locator1.setScalable(PI_HeatExchanger);
+        PI_HeatExchanger.createPort("hybrid", locator1);
+
+        var locator2 = new draw2d.layout.locator.CustomPortLocator(90, 70);
+        locator2.setScalable(PI_HeatExchanger);
+        PI_HeatExchanger.createPort("hybrid", locator2);
+
+        var locator3 = new draw2d.layout.locator.CustomPortLocator(0, 70);
+        locator3.setScalable(PI_HeatExchanger);
+        PI_HeatExchanger.createPort("hybrid", locator3);
 
         canvas.addFigure(PI_HeatExchanger);
 

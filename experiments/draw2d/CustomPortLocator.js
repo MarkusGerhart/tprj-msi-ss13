@@ -1,17 +1,32 @@
 draw2d.layout.locator.CustomPortLocator = draw2d.layout.locator.PortLocator.extend({
-    init:function( ){
+    init:function(portX, portY){
+        this.portX = portX;
+        this.portY = portY;
       this._super();
     },
 
-    setPortY:function(_portY) {
-        this.portY = _portY;
+    setScalable:function(parent) {
+        this.initWidth = parent.getWidth();
+        this.initHeight = parent.getHeight();
+        this.scaleY = true;
     },
 
     relocate:function(index, port){
         var parent = port.getParent();
-        //var calcY = (8+18.5*index)*parent.scaleY;
-        var calcY = 10;
-        //this.applyConsiderRotation(port, 1, calcY);
-        this.applyConsiderRotation(port, 1, this.portY);
+
+        var tmpX = this.portX;
+        if (tmpX != 0 && typeof this.initWidth !== "undefined") {
+            tmpX = this.portX + parent.getWidth() - this.initWidth;
+        }
+
+        var tmpY = this.portY;
+        if (this.scaleY === true) {
+            percentY = this.portY / this.initHeight;
+            console.log("percentY: " + percentY);
+            tmpY = parent.getHeight() * percentY;
+            console.log("tmpY: " + tmpY);
+        }
+
+        this.applyConsiderRotation(port, tmpX, tmpY);
     }
 })
