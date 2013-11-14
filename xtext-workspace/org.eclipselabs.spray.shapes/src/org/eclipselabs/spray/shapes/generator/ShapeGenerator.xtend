@@ -15,6 +15,10 @@ import org.eclipselabs.spray.shapes.shape.Rectangle
 import org.eclipselabs.spray.shapes.shape.Polygon
 import org.eclipselabs.spray.shapes.shape.Ellipse
 import org.eclipselabs.spray.shapes.shape.Text
+import org.eclipselabs.spray.shapes.shape.AnchorPredefinied
+import org.eclipselabs.spray.shapes.shape.AnchorManual
+import org.eclipselabs.spray.shapes.shape.AnchorRelativePosition
+import org.eclipselabs.spray.shapes.shape.AnchorFixPointPosition
 
 /**
  * Generates code from your model files on save.
@@ -54,6 +58,24 @@ class ShapeGenerator implements IGenerator {
 			proportional: «d.shapeLayout.proportional»
 			«ENDIF»
 		},
+		anchors: [
+			«IF d.anchor != null»
+				«IF d.anchor.type.eClass.name == "AnchorPredefinied"»
+					{type: "«(d.anchor.type as AnchorPredefinied).value»"},
+				«ELSE»
+					«val anchor = d.anchor.type as AnchorManual»
+					«FOR manualAnchor: anchor.position»
+						«IF manualAnchor.pos.eClass.name == "AnchorRelativePosition"»
+							«val relativeAnchor = manualAnchor.pos as AnchorRelativePosition»
+							{type: "relative", x: «relativeAnchor.xoffset», y: «relativeAnchor.yoffset»},
+						«ELSE»
+							«val fixpointAnchor = manualAnchor.pos as AnchorFixPointPosition»
+							{type: "fixpoint", x: «fixpointAnchor.xcor», y: «fixpointAnchor.ycor»},
+						«ENDIF»
+					«ENDFOR»
+				«ENDIF»
+			«ENDIF»
+		],
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
