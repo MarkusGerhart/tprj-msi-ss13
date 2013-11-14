@@ -448,7 +448,10 @@
         text11.setBackgroundColor("#f0f0f0");
         text11.setUserData({"type":"Label"});
 
-        PI_HeatExchanger.addFigure(text11, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
+        var locatorA = new draw2d.layout.locator.LocatorA();
+        locatorA.setPos(PI_HeatExchanger, 0, 130);
+        PI_HeatExchanger.addFigure(text11, locatorA);
+
         PI_HeatExchanger.attachResizeListener(text11);
 
         //this.portLocator = new draw2d.layout.locator.LocatorA(PI_HeatExchanger, 90, 180);
