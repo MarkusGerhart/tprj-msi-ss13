@@ -31,6 +31,7 @@ Every conjuncted shape has the properties
 
 * name: String
 * params : {*}
+* anchors: [*]  (only in the top level!)
 * shapes: [*]
 
 The name property describes the actual primitive shape, or when on top
@@ -51,6 +52,14 @@ The params proptery holds information about the current shape, like
 * layout : {stretching | spacing : Int | margin : Int | invisible}
 * point : [{x: Int, y: Int, curveBefore: Int, curveAfter: Int}*]
 * id : String
+
+Anchors:
+Only the top level shape can hold anchors. There are four types of anchors:
+
+* {type: "center"}
+* {type: "corners"}
+* {type: "relative", x: Int, y: Int}
+* {type: "fixpoints", x: Int, y: Int}
 
 The shapes property is a list. To build conjuncted shapes
 in a hierarchie, the same properties are allowed to be applied
@@ -76,7 +85,8 @@ shape PI_Vessel_Vertical {
 
 PI_Vessel_Vertical = {
   name: "PI_Vessel_Vertical",
-  params: undefined,
+  params: {},
+  anchors: [],
   shapes: [{
     name: "rounded-rectangle",
     params: {
@@ -126,7 +136,13 @@ shape PI_Boiler {
 
 PI_Boiler = {
   name: "PI_Boiler",
-  params: undefined,
+  params: {},
+  anchors: [
+      {type: "fixpoint", x: 0, y: 30},
+      {type: "fixpoint", x: 0, y: 70},
+      {type: "fixpoint", x: 90, y: 30},
+      {type: "fixpoint", x: 90, y: 70},
+  ],
   shapes: [{
     name: "rounded-rectangle",
     params: {
