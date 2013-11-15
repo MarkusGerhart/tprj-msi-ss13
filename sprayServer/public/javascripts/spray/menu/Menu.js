@@ -28,22 +28,34 @@ htwg.spray.Menu = function($){
     this.buildMenu = function( shapes ){
         $.each(shapes, function(i, item) {
 
-                canvasElem = $("<div style='width: 60px; height: 60px; display:none;' id='"+ item.id +"'></div>");
+                var size = 60;
+                canvasElem = $("<div style='width: 1000px; height: 1000px; display:none;' id='"+ item +"'></div>");
                 that.menu.append(canvasElem);
-                canvas = new draw2d.Canvas(item.id);
-                SPRAY.htwg.generator.drawFigure(item.name, canvas);
-                var figure = canvas.getFigure(item.id);
-                shape = figure.getShapeElement();
-                var writer = new draw2d.io.svg.Writer();
-                svg = writer.marshal(canvas);
-                canvasElem.remove();
+                canvas = new draw2d.Canvas(item);
+                var figure = htwg.spray.factory.drawShape(item, canvas);
 
-                menuElem = $("<div data-shape='"+item.type+"' class='palette_node_element draw2d_droppable' id='" + item.id+ "'>" + svg + "</div>");
-                that.menu.append(menuElem);
-                topPosition = i*70;
-                $("#"+item.id).css("top", topPosition );
-                $("#"+item.id).css("z-index",1);
+                if ( figure.getWidth() > size || figure.getHeight() > size ){
+                    if ( figure.getWidth() > figure.getHeight() ){
+                        figure.setDimension(size, parseInt(size * figure.getHeight()/figure.getWidth()));
+                    }else{
+                        figure.setDimension(parseInt(size * figure.getWidth()/figure.getHeight()), size);
+                    }
+                }
 
+                if ( !$.isEmptyObject(figure) ){
+                    canvas.addFigure(figure);
+                    shape = figure.getShapeElement();
+                    var writer = new draw2d.io.svg.Writer();
+                    writer.marshal(canvas, function(svg){
+                        canvasElem.remove();
+                        menuElem = $("<div data-shape='"+"draw2d.shape.basic.Rectangle"+"' class='palette_node_element draw2d_droppable' id='" + item.id+ "'>" + svg + "</div>");
+                        that.menu.append(menuElem);
+                        topPosition = i*70;
+                        $("#"+item.id).css("top", topPosition );
+                        $("#"+item.id).css("z-index",1);
+                    });
+
+                }
         });
     }
 
