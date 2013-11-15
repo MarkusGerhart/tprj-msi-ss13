@@ -141,9 +141,6 @@ htwg.spray.Factory = function($){
             bbox.setStretchingVertical( params.stretchingVertical );
         }
 
-        bbox.setAlpha(0);
-        bbox.setPosition(0,0);
-
         return bbox;
     }
 
