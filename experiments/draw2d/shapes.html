@@ -1018,8 +1018,10 @@
         polygon2.addPoint(new draw2d.geo.Point(0,120), new draw2d.geo.Point(0,60));
 
         var ovaltest = new spray2d.shape.basic.Ellipse(60,60);
+        ovaltest.setUserData({"type":"Ellipse"});
         ovaltest.setPosition(0,40);
         ovaltest.setDimensionRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth()/ovaltest.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight()/ovaltest.getHeight() );
+        ovaltest.setPositionRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth()/ovaltest.getPosition().x, PI_Valve_Manual_SIMON_TEST.getHeight()/ovaltest.getPosition().y );
         ovaltest.setBackgroundColor("#ffffff");
         polygon2.addFigure(ovaltest);
 
