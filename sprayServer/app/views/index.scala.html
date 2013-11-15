@@ -5,7 +5,7 @@
 
 @main(title) {
 
-    <!--<header>
+    <header>
         <div id="left">
             <a href="@routes.Application.index" id="logo"><h1>Spray<span style="color:#7d9dcd">JS</span></h1></a>
         </div>
@@ -20,99 +20,14 @@
             <ul>
                 <li>
                     <a id="logout" href="#">Logout</a>
-                    <a id="logout" href="ATroutes.Authentication.logout">Logout</a>
+                    <!--<a id="logout" href="ATroutes.Authentication.logout">Logout</a>-->
                 </li>
             </ul>
         </div>
         <div class="clear"> </div>
-    </header>-->
+    </header>
 
-    <!-- Static Shape Experiments -->
-    <div  onselectstart="javascript:/*IE8 hack*/return false" id="gfx_holder" style="width:1500px; height:1500px;-webkit-tap-highlight-color: rgba(0,0,0,0); ">
-    </div>
-
-    <pre id="json" style="overflow:auto;position:absolute; top:10px; right:10px; width:450; height:500;background:white;border:1px solid gray">
-    </pre>
-
-<script type="text/javascript">
-
-$(window).load(function () {
-
-    // create the canvas for the user interaction
-    //
-    var canvas = new draw2d.Canvas("gfx_holder");
-
-    //PI_Vessel_Horizontal
-    /*shape PI_Vessel_Vertical {
-         rounded-rectangle {
-             size (width=120, height=60)
-             curve (width=50, height=50)
-             text style TextStyle {
-                 size (width=100, height=20)
-                 position (x=3, y=20)
-                 align (horizontal=center, vertical=middle)
-                 id = shapeName
-             }
-         }
-     }*/
-
-    var PI_Vessel_Vertical = new htwg.spray.shapes.Rectangle(120,60);
-    PI_Vessel_Vertical.setAlpha(0);
-
-    var rect = new htwg.spray.shapes.Rectangle(120,60);
-    rect.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth() );
-    rect.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/rect.getHeight() );
-    rect.setRadius(50);
-    rect.setBackgroundColor("#ffffff");
-
-    var text = new htwg.spray.shapes.Text("Text");
-    text.setDimension(100,20);
-    text.setWidthDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/100 );
-    text.setHeightDimensionRatioToRoot( PI_Vessel_Vertical.getHeight()/20 );
-    text.setStroke(0);
-    text.setBackgroundColor("#f0f0f0");
-    text.setPosition(3,20);
-    text.setUserData({"type":"Label","textAlign":"center", "verticalAlign":"middle"});
-
-    rect.addFigure(text, new htwg.spray.locators.FigureLocator(rect));
-    rect.attachResizeListener(text);
-
-    PI_Vessel_Vertical.addFigure(rect,  new htwg.spray.locators.FigureLocator(PI_Vessel_Vertical));
-    PI_Vessel_Vertical.attachResizeListener(rect);
-
-
-    canvas.addFigure(PI_Vessel_Vertical);
-
-
-
-
-    // display the SVG into the preview DIV
-    //
-    displayJSON(canvas);
-
-
-    // add an event listener to the Canvas for change notifications.
-    // We just dump the current canvas document into the DIV
-    //
-    canvas.getCommandStack().addEventListener(function(e){
-        if(e.isPostChangeEvent()){
-            displayJSON(canvas);
-        }
-    });
-});
-
-function displayJSON(canvas){
-    var writer = new draw2d.io.json.Writer();
-    writer.marshal(canvas,function(json){
-        $("#json").text(JSON.stringify(json, null, 2));
-    });
-}
-
-</script>
-
-    <!-- END Static Shape Experiments -->
-
-    <!-- <div id="contentwrap">
+    <div id="contentwrap">
         @includes.toolbar()
 
         @includes.editor()
@@ -121,11 +36,11 @@ function displayJSON(canvas){
         <div class="clear"> </div>
     </div>
 
-    @includes.footer() -->
+    @includes.footer()
 
     <script type="text/javascript">
         jQuery(document).ready(function(){
-            htwg.websocket = new htwg.spray.WebSocket("@routes.Application.websocket().webSocketURL()");
+            htwg.spray.websocket = new htwg.spray.WebSocket("@routes.Application.websocket().webSocketURL()");
         });
     </script>
 

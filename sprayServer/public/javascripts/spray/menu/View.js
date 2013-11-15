@@ -1,6 +1,9 @@
+var htwg = htwg || {};
+htwg.spray = htwg.spray || {};
+
 // class: View
 
-spray.View = draw2d.Canvas.extend({
+htwg.spray.View = draw2d.Canvas.extend({
 
     init:function(id){
         this._super(id);

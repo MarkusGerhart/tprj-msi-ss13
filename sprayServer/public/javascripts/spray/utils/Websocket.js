@@ -1,8 +1,11 @@
-import "../core/browser"
+var htwg = htwg || {};
+htwg.spray = htwg.spray || {};
+
+htwg.spray.document = document;
+htwg.spray.window = window;
 
 // class: Websocket
-
-spray.WebSocket = function (wsURI) {
+htwg.spray.WebSocket = function (wsURI) {
   var WebSocket = htwg.spray.require("WebSocket")
   this.sock = new WebSocket(wsURI);
   this.ready = false;
@@ -13,27 +16,38 @@ spray.WebSocket = function (wsURI) {
   this.sock.onerror = function(evt) { self.onerror(evt) };
 }
 
-spray.WebSocket.prototype.onopen = function (event) {
+htwg.spray.WebSocket.prototype.onopen = function (event) {
   this.ready = true;
   console.log("WebSocket connected.");
 }
 
-spray.WebSocket.prototype.onclose = function (event) {
+htwg.spray.WebSocket.prototype.onclose = function (event) {
   this.ready = false;
   console.log("WebSocket disconnected.");
 }
 
-spray.WebSocket.prototype.onmessage = function (evt) {
+htwg.spray.WebSocket.prototype.onmessage = function (evt) {
   console.log("WebSocket got: " + evt.data);
   //this.sock.close();
 }
 
-spray.WebSocket.prototype.onerror = function (event) {
+htwg.spray.WebSocket.prototype.onerror = function (event) {
   console.log("WebSocket got error: " + event.data);
 }
 
-spray.WebSocket.prototype.send = function (message) {
+htwg.spray.WebSocket.prototype.send = function (message) {
   console.log("WebSocket send: " + message);
   this.sock.send(message);
   return message;
+}
+
+htwg.spray.require = function (dep) {
+    if (dep == "WebSocket") {
+        if (htwg.spray.window["MozWebSocket"] != undefined) {
+            return htwg.spray.window["MozWebSocket"];
+        } else {
+            return htwg.spray.window["WebSocket"];
+        }
+    }
+    return htwg.spray.window[dep];
 }

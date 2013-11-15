@@ -1,3 +1,6 @@
+var htwg = htwg || {};
+htwg.spray = htwg.spray || {};
+
 // class: Generator
 // varianten: 1) konvertieren des spray json in draw2d json
 //               dann mit rekursivem unmarshall zeichnen
@@ -93,7 +96,7 @@ var PI_Vessel_Vertical = {
 
 var shapeExamples = { "PI_Vessel_Vertical": PI_Vessel_Vertical };
 
-spray.Generator = function($){
+htwg.spray.Factory = function($){
 
     /**
      * Scope duplicator / parent this

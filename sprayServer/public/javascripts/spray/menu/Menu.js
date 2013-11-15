@@ -1,4 +1,7 @@
-spray.Menu = function($){
+var htwg = htwg || {};
+htwg.spray = htwg.spray || {};
+
+htwg.spray.Menu = function($){
 
     /*var exampleJSON = [{ id:"elem1", type: "draw2d.shape.node.Start", title: "Start", attributes: ""},
                        { id:"elem2", type: "draw2d.shape.node.Between", title: "Between", attributes: ""},
