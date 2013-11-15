@@ -888,9 +888,11 @@
         PI_HeatExchanger.setPosition(0,850);
 
         var oval6 = new spray2d.shape.basic.Ellipse(60,60);
-        oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
-        oval6.setBackgroundColor("#ffffff");
         oval6.setPosition(0,20);
+        oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
+        oval6.setPositionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getPosition().x, PI_HeatExchanger.getHeight()/oval6.getPosition().y );
+        oval6.setBackgroundColor("#ffffff");
+        oval6.setUserData({"type":"Ellipse"});
         PI_HeatExchanger.addFigure(oval6, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
         PI_HeatExchanger.attachResizeListener(oval6);
 

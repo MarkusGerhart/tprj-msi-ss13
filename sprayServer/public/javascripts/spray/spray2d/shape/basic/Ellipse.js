@@ -30,20 +30,20 @@ spray2d.shape.basic.Ellipse = draw2d.shape.basic.Oval.extend({
     },
 
     setDimensionRatioToRoot:function(x,y){
-        if ( !( x > 0 ) ){
+        if ( isNaN(x) || !( x > 0 ) ){
             x = 1;
         }
-        if ( !( y > 0 ) ){
+        if ( isNaN(y) || !( y > 0 ) ){
             y = 1;
         }
         this.dimensionRatioToRoot = { "x": x, "y": y};
     },
 
     setPositionRatioToRoot:function(x,y){
-        if ( !( x > 0 ) ){
+        if ( isNaN(x) || !( x > 0 ) ){
             x = 1;
         }
-        if ( !( y > 0 ) ){
+        if ( isNaN(y) || !( y > 0 ) ){
             y = 1;
         }
         this.positionRatioToRoot = { "x": x, "y": y};
