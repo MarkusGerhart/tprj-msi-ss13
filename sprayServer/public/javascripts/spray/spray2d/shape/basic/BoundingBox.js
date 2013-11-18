@@ -36,6 +36,8 @@ spray2d.shape.basic.BoundingBox = draw2d.shape.basic.Rectangle.extend({
     },
 
     setDimension:function(w,h){
+        console.log("sds");
+
         if ( this.stretchingHorizontal == false ){
             w = this.cachedWidth;
         }
@@ -45,16 +47,26 @@ spray2d.shape.basic.BoundingBox = draw2d.shape.basic.Rectangle.extend({
         }
 
         if ( w >= this.maxWidth && h >= this.maxHeight ){
+            console.log(w);
+            console.log(h);
+
             return
         }else if ( w >= this.maxWidth ){
+            console.log("sds343434");
+
             return;
         }else if ( h >= this.maxHeight ){
+            console.log("sds55");
+
             return;
         }
 
         if ( this.getProportional() == true ){
             h = w * this.ratio;
         }
+
+        console.log("sds2");
+
 
         this._super(w,h);
     },

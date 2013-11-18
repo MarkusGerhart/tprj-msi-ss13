@@ -888,9 +888,11 @@
         PI_HeatExchanger.setPosition(0,850);
 
         var oval6 = new spray2d.shape.basic.Ellipse(60,60);
-        oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
-        oval6.setBackgroundColor("#ffffff");
         oval6.setPosition(0,20);
+        oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
+        oval6.setPositionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getPosition().x, PI_HeatExchanger.getHeight()/oval6.getPosition().y );
+        oval6.setBackgroundColor("#ffffff");
+        oval6.setUserData({"type":"Ellipse"});
         PI_HeatExchanger.addFigure(oval6, new spray2d.layout.locator.FigureLocator(PI_HeatExchanger));
         PI_HeatExchanger.attachResizeListener(oval6);
 
@@ -1016,8 +1018,10 @@
         polygon2.addPoint(new draw2d.geo.Point(0,120), new draw2d.geo.Point(0,60));
 
         var ovaltest = new spray2d.shape.basic.Ellipse(60,60);
+        ovaltest.setUserData({"type":"Ellipse"});
         ovaltest.setPosition(0,40);
         ovaltest.setDimensionRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth()/ovaltest.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight()/ovaltest.getHeight() );
+        ovaltest.setPositionRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth()/ovaltest.getPosition().x, PI_Valve_Manual_SIMON_TEST.getHeight()/ovaltest.getPosition().y );
         ovaltest.setBackgroundColor("#ffffff");
         polygon2.addFigure(ovaltest);
 

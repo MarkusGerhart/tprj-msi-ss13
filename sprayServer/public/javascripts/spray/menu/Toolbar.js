@@ -1,4 +1,7 @@
-spray.Toolbar = function($){
+var htwg = htwg || {};
+htwg.spray = htwg.spray || {};
+
+htwg.spray.Toolbar = function($){
 
     if ( jQuery('#toolbar').length === 0 ) {
         //no need to initialize
@@ -16,7 +19,7 @@ spray.Toolbar = function($){
 
     this.menu = jQuery("#toolbar");
 
-    this.view = SPRAY.htwg.view;
+    this.view = htwg.spray.view;
 
     this.initialize = function(){
 
