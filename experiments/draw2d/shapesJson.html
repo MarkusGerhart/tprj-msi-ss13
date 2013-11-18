@@ -471,6 +471,15 @@
         canvas.addFigure(PI_HeatExchanger);
 
 
+        var end   = new draw2d.shape.node.End();
+        end.setPosition(50, 10);
+        canvas.addFigure(end);
+
+        var c = new draw2d.Connection();
+        c.setSource(PI_HeatExchanger.getHybridPort(0));
+        c.setTarget(end.getInputPort(0));
+        canvas.addFigure(c);
+
         // display the SVG into the preview DIV
         //
         displayJSON(canvas);

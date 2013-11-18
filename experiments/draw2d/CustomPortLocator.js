@@ -24,9 +24,9 @@ draw2d.layout.locator.CustomPortLocator = draw2d.layout.locator.PortLocator.exte
         var tmpY = this.portY;
         if (this.scaleY === true) {
             percentY = this.portY / this.initHeight;
-            console.log("percentY: " + percentY);
+            //console.log("percentY: " + percentY);
             tmpY = parent.getHeight() * percentY;
-            console.log("tmpY: " + tmpY);
+            //console.log("tmpY: " + tmpY);
         }
 
         this.applyConsiderRotation(port, tmpX, tmpY);
