@@ -1,0 +1,102 @@
+shape AllShapes {
+	ellipse {
+		size(width=100, height=100)
+		text {
+			align(horizontal=center, vertical=middle)
+			position(x=50,y=25)
+			size(width=20,height=10)
+			id=Value
+		}
+		polyline {
+			point(x=0, y=50)
+			point(x=50, y=40)
+			point(x=100, y=50)
+		}
+		line {
+			point(x=0, y=50)
+			point(x=100, y=50)
+		}
+		rounded-rectangle {
+			position(x=25, y=60)
+			size(width=50, height=30)
+			curve(width=20,height=20)
+			polygon {
+				point(x=25, y=0)
+				point(x=0, y=25, curveBefore=40, curveAfter=20)
+				point(x=50, y=25, curveBefore=40,curveAfter=20)
+			}
+		}
+	}
+}
+
+shape SimpleShape {
+	rectangle {
+		size(width=100, height=50)
+	}
+}
+
+shape SimpleShape_minmax {
+	size-min(width=50, height=25)
+	size-max(width=150, height=100)
+	rectangle {
+		size(width=100, height=50)
+	}
+}
+
+shape SimpleShape_streching {
+	stretching(horizontal=true, vertical=true)
+	rectangle {
+		size(width=100, height=50)
+	}
+}
+
+shape SimpleShape_streching {
+	proportional=true
+	rectangle {
+		size(width=100, height=50)
+	}
+}
+
+shape SimpleShape_all {
+	size-min(width=50, height=25)
+	size-max(width=150, height=100)
+	stretching(horizontal=true, vertical=true)
+	proportional=true
+	rectangle {
+		size(width=100, height=50)
+	}
+}
+
+shape SimpleShape_center_anchor {
+	rectangle {
+		size(width=100, height=50)
+	}
+	anchor center
+}
+
+shape SimpleShape_corner_anchor {
+	rectangle {
+		size(width=100, height=50)
+	}
+	anchor corners
+}
+
+shape SimpleShape_fixpoint_anchor {
+	rectangle {
+		size(width=100, height=50)
+	}
+	anchor {
+		position(x=0, y=25)
+		position(x=100, y=25)
+	}
+}
+
+shape SimpleShape_relative_anchor {
+	rectangle {
+		size(width=100, height=50)
+	}
+	anchor {
+		position(xoffset=0.1, yoffset=0.0)
+		position(xoffset=0.8, yoffset=1.0)
+	}
+}

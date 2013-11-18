@@ -43,11 +43,24 @@ class ShapeGenerator implements IGenerator {
 	def outerShape(ShapeDefinition d) '''
 	{
 		name: "«d.name»",
+		«IF d.shapeLayout.minwidth > 0 && d.shapeLayout.minheight > 0
+			&& d.shapeLayout.maxwidth > 0 && d.shapeLayout.maxheight > 0
+			&& d.shapeLayout.stretchH != null && d.shapeLayout.stretchV != null
+			&& d.shapeLayout.proportional != null
+		»
 		params: {
-			minwidth: «d.shapeLayout.minwidth»,
-			minheight: «d.shapeLayout.minheight»,
-			maxwidth: «d.shapeLayout.maxwidth»,
-			maxheight: «d.shapeLayout.maxheight»,
+			«IF d.shapeLayout.minwidth > 0»
+			minWidth: «d.shapeLayout.minwidth»,
+			«ENDIF»
+			«IF d.shapeLayout.minheight > 0»
+			minHeight: «d.shapeLayout.minheight»,
+			«ENDIF»
+			«IF d.shapeLayout.maxwidth > 0»
+			maxWidth: «d.shapeLayout.maxwidth»,
+			«ENDIF»
+			«IF d.shapeLayout.maxheight > 0»
+			maxHeight: «d.shapeLayout.maxheight»,
+			«ENDIF»
 			«IF d.shapeLayout.stretchH != null»
 			stretchH: «d.shapeLayout.stretchH»,
 			«ENDIF»
@@ -58,8 +71,9 @@ class ShapeGenerator implements IGenerator {
 			proportional: «d.shapeLayout.proportional»
 			«ENDIF»
 		},
+		«ENDIF»
+		«IF d.anchor != null»
 		anchors: [
-			«IF d.anchor != null»
 				«IF d.anchor.type.eClass.name == "AnchorPredefinied"»
 					{type: "«(d.anchor.type as AnchorPredefinied).value»"},
 				«ELSE»
@@ -74,20 +88,22 @@ class ShapeGenerator implements IGenerator {
 						«ENDIF»
 					«ENDFOR»
 				«ENDIF»
-			«ENDIF»
 		],
+		«ENDIF»
+		«IF d.shape.length > 0 »
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
 			«ENDFOR»
 		]
+		«ENDIF»
 	}
 	'''
 	
 	def switchShape(Shape s) {
 		switch s {
 			case s.eClass.name == "Line" : innerShape(s.eClass.name, (s as Line))
-			case s.eClass.name == "PolyLine" : innerShape(s.eClass.name, (s as Polyline))
+			case s.eClass.name == "Polyline" : innerShape(s.eClass.name, (s as Polyline))
 			case s.eClass.name == "Rectangle" : innerShape(s.eClass.name, (s as Rectangle))
 			case s.eClass.name == "RoundedRectangle" : innerShape(s.eClass.name, (s as RoundedRectangle))
 			case s.eClass.name == "Polygon" : innerShape(s.eClass.name, (s as Polygon))
@@ -111,8 +127,7 @@ class ShapeGenerator implements IGenerator {
 				},
 				«ENDFOR»
 			]
-		},
-		shapes: []
+		}
 	}
 	'''
 
@@ -130,8 +145,7 @@ class ShapeGenerator implements IGenerator {
 				},
 				«ENDFOR»
 			]
-		},
-		shapes: []
+		}
 	}
 	'''
 
@@ -147,8 +161,7 @@ class ShapeGenerator implements IGenerator {
 				horizontal: "«d.layout.HAlign»",
 				vertical: "«d.layout.VAlign»"
 			},
-		},
-		shapes: []
+		}
 	}
 	'''
 
@@ -161,11 +174,13 @@ class ShapeGenerator implements IGenerator {
 			«ENDIF»
 			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
 		},
+		«IF d.shape.length > 0 »
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
 			«ENDFOR»
 		]
+		«ENDIF»
 	}
 	'''
 
@@ -179,11 +194,13 @@ class ShapeGenerator implements IGenerator {
 			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
 			curve: {width: «d.layout.curveWidth», height: «d.layout.curveHeight»}
 		},
+		«IF d.shape.length > 0 »
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
 			«ENDFOR»
 		]
+		«ENDIF»
 	}
 	'''
 
@@ -202,11 +219,13 @@ class ShapeGenerator implements IGenerator {
 				«ENDFOR»
 			]
 		},
+		«IF d.shape.length > 0 »
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
 			«ENDFOR»
 		]
+		«ENDIF»
 	}
 	'''
 
@@ -219,11 +238,13 @@ class ShapeGenerator implements IGenerator {
 			«ENDIF»
 			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
 		},
+		«IF d.shape.length > 0 »
 		shapes: [
 			«FOR s: d.shape»
 				«switchShape(s)»,
 			«ENDFOR»
 		]
+		«ENDIF»
 	}
 	'''
 
