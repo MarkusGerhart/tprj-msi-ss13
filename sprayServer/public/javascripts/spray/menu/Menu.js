@@ -29,10 +29,10 @@ htwg.spray.Menu = function($){
         $.each(shapes, function(i, item) {
 
                 var size = 60;
-                canvasElem = $("<div style='width: 1000px; height: 1000px; display:none;' id='"+ item +"'></div>");
+                canvasElem = $("<div style='width: 60px; height: 60px;' id='"+ item +"'></div>");
                 that.menu.append(canvasElem);
                 canvas = new draw2d.Canvas(item);
-                var figure = htwg.spray.factory.drawShape(item, canvas);
+                var figure = htwg.spray.factory.drawShape(item);
 
                 if ( figure.getWidth() > size || figure.getHeight() > size ){
                     if ( figure.getWidth() > figure.getHeight() ){
@@ -48,13 +48,12 @@ htwg.spray.Menu = function($){
                     var writer = new draw2d.io.svg.Writer();
                     writer.marshal(canvas, function(svg){
                         canvasElem.remove();
-                        menuElem = $("<div data-shape='"+"draw2d.shape.basic.Rectangle"+"' class='palette_node_element draw2d_droppable' id='" + item.id+ "'>" + svg + "</div>");
+                        menuElem = $("<div class='palette_node_element draw2d_droppable ui-draggable' id='" + item+ "'>" + svg + "</div>");
                         that.menu.append(menuElem);
                         topPosition = i*70;
-                        $("#"+item.id).css("top", topPosition );
-                        $("#"+item.id).css("z-index",1);
+                        $("#"+item).css("top", topPosition );
+                        $("#"+item).css("z-index",1);
                     });
-
                 }
         });
     }

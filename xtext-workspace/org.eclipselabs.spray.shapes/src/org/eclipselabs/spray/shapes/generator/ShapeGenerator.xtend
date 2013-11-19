@@ -192,7 +192,8 @@ class ShapeGenerator implements IGenerator {
 			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
 			«ENDIF»
 			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
-			curve: {width: «d.layout.curveWidth», height: «d.layout.curveHeight»}
+			curve: {width: «d.layout.curveWidth», height: «d.layout.curveHeight»},
+			radius: «(d.layout.curveWidth + d.layout.curveHeight) / 2.0»
 		},
 		«IF d.shape.length > 0 »
 		shapes: [
