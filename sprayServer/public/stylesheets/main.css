@@ -217,12 +217,30 @@ footer a:hover { border-bottom: 1px dotted #ccc; color: #a9a9a9; }
 }
 
 .palette_node_element{
-    position:absolute;
-    margin:10px;
-    width: 60px;
-    height: 60px;
+    position:relative;
+    margin:10px 10px 10px 10px;
+    cursor: pointer;
+    padding-top:1px;
 }
 
 #menu{
     position:relative;
+    width: 210px;
+    overflow-y: scroll;
+    min-height: 500px;
+}
+
+.flyout{
+    position:absolute;
+    left: 50px;
+    height:25px;
+    background:yellow;
+    overflow: hidden;
+    z-index:10000;
+    display:none;
+    font-size: 10px;
+    font-family: Helvetica;
+}
+.palette_node_element:hover + .flyout{
+    display:block;
 }

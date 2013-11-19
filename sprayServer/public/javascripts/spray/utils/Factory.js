@@ -1,7 +1,7 @@
 var htwg = htwg || {};
 htwg.spray = htwg.spray || {};
 
-var shapedefs = [
+/*var shapedefs = [
     {
         name: "PI_Vessel_Vertical",
         params: {
@@ -15,10 +15,10 @@ var shapedefs = [
             stretchV: true,
             proportional: false
         },
-        /*anchors: [
+        anchors: [
             {type: "fixpoint", x: 0, y: 25},
             {type: "fixpoint", x: 100, y: 25}
-        ],*/
+        ],
         shapes: [
             {
                 name: "RoundedRectangle",
@@ -121,7 +121,7 @@ var shapedefs = [
             }
         ]
     }
-];
+];*/
 
 htwg.spray.Factory = function($){
 
@@ -209,6 +209,7 @@ htwg.spray.Factory = function($){
             if ( params.hasOwnProperty("position")){
                 rect.setPosition(params.position.x, params.position.y);
                 rect.setPositionRatioToRoot( parent.getWidth()/rect.getPosition().x, parent.getHeight()/rect.getPosition().y );
+                rect.setUserData({"type":"Rectangle"});
             }
 
             rect.setRadius(params.curve.width);
@@ -234,6 +235,7 @@ htwg.spray.Factory = function($){
             if ( params.hasOwnProperty("position")){
                 rect.setPosition(params.position.x, params.position.y);
                 rect.setPositionRatioToRoot( parent.getWidth()/rect.getPosition().x, parent.getHeight()/rect.getPosition().y );
+                rect.setUserData({"type":"Rectangle"});
             }
         }
 
@@ -270,7 +272,7 @@ htwg.spray.Factory = function($){
 
     this.drawLabel = function(shapeDef, parent){
 
-        var label = new spray2d.shape.basic.Label("sd");
+        var label = new spray2d.shape.basic.Label("text");
         label.setStroke(0);
         label.setAlpha(0);
 
@@ -381,12 +383,17 @@ htwg.spray.Factory = function($){
     },
 
     this.createBoundingBox = function( shape ){
-        var bbox = new spray2d.shape.basic.BoundingBox(shape.params.width, shape.params.height);
+        var bbox = new spray2d.shape.basic.BoundingBox(100,100);
         bbox.setAlpha(0);
         bbox.setPosition(0,0);
 
         if ( typeof shape.params != "undefined" ){
             var params = shape.params;
+
+            console.log(params.width, params.height);
+
+            bbox.setDimension(params.width, params.height);
+
             if ( params.hasOwnProperty("minHeight") ){
                 bbox.setMinHeight( params.minHeight );
             }
