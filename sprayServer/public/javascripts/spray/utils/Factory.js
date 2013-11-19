@@ -329,7 +329,7 @@ htwg.spray.Factory = function($){
                         break;
                     default: dash = "";
                 }
-                line.setDashArray("");
+                line.setDashArray(dash);
 
                 //TODO: add more styles...
             }
