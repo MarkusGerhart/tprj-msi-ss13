@@ -120,11 +120,12 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
         var userData = this.getUserData();
         var tAlign = "left";
         var vAlign = "top";
-        if ( userData.hasOwnProperty("textAlign") )
+
+        if ( userData != null && userData.hasOwnProperty("textAlign") )
         {
             tAlign = userData.textAlign;
         }
-        if ( userData.hasOwnProperty("verticalAlign") )
+        if ( userData != null && userData.hasOwnProperty("verticalAlign") )
         {
             vAlign = userData.verticalAlign;
         }

@@ -424,7 +424,7 @@
 
         var PI_HeatExchanger = new spray2d.shape.basic.BoundingBox(60,60);
         PI_HeatExchanger.setAlpha(0);
-        PI_HeatExchanger.setPosition(0,150);
+        PI_HeatExchanger.setPosition(20,150);
 
         var oval6 = new spray2d.shape.basic.Ellipse(60,60);
         oval6.setDimensionRatioToRoot( PI_HeatExchanger.getWidth()/oval6.getWidth(), PI_HeatExchanger.getHeight()/oval6.getHeight() );
@@ -471,13 +471,81 @@
         canvas.addFigure(PI_HeatExchanger);
 
 
-        var end   = new draw2d.shape.node.End();
+/*        var end   = new draw2d.shape.node.End();
         end.setPosition(50, 10);
         canvas.addFigure(end);
 
         var c = new draw2d.Connection();
         c.setSource(PI_HeatExchanger.getHybridPort(0));
         c.setTarget(end.getInputPort(0));
+        canvas.addFigure(c);*/
+
+
+        var PI_CentralHeatingUnit = new spray2d.shape.basic.BoundingBox(200,130);
+        PI_CentralHeatingUnit.setAlpha(0);
+        PI_CentralHeatingUnit.setPosition(300,200);
+
+        var rect3 = new spray2d.shape.basic.Rectangle(100,100);
+        rect3.setDimensionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect3.getWidth(), PI_CentralHeatingUnit.getHeight()/rect3.getHeight() );
+        rect3.setRadius(20);
+        rect3.setPosition(0,30);
+        rect3.setBackgroundColor("#ffffff");
+
+        PI_CentralHeatingUnit.addFigure(rect3, new spray2d.layout.locator.FigureLocator());
+        PI_CentralHeatingUnit.attachResizeListener(rect3);
+
+        var polyline2 = new spray2d.shape.basic.PolyLine(PI_CentralHeatingUnit);
+        polyline2.addPoint(new draw2d.geo.Point(30,0), new draw2d.geo.Point(30,70));
+        polyline2.addPoint(new draw2d.geo.Point(30,70), new draw2d.geo.Point(50,50));
+        polyline2.addPoint(new draw2d.geo.Point(50,50), new draw2d.geo.Point(70,70));
+        polyline2.addPoint(new draw2d.geo.Point(70,70), new draw2d.geo.Point(70,0));
+
+        var text14 = new spray2d.shape.basic.Label("Text");
+        text14.setPosition(100,0);
+        text14.setDimension(100,20);
+        text14.setAlpha(0);
+        text14.setDimensionRatioToRoot( PI_CentralHeatingUnit.getWidth()/60, PI_CentralHeatingUnit.getHeight()/20 );
+        text14.setPositionRatioToRoot( PI_CentralHeatingUnit.getWidth()/text14.getPosition().x, PI_CentralHeatingUnit.getHeight()/text14.getPosition().y );
+        text14.setStroke(0);
+        text14.setBackgroundColor("#f0f0f0");
+        text14.setUserData({"type":"Label"});
+
+        PI_CentralHeatingUnit.addFigure(text14, new spray2d.layout.locator.FigureLocator());
+        PI_CentralHeatingUnit.attachResizeListener(text14);
+
+        var rect4 = new spray2d.shape.basic.Rectangle(50,20);
+        rect4.setUserData({"type": "Rectangle"});
+        rect4.setPosition(25,100);
+        rect4.setDimensionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect4.getWidth(), PI_CentralHeatingUnit.getHeight()/rect4.getHeight() );
+        rect4.setPositionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect4.getPosition().x, PI_CentralHeatingUnit.getHeight()/rect4.getPosition().y );
+        rect4.setBackgroundColor("#ffffff");
+
+        PI_CentralHeatingUnit.addFigure(rect4, new spray2d.layout.locator.FigureLocator());
+        PI_CentralHeatingUnit.attachResizeListener(rect4);
+
+        canvas.addFigure(PI_CentralHeatingUnit);
+
+
+        var locator4 = new draw2d.layout.locator.CustomPortLocator(30, 0);
+        locator4.setScalable(PI_CentralHeatingUnit);
+        PI_CentralHeatingUnit.createPort("hybrid", locator4);
+
+        var locator5 = new draw2d.layout.locator.CustomPortLocator(70, 0);
+        locator5.setScalable(PI_CentralHeatingUnit);
+        PI_CentralHeatingUnit.createPort("hybrid", locator5);
+
+        var locator6 = new draw2d.layout.locator.CustomPortLocator(25, 110);
+        locator6.setScalable(PI_CentralHeatingUnit);
+        PI_CentralHeatingUnit.createPort("hybrid", locator6);
+
+        var locator7 = new draw2d.layout.locator.CustomPortLocator(75, 110);
+        locator7.setScalable(PI_CentralHeatingUnit);
+        PI_CentralHeatingUnit.createPort("hybrid", locator7);
+
+        var c = new draw2d.Connection();
+        c.setRouter(new draw2d.layout.connection.SketchConnectionRouter());
+        c.setSource(PI_HeatExchanger.getHybridPort(0));
+        c.setTarget(PI_CentralHeatingUnit.getHybridPort(0));
         canvas.addFigure(c);
 
         // display the SVG into the preview DIV

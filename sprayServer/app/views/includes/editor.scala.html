@@ -4,11 +4,15 @@
     <script>
         jQuery(document).ready(function() {
 
-            htwg.spray.view = new htwg.spray.View("drawArea");
-            htwg.spray.menu = new htwg.spray.Menu(jQuery);
             htwg.spray.factory = new htwg.spray.Factory(jQuery);
-            htwg.spray.toolbar = new htwg.spray.Toolbar(jQuery);
+            htwg.spray.menu = new htwg.spray.Menu(jQuery);
             htwg.spray.menu.buildMenu( htwg.spray.factory.shapeElements );
+
+            htwg.spray.view = new htwg.spray.View("drawArea");
+
+
+            htwg.spray.toolbar = new htwg.spray.Toolbar(jQuery);
+
         });
     </script>
 

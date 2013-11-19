@@ -59,8 +59,6 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
                         var positionY = target.getPosition().y;
                         target.setPosition(parseInt(target.parent.getWidth()/target.getPositionRatioToRoot().x),
                                            parseInt(target.parent.getHeight()/target.getPositionRatioToRoot().y));
-                        target.repaint();
-
                         break;
                     case "Rectangle":
                         var positionX = target.getPosition().x;
@@ -72,7 +70,7 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
                         var positionX = target.getPosition().x;
                         var positionY = target.getPosition().y;
                         target.setPosition(parseInt(target.parent.getWidth()/target.getPositionRatioRoot().x),
-                            parseInt(target.parent.getHeight()/target.getPositionRatioRoot().y));
+                                           parseInt(target.parent.getHeight()/target.getPositionRatioRoot().y));
                         break;
                     default: target.setPosition(target.getPosition().x,target.getPosition().y);
                 }

@@ -14,9 +14,9 @@ var spray2d = spray2d || {};
 spray2d.shape = spray2d.shape || {};
 spray2d.shape.basic = spray2d.shape.basic || {};
 
-spray2d.shape.basic.PolyLine = Class.extend({
+spray2d.shape.basic.Polyline = Class.extend({
 
-    NAME : "spray2d.shape.basic.PolyLine",
+    NAME : "spray2d.shape.basic.Polyline",
 
     DEFAULT_COLOR : new draw2d.util.Color(0,0,0),
 
@@ -35,10 +35,10 @@ spray2d.shape.basic.PolyLine = Class.extend({
 
     /**
      * @method
-     * add points
+     * add Line
      *
      **/
-    addPoint:function(/*:draw2d.geo.Point*/ start, end)
+    addLine:function(/*:draw2d.geo.Point*/ start, end)
     {
         if(typeof start=="undefined" || typeof end =="undefined"){
             return;

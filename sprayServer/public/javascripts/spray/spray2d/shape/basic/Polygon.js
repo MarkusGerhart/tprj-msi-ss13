@@ -35,10 +35,10 @@ spray2d.shape.basic.Polygon = Class.extend({
 
     /**
      * @method
-     * add points
+     * add Line
      *
      **/
-    addPoint:function(/*:draw2d.geo.Point*/ start, end)
+    addLine:function(/*:draw2d.geo.Point*/ start, end)
     {
         if(typeof start=="undefined" || typeof end =="undefined"){
             return;
