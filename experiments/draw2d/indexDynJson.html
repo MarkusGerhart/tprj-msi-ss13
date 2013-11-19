@@ -104,6 +104,7 @@
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/AntSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/GlowSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/figure/SlimSelectionFeedbackPolicy.js"> </SCRIPT>
+<SCRIPT src="../draw2d_3.0.0-dev/src/policy/line/LineSelectionFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/port/PortFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/port/ElasticStrapFeedbackPolicy.js"> </SCRIPT>
 <SCRIPT src="../draw2d_3.0.0-dev/src/policy/port/IntrusivePortsFeedbackPolicy.js"> </SCRIPT>
@@ -494,7 +495,9 @@ window.onload = function () {
 
 function displayJSON(canvas){
     var writer = new draw2d.io.json.Writer();
-    $("#json").text(JSON.stringify(writer.marshal(canvas),null,2));
+    writer.marshal(canvas,function(json){
+        $("#json").text(JSON.stringify(json, null, 2));
+    });
 }
 
 

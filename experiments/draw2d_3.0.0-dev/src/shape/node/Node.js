@@ -69,7 +69,9 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
           this.cachedPorts.addAll(this.hybridPorts);
           
           this.children.each($.proxy(function(i,e){
-              this.cachedPorts.addAll( e.figure.getPorts());
+	      if (e.figure.NAME != "draw2d.shape.basic.OurLine") {
+                this.cachedPorts.addAll( e.figure.getPorts());
+              }
           },this));
       }
               
