@@ -25,7 +25,9 @@ htwg.spray.Menu = function($){
         var size = 80;
 
         $.each(shapes, function(i, item) {
-            canvasElem = $("<div style='width: "+size+"px; height: "+size+"px;' id='"+ item +"'></div>");
+            canvasSize = size + 10;
+            canvasElem = $("<div style='width: "+canvasSize+"px; height: "+canvasSize+"px;' id='"+ item +"'></div>");
+            console.log(size);
             that.menu.append(canvasElem);
             canvas = new draw2d.Canvas(item);
             var figure = htwg.spray.factory.drawShape(item);

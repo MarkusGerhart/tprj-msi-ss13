@@ -1,128 +1,6 @@
 var htwg = htwg || {};
 htwg.spray = htwg.spray || {};
 
-/*var shapedefs = [
-    {
-        name: "PI_Vessel_Vertical",
-        params: {
-            width: 120,
-            height: 60,
-            minWidth: 50,
-            minHeight: 25,
-            maxWidth: 150,
-            maxHeight: 100,
-            stretchH: true,
-            stretchV: true,
-            proportional: false
-        },
-        anchors: [
-            {type: "fixpoint", x: 0, y: 25},
-            {type: "fixpoint", x: 100, y: 25}
-        ],
-        shapes: [
-            {
-                name: "RoundedRectangle",
-                params: {
-                    size: {width: 120, height: 60},
-                    curve: {width: 50, height: 50}
-                },
-                shapes: [
-                    {
-                        name: "Text",
-                        params: {
-                            position: {x: 3, y: 20},
-                            size: {width: 100, height: 20},
-                            align: {
-                                horizontal: "center",
-                                vertical: "middle"
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                name: "Ellipse",
-                params: {
-                    size: {width: 100, height: 100},
-                    position: {x:0, y:20}
-                }
-            },
-            {
-                name: "Line",
-                params:{
-                  style:{
-                      lineStyle: "dash"
-                  },
-                    points: [
-                    {
-                        x: 0,
-                        y: 10,
-                        curveBefore: 0,
-                        curveAfter: 0
-                    },
-                    {
-                        x: 100,
-                        y: 10,
-                        curveBefore: 0,
-                        curveAfter: 0
-                    }
-                    ]
-                }
-            },
-            {
-                name: "Polyline",
-                params: {
-                    points: [
-                        {
-                            x: 0,
-                            y: 10,
-                            curveBefore: 0,
-                            curveAfter: 0
-                        },
-                        {
-                            x: 30,
-                            y: 20,
-                            curveBefore: 0,
-                            curveAfter: 0
-                        },
-                        {
-                            x: 50,
-                            y: 50,
-                            curveBefore: 0,
-                            curveAfter: 0
-                        }
-                    ]
-                }
-            },
-            {
-                name: "Polygon",
-                params: {
-                    points: [
-                        {
-                            x: 100,
-                            y: 0,
-                            curveBefore: 0,
-                            curveAfter: 0
-                        },
-                        {
-                            x: 0,
-                            y: 50,
-                            curveBefore: 40,
-                            curveAfter: 20
-                        },
-                        {
-                            x: 0,
-                            y: 0,
-                            curveBefore: 40,
-                            curveAfter: 20
-                        }
-                    ]
-                }
-            }
-        ]
-    }
-];*/
-
 htwg.spray.Factory = function($){
 
     /**
@@ -144,7 +22,7 @@ htwg.spray.Factory = function($){
         });
     },
 
-    this.drawShape = function(name, canvas){
+    this.drawShape = function(name){
         var root = {};
         $.each(shapedefs, function(i,shapeDef){
             if ( shapeDef.hasOwnProperty("name") ){
@@ -153,6 +31,11 @@ htwg.spray.Factory = function($){
                     if ( shapeDef.hasOwnProperty("shapes")){
                         $.each(shapeDef.shapes, function(i,childShapeDef){
                              that.drawChild(childShapeDef, root, root);
+                        });
+                    }
+                    if ( shapeDef.hasOwnProperty("anchors")){
+                        $.each(shapeDef.anchors, function(i,anchorDef){
+                            that.drawAnchor(anchorDef, root);
                         });
                     }
                     return;
@@ -194,6 +77,42 @@ htwg.spray.Factory = function($){
                 that.drawChild(childShapeDef, shape, root);}
             });
         }
+    },
+
+    this.drawAnchor = function(anchorDef, parent){
+
+        switch (anchorDef.type) {
+            case "fixpoint":
+                var anchor = new spray2d.layout.locator.CustomPortLocator(anchorDef.x, anchorDef.y);
+                break;
+            case "relative":
+                var anchor = new spray2d.layout.locator.CustomPortLocator(parseInt(anchorDef.x*parent.getWidth()), parseInt(anchorDef.y*parent.getHeight()));
+                break;
+            case "center":
+                var anchor = new spray2d.layout.locator.CustomPortLocator(parseInt(parent.getWidth()/2), parseInt(parent.getHeight()/2));
+                break;
+            case "corners":
+                    var anchor_topleft = new spray2d.layout.locator.CustomPortLocator(0, 0);
+                    var anchor_topright = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), 0);
+                    var anchor_bottomleft = new spray2d.layout.locator.CustomPortLocator(0, parent.getHeight());
+                    var anchor_bottomright = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), parent.getHeight());
+                break;
+        }
+
+        if ( anchorDef.type != "corners"){
+            anchor.setScalable(parent);
+            parent.createPort("hybrid", anchor);
+        }else{
+            anchor_topleft.setScalable(parent);
+            anchor_topright.setScalable(parent);
+            anchor_bottomleft.setScalable(parent);
+            anchor_bottomright.setScalable(parent);
+            parent.createPort("hybrid", anchor_topleft);
+            parent.createPort("hybrid", anchor_topright);
+            parent.createPort("hybrid", anchor_bottomleft);
+            parent.createPort("hybrid", anchor_bottomright);
+        }
+
     },
 
     this.drawRoundedRectangle = function(shapeDef, parent){
@@ -272,7 +191,7 @@ htwg.spray.Factory = function($){
 
     this.drawLabel = function(shapeDef, parent){
 
-        var label = new spray2d.shape.basic.Label("text");
+        var label = new spray2d.shape.basic.Label();
         label.setStroke(0);
         label.setAlpha(0);
 
@@ -385,13 +304,10 @@ htwg.spray.Factory = function($){
     this.createBoundingBox = function( shape ){
         var bbox = new spray2d.shape.basic.BoundingBox(100,100);
         bbox.setAlpha(0);
-        bbox.setPosition(0,0);
+        bbox.setPosition(10,10);
 
         if ( typeof shape.params != "undefined" ){
             var params = shape.params;
-
-            console.log(params.width, params.height);
-
             bbox.setDimension(params.width, params.height);
 
             if ( params.hasOwnProperty("minHeight") ){
