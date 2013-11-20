@@ -59,5 +59,8 @@ spray2d.shape.basic.Ellipse = draw2d.shape.basic.Oval.extend({
 
     onOtherFigureIsResizing:function(figure){
         this.setDimension( figure.getWidth()/this.dimensionRatioToRoot.x, figure.getHeight()/this.dimensionRatioToRoot.y);
+    },
+
+    onDoubleClick: function(){
     }
 });

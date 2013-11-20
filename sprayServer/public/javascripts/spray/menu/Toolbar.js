@@ -27,12 +27,12 @@ htwg.spray.Toolbar = function($){
         // CommandStack. This is required to update the state of
         // the Undo/Redo Buttons.
         //
-        //SPRAY.htwg.view.getCommandStack().addEventListener(this);
+        //htwg.spray.view.getCommandStack().addEventListener(this);
 
-        // Register a Selection listener for the state hnadling
+        // Register a Selection listener for the state handling
         // of the Delete Button
         //
-        //SPRAY.htwg.view.addSelectionListener(this);
+        //htwg.spray.view.addSelectionListener(this);
 
         // Inject the UNDO Button and the callbacks
         //

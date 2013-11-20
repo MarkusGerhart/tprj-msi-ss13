@@ -46,36 +46,40 @@ htwg.spray.Factory = function($){
     },
 
     this.drawChild = function(shapeDef, parent, root){
+        var shape = null;
         switch( shapeDef.name ){
             case "RoundedRectangle":
-                var shape = that.drawRoundedRectangle(shapeDef, parent);
+                shape = that.drawRoundedRectangle(shapeDef, parent);
                 break;
             case "Rectangle":
-                var shape = that.drawRectangle(shapeDef, parent);
+                shape = that.drawRectangle(shapeDef, parent);
                 break;
             case "Text":
-                var shape = that.drawLabel(shapeDef, parent);
+                shape = that.drawLabel(shapeDef, parent);
                 break;
             case "Ellipse":
-                var shape = that.drawEllipse(shapeDef, parent);
+                shape = that.drawEllipse(shapeDef, parent);
                 break;
             case "Line":
-                var shape = that.drawLine(shapeDef, parent);
+                shape = that.drawLine(shapeDef, parent);
                 break;
             case "Polyline":
-                var shape = that.drawPolyline(shapeDef, parent);
+                shape = that.drawPolyline(shapeDef, parent);
                 break;
             case "Polygon":
-                var shape = that.drawPolygon(shapeDef, parent);
+                shape = that.drawPolygon(shapeDef, parent);
                 break;
             default:break;
         }
 
-        if ( shapeDef.hasOwnProperty("shapes")){
-            $.each(shapeDef.shapes, function(i,childShapeDef){
-                if ( typeof shape != "undefined" ){
-                that.drawChild(childShapeDef, shape, root);}
-            });
+        if ( shape != null ){
+            if ( shapeDef.hasOwnProperty("shapes")){
+                $.each(shapeDef.shapes, function(i,childShapeDef){
+                    if ( typeof shape != "undefined" ){
+                        that.drawChild(childShapeDef, shape, root);
+                    }
+                });
+            }
         }
     },
 
@@ -112,7 +116,6 @@ htwg.spray.Factory = function($){
             parent.createPort("hybrid", anchor_bottomleft);
             parent.createPort("hybrid", anchor_bottomright);
         }
-
     },
 
     this.drawRoundedRectangle = function(shapeDef, parent){
@@ -191,7 +194,7 @@ htwg.spray.Factory = function($){
 
     this.drawLabel = function(shapeDef, parent){
 
-        var label = new spray2d.shape.basic.Label();
+        var label = new spray2d.shape.basic.Label("default");
         label.setStroke(0);
         label.setAlpha(0);
 
@@ -199,7 +202,6 @@ htwg.spray.Factory = function($){
             var params = shapeDef.params;
 
             if ( params.hasOwnProperty("position")){
-                console.log(parent);
                 label.setPosition(params.position.x, params.position.y);
                 label.setPositionRatioToRoot( parent.getWidth()/label.getPosition().x, parent.getHeight()/label.getPosition().y );
                 label.setUserData({"type":"Label"});
@@ -220,6 +222,7 @@ htwg.spray.Factory = function($){
 
         parent.addFigure(label, new spray2d.layout.locator.FigureLocator(label));
         parent.attachResizeListener(label);
+        label.installEditor(new draw2d.ui.LabelInplaceEditor());
 
         return label;
     },
@@ -261,6 +264,7 @@ htwg.spray.Factory = function($){
 
             return line;
         }
+        return null;
     },
 
     this.drawPolyline = function(shapeDef, parent){
@@ -277,6 +281,7 @@ htwg.spray.Factory = function($){
 
             return polyline;
         }
+        return null;
     },
 
     this.drawPolygon = function(shapeDef, parent){
@@ -299,6 +304,7 @@ htwg.spray.Factory = function($){
 
             return polygon;
         }
+        return null;
     },
 
     this.createBoundingBox = function( shape ){

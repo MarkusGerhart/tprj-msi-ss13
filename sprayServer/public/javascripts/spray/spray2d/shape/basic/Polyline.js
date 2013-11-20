@@ -61,6 +61,9 @@ spray2d.shape.basic.Polyline = Class.extend({
      */
     getSegments: function(){
         return this.lineSegments;
+    },
+
+    onDoubleClick: function(){
     }
 
 });

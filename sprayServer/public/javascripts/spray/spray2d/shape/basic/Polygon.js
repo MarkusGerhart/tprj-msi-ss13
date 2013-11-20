@@ -71,6 +71,9 @@ spray2d.shape.basic.Polygon = Class.extend({
      */
     getSegments: function(){
         return this.lineSegments;
+    },
+
+    onDoubleClick: function(){
     }
 
 });

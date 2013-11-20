@@ -651,6 +651,9 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
 
         this.setStartPoint(positionStartX,positionStartY);
         this.setEndPoint(positionEndX,positionEndY);
+    },
+
+    onDoubleClick: function(){
     }
 
 });

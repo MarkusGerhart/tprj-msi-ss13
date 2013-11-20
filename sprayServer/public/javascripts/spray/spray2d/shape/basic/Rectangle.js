@@ -63,5 +63,8 @@ spray2d.shape.basic.Rectangle = draw2d.shape.basic.Rectangle.extend({
 
     onOtherFigureIsResizing:function(figure){
         this.setDimension( figure.getWidth()/this.dimensionRatioToRoot.x, figure.getHeight()/this.dimensionRatioToRoot.y);
+    },
+
+    onDoubleClick: function(){
     }
 });
