@@ -188,6 +188,90 @@ var shapedefs = [
 			,
 		]
 	}
+    ,
+    {
+        name: "SIMON_TEST",
+        params:{
+            width: 100,
+            height: 130,
+            proportional: false,
+        },
+        anchors: [
+            {type: "fixpoint", x: 30, y: 0},
+            {type: "fixpoint", x: 70, y: 0},
+            {type: "fixpoint", x: 25, y: 110},
+            {type: "fixpoint", x: 75, y: 110},
+        ],
+        shapes: [
+            {
+                name: "RoundedRectangle",
+                params: {
+                    position: {x: 0, y: 30},
+                    size: {width: 100, height: 100},
+                    curve: {width: 20, height: 20}
+                },
+            }
+            ,
+            {
+                name: "Polyline",
+                params: {
+                    points: [
+                        {
+                            x: 30,
+                            y: 0,
+                            curveBefore: 0,
+                            curveAfter: 0
+                        },
+                        {
+                            x: 30,
+                            y: 70,
+                            curveBefore: 0,
+                            curveAfter: 0
+                        },
+                        {
+                            x: 50,
+                            y: 50,
+                            curveBefore: 0,
+                            curveAfter: 0
+                        },
+                        {
+                            x: 70,
+                            y: 70,
+                            curveBefore: 0,
+                            curveAfter: 0
+                        },
+                        {
+                            x: 70,
+                            y: 0,
+                            curveBefore: 0,
+                            curveAfter: 0
+                        },
+                    ]
+                }
+            }
+            ,
+            {
+                name: "Text",
+                params: {
+                    position: {x: 0, y: 0},
+                    size: {width: 100, height: 20},
+                    align: {
+                        horizontal: "left",
+                        vertical: "top"
+                    },
+                }
+            }
+            ,
+            {
+                name: "Rectangle",
+                params: {
+                    position: {x: 25, y: 100},
+                    size: {width: 50, height: 20},
+                },
+            }
+            ,
+        ]
+    }
 	,
 	{
 		name: "PI_Vessel_Horizontal",

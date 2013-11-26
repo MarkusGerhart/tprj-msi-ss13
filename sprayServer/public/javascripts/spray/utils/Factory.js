@@ -100,10 +100,19 @@ htwg.spray.Factory = function($){
                     var anchor_topright = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), 0);
                     var anchor_bottomleft = new spray2d.layout.locator.CustomPortLocator(0, parent.getHeight());
                     var anchor_bottomright = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), parent.getHeight());
+                    var anchor_topmiddle = new spray2d.layout.locator.CustomPortLocator(parseInt(parent.getWidth()/2), 0);
+                    var anchor_leftmiddle = new spray2d.layout.locator.CustomPortLocator(0, parseInt(parent.getHeight/2));
+                    var anchor_rightmiddle = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), parseInt(parent.getHeight()/2));
+                    var anchor_bottommiddle = new spray2d.layout.locator.CustomPortLocator(parseInt(parent.getWidth()/2), parent.getHeight());
                 break;
         }
 
-        if ( anchorDef.type != "corners"){
+        if ( anchorDef.type == "relative" || anchorDef.type == "center" ){
+            anchor.setScalable(parent);
+            parent.createPort("hybrid", anchor);
+        }
+        else if ( anchorDef.type == "fixpoint"){
+            //not sure if fixpoint means definition in pixel or really fixed in position!
             anchor.setScalable(parent);
             parent.createPort("hybrid", anchor);
         }else{
@@ -111,10 +120,18 @@ htwg.spray.Factory = function($){
             anchor_topright.setScalable(parent);
             anchor_bottomleft.setScalable(parent);
             anchor_bottomright.setScalable(parent);
+            anchor_topmiddle.setScalable(parent);
+            anchor_leftmiddle.setScalable(parent);
+            anchor_rightmiddle.setScalable(parent);
+            anchor_bottommiddle.setScalable(parent);
             parent.createPort("hybrid", anchor_topleft);
             parent.createPort("hybrid", anchor_topright);
             parent.createPort("hybrid", anchor_bottomleft);
             parent.createPort("hybrid", anchor_bottomright);
+            parent.createPort("hybrid", anchor_topmiddle);
+            parent.createPort("hybrid", anchor_leftmiddle);
+            parent.createPort("hybrid", anchor_rightmiddle);
+            parent.createPort("hybrid", anchor_bottommiddle);
         }
     },
 
@@ -311,6 +328,9 @@ htwg.spray.Factory = function($){
         var bbox = new spray2d.shape.basic.BoundingBox(100,100);
         bbox.setAlpha(0);
         bbox.setPosition(10,10);
+        bbox.setUserData({"name":shape.name});
+
+        //TODO: Refactor this, each shape could have these params
 
         if ( typeof shape.params != "undefined" ){
             var params = shape.params;

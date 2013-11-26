@@ -48,6 +48,20 @@ htwg.spray.Toolbar = function($){
             that.view.getCommandStack().redo();
         },this));
 
+        // Inject the SAVE Button and the callback
+        //
+        this.saveButton  = $("#save");
+        this.saveButton.click($.proxy(function(){
+            that.view.getModel();
+        },this));
+
+        // Inject the SAVE Button and the callback
+        //
+        this.loadButton  = $("#load");
+        this.loadButton.click($.proxy(function(){
+            that.view.setModel();
+        },this));
+
     };
 
     this.initialize();
