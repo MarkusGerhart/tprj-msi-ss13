@@ -46,7 +46,7 @@ spray2d.shape.basic.Polygon = Class.extend({
         var line = new spray2d.shape.basic.Line(start.getX(), start.getY(), end.getX(), end.getY());
         line.setStartRatioToRoot( this.root.getWidth(), this.root.getHeight() );
         line.setEndRatioToRoot( this.root.getWidth(), this.root.getHeight() );
-        line.setUserData({"type":"Line"});
+        //line.setUserData({"type":"Line"});
         this.root.addFigure(line, new spray2d.layout.locator.FigureLocator(this.root));
         this.root.attachMoveListener(line);
 
