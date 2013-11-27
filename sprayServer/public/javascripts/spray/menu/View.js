@@ -137,6 +137,13 @@ htwg.spray.View = draw2d.Canvas.extend({
 
                 that.model.entities.push(entity);
                 that.labels = [];
+
+                $.each(figure.hybridPorts, function(i,port){
+                    $.each(port.getConnections(),function(j,conn){
+                         console.log(conn);
+                    });
+                });
+
             }
         });
     },
@@ -160,8 +167,6 @@ htwg.spray.View = draw2d.Canvas.extend({
             that.addFigure(figure);
 
         });
-
-        console.log(this.model);
     },
 
     getAllLabels: function(figure){
@@ -202,8 +207,31 @@ htwg.spray.View = draw2d.Canvas.extend({
                 else if ( child.getChildren().data.length > 0 ) {
                     that.setAllLabels(child)
                 }
+
+                //connection nicht redundant anhängen
+
             }
         });
     }
+
+   /* getAllAnchors: function(figure){
+        var that = this;
+
+        $.each(figure.getChildren().data, function(i,child){
+            if ( typeof child == "object" ){
+                if ( child.hasOwnProperty("figure")){
+                    child = child.figure;
+                }
+                var userData = child.getUserData();
+                if ( userData != null && userData.hasOwnProperty("type") && userData.type == "Label" ){
+                    that.labels.push({"id":child.getId(),
+                        "text":child.getText()});
+                }
+                else if ( child.getChildren().data.length > 0 ) {
+                    that.getAllLabels(child)
+                }
+            }
+        });
+    }*/
 
 });
