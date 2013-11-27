@@ -63,7 +63,19 @@ Only the top level shape can hold anchors. There are four types of anchors:
 
 The shapes property is a list. To build conjuncted shapes
 in a hierarchie, the same properties are allowed to be applied
-recursive:
+recursive.
+
+Following parameters are *only* in the mother shape available:
+
+* minWidth, minHeight
+* maxWidth, maxHeight
+* stretchH, stretchV
+* proportional
+
+Also a boundingbox size will be calculated for the mother shape.
+This boundingbox size is based on the sizes of the child shapes.
+The size parameter in the mother shape is therefore the size of
+the invisible boundingbox.
 
 PI Example
 ----------
