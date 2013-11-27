@@ -138,19 +138,75 @@ htwg.spray.View = draw2d.Canvas.extend({
                 that.model.entities.push(entity);
                 that.labels = [];
 
-                $.each(figure.hybridPorts, function(i,port){
-                    $.each(port.getConnections(),function(j,conn){
-                         console.log(conn);
-                    });
+                $.each(figure.hybridPorts.data, function(i,port){
+                    if ( typeof port == "object" ){
+                        var conns = port.getConnections();
+                        $.each(conns.data,function(j,conn){
+                            that.getConnectionAsJSON(conn, figure);
+                        });
+                    }
                 });
-
             }
         });
+
+        console.log(this.model);
+    },
+
+    getConnectionAsJSON: function(conn, figure){
+         if ( typeof conn == "object" ){
+
+            //important to retrieve the real source port
+            var sourcePortID = conn.getSource().getId();
+            var sourceParentObj = conn.getSource().getParent();
+            var sourceAnchorID = -1;
+
+            $.each(sourceParentObj.hybridPorts.data,function(q,sourcePort){
+                if ( typeof sourcePort == "object" && sourcePort.getId() == sourcePortID ){
+                    sourceAnchorID = q;
+                }
+            });
+
+            var targetPortID = conn.getTarget().getId();
+            var targetParentObj = conn.getTarget().getParent();
+            var targetAnchorID = -1;
+
+            $.each(targetParentObj.hybridPorts.data,function(p,targetPort){
+                if ( typeof targetPort == "object" && targetPort.getId() == targetPortID ){
+                    targetAnchorID = p;
+                }
+            });
+
+            if ( targetAnchorID > -1 && sourceAnchorID > -1 ){
+
+                var alreadyInserted = false;
+                $.each(this.model.connections, function(i,existingConn){
+                    if ( typeof existingConn == "object" && existingConn.hasOwnProperty("id") && existingConn.id == conn.getId() ){
+                        alreadyInserted = true;
+                    }
+                });
+
+                if ( !alreadyInserted ){
+                    var connections = {};
+
+                    /*TODO: name should be the connection name (e.g. PI_Source_Exhaust) from Spray Model
+                            The type manhattan or freeform should then be set in the factory! */
+                    connections["name"] = "Manhattan";
+                    connections["id"] = conn.getId();
+                    connections["from"] = {"id":sourceParentObj.getId(),
+                        "anchor":sourceAnchorID};
+                    connections["to"] = {"id":targetParentObj.getId(),
+                        "anchor":targetAnchorID};
+
+                    this.model.connections.push(connections);
+                }
+            }
+        }
     },
 
     setModel: function(){
         this.clear();
         var entities = this.model.entities;
+        var connections = this.model.connections;
         var that = this;
 
         $.each(entities,function(i,entity){
@@ -166,6 +222,20 @@ htwg.spray.View = draw2d.Canvas.extend({
             }
             that.addFigure(figure);
 
+        });
+
+        $.each(connections, function(i,conn){
+            /*TODO: name should be the connection name (e.g. PI_Source_Exhaust) from Spray Model
+                    The type manhattan or freeform should then be set in the factory! */
+            var c = new draw2d.Connection();
+            c.setRouter(new draw2d.layout.connection.ManhattanConnectionRouter());
+
+            var sourceFigure = that.getFigure(conn.from.id);
+            var targetFigure = that.getFigure(conn.to.id);
+            c.setSource(sourceFigure.getHybridPort(conn.from.anchor));
+            c.setTarget(targetFigure.getHybridPort(conn.to.anchor));
+            c.setId(conn.id);
+            that.addFigure(c);
         });
     },
 
@@ -207,31 +277,8 @@ htwg.spray.View = draw2d.Canvas.extend({
                 else if ( child.getChildren().data.length > 0 ) {
                     that.setAllLabels(child)
                 }
-
-                //connection nicht redundant anhängen
-
             }
         });
     }
-
-   /* getAllAnchors: function(figure){
-        var that = this;
-
-        $.each(figure.getChildren().data, function(i,child){
-            if ( typeof child == "object" ){
-                if ( child.hasOwnProperty("figure")){
-                    child = child.figure;
-                }
-                var userData = child.getUserData();
-                if ( userData != null && userData.hasOwnProperty("type") && userData.type == "Label" ){
-                    that.labels.push({"id":child.getId(),
-                        "text":child.getText()});
-                }
-                else if ( child.getChildren().data.length > 0 ) {
-                    that.getAllLabels(child)
-                }
-            }
-        });
-    }*/
 
 });
