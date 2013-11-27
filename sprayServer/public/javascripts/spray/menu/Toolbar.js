@@ -1,3 +1,14 @@
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2013 Simon Schneeberger
+ ****************************************/
+/**
+ * @class htwg.spray.Toolbar
+ * Toolbar
+ *
+ * @author Simon Schneeberger
+ */
+
 var htwg = htwg || {};
 htwg.spray = htwg.spray || {};
 
