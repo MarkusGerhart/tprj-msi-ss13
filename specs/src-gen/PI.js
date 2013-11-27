@@ -1,12 +1,16 @@
 var shapedefs = [
 	{
 		name: "PI_Vessel_Vertical",
+		params: {
+			size: {witdh: 120, height: 60},
+		},
 		shapes: [
 			{
 				name: "RoundedRectangle",
 				params: {
 					size: {width: 120, height: 60},
-					curve: {width: 50, height: 50}
+					curve: {width: 50, height: 50},
+					radius: 50.0
 				},
 				shapes: [
 					{
@@ -29,6 +33,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Boiler",
+		params: {
+			size: {witdh: 160, height: 100},
+		},
 		anchors: [
 				{type: "fixpoint", x: 0, y: 30},
 				{type: "fixpoint", x: 0, y: 70},
@@ -39,9 +46,9 @@ var shapedefs = [
 			{
 				name: "RoundedRectangle",
 				params: {
-					position: {x: 0, y: 0},
 					size: {width: 60, height: 100},
-					curve: {width: 30, height: 30}
+					curve: {width: 30, height: 30},
+					radius: 30.0
 				},
 			}
 			,
@@ -86,7 +93,6 @@ var shapedefs = [
 			{
 				name: "Text",
 				params: {
-					position: {x: 60, y: 0},
 					size: {width: 100, height: 20},
 					align: {
 						horizontal: "left",
@@ -100,6 +106,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_CentralHeatingUnit",
+		params: {
+			size: {witdh: 200, height: 130},
+		},
 		anchors: [
 				{type: "fixpoint", x: 30, y: 0},
 				{type: "fixpoint", x: 70, y: 0},
@@ -110,9 +119,9 @@ var shapedefs = [
 			{
 				name: "RoundedRectangle",
 				params: {
-					position: {x: 0, y: 30},
 					size: {width: 100, height: 100},
-					curve: {width: 20, height: 20}
+					curve: {width: 20, height: 20},
+					radius: 20.0
 				},
 			}
 			,
@@ -157,7 +166,6 @@ var shapedefs = [
 			{
 				name: "Text",
 				params: {
-					position: {x: 100, y: 0},
 					size: {width: 100, height: 20},
 					align: {
 						horizontal: "left",
@@ -179,12 +187,16 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Vessel_Horizontal",
+		params: {
+			size: {witdh: 60, height: 120},
+		},
 		shapes: [
 			{
 				name: "RoundedRectangle",
 				params: {
 					size: {width: 60, height: 120},
-					curve: {width: 50, height: 50}
+					curve: {width: 50, height: 50},
+					radius: 50.0
 				},
 				shapes: [
 					{
@@ -207,6 +219,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_HeatExchanger",
+		params: {
+			size: {witdh: 100, height: 80},
+		},
 		anchors: [
 				{type: "fixpoint", x: 0, y: 50},
 				{type: "fixpoint", x: 90, y: 30},
@@ -216,7 +231,6 @@ var shapedefs = [
 			{
 				name: "Ellipse",
 				params: {
-					position: {x: 0, y: 20},
 					size: {width: 60, height: 60},
 				},
 			}
@@ -275,6 +289,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Valve",
+		params: {
+			size: {witdh: 120, height: 60},
+		},
 		shapes: [
 			{
 				name: "Polygon",
@@ -311,7 +328,6 @@ var shapedefs = [
 			{
 				name: "Text",
 				params: {
-					position: {x: 30, y: 0},
 					size: {width: 60, height: 20},
 					align: {
 						horizontal: "left",
@@ -325,6 +341,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Valve_Manual",
+		params: {
+			size: {witdh: 120, height: 120},
+		},
 		shapes: [
 			{
 				name: "Polygon",
@@ -415,6 +434,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Valve_Control",
+		params: {
+			size: {witdh: 120, height: 120},
+		},
 		shapes: [
 			{
 				name: "Polygon",
@@ -511,6 +533,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Pump",
+		params: {
+			size: {witdh: 60, height: 60},
+		},
 		shapes: [
 			{
 				name: "Ellipse",
@@ -578,6 +603,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Pump_Vacuum",
+		params: {
+			size: {witdh: 60, height: 60},
+		},
 		shapes: [
 			{
 				name: "Ellipse",
@@ -645,6 +673,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_SystemEnd",
+		params: {
+			size: {witdh: 20, height: 90},
+		},
 		shapes: [
 			{
 				name: "Polyline",
@@ -689,6 +720,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Joint",
+		params: {
+			size: {witdh: 10, height: 10},
+		},
 		shapes: [
 			{
 				name: "Ellipse",
@@ -702,6 +736,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Location_NoLine",
+		params: {
+			size: {witdh: 50, height: 50},
+		},
 		shapes: [
 			{
 				name: "Ellipse",
@@ -712,7 +749,6 @@ var shapedefs = [
 					{
 						name: "Text",
 						params: {
-							position: {x: 0, y: 5},
 							size: {width: 50, height: 20},
 							align: {
 								horizontal: "center",
@@ -724,7 +760,6 @@ var shapedefs = [
 					{
 						name: "Text",
 						params: {
-							position: {x: 0, y: 30},
 							size: {width: 50, height: 20},
 							align: {
 								horizontal: "center",
@@ -741,6 +776,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Location_SolidLine",
+		params: {
+			size: {witdh: 50, height: 50},
+		},
 		shapes: [
 			{
 				name: "Ellipse",
@@ -771,7 +809,6 @@ var shapedefs = [
 					{
 						name: "Text",
 						params: {
-							position: {x: 0, y: 5},
 							size: {width: 50, height: 20},
 							align: {
 								horizontal: "center",
@@ -783,7 +820,6 @@ var shapedefs = [
 					{
 						name: "Text",
 						params: {
-							position: {x: 0, y: 30},
 							size: {width: 50, height: 20},
 							align: {
 								horizontal: "center",
@@ -800,6 +836,9 @@ var shapedefs = [
 	,
 	{
 		name: "PI_Location_DashedLine",
+		params: {
+			size: {witdh: 50, height: 50},
+		},
 		shapes: [
 			{
 				name: "Ellipse",
@@ -830,7 +869,6 @@ var shapedefs = [
 					{
 						name: "Text",
 						params: {
-							position: {x: 0, y: 5},
 							size: {width: 50, height: 20},
 							align: {
 								horizontal: "center",
@@ -842,7 +880,6 @@ var shapedefs = [
 					{
 						name: "Text",
 						params: {
-							position: {x: 0, y: 30},
 							size: {width: 50, height: 20},
 							align: {
 								horizontal: "center",
