@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:petrinet="http://spray.eclipselabs.org/examples/Petrinet" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://spray.eclipselabs.org/examples/Petrinet">
+  <xsd:import namespace="http://www.omg.org/XMI" schemaLocation="http://grepcode.com/file_/repository.grepcode.com/java/eclipse.org/3.7/org.eclipse.emf/ecore/2.7.0/model/XMI.xsd/?v=source"/>
+  <!-- was: platform:/plugin/org.eclipse.emf.ecore/model/XMI.xsd (reference to eclipse) -->
+  <xsd:complexType name="Petrinet">
+    <xsd:choice maxOccurs="unbounded" minOccurs="0">
+      <xsd:element name="mapelements" type="petrinet:Petrinet"/>
+      <xsd:element ref="xmi:Extension"/>
+    </xsd:choice>
+    <xsd:attribute ref="xmi:id"/>
+    <xsd:attributeGroup ref="xmi:ObjectAttribs"/>
+    <xsd:attribute name="name" type="xsd:string"/>
+    <xsd:attribute name="description" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="Petrinet" type="petrinet:Petrinet"/>
+  <xsd:complexType name="Node">
+    <xsd:complexContent>
+      <xsd:extension base="petrinet:Petrinet"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Node" type="petrinet:Node"/>
+  <xsd:complexType name="Edge">
+    <xsd:complexContent>
+      <xsd:extension base="petrinet:Petrinet"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Edge" type="petrinet:Edge"/>
+  <xsd:complexType name="Token">
+    <xsd:complexContent>
+      <xsd:extension base="petrinet:Node"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Token" type="petrinet:Token"/>
+  <xsd:complexType name="Transition">
+    <xsd:complexContent>
+      <xsd:extension base="petrinet:Node"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Transition" type="petrinet:Transition"/>
+  <xsd:complexType name="Place">
+    <xsd:complexContent>
+      <xsd:extension base="petrinet:Node">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="tokens" type="petrinet:Token"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Place" type="petrinet:Place"/>
+  <xsd:complexType name="PTEdge">
+    <xsd:complexContent>
+      <xsd:extension base="petrinet:Edge">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="fromPlace" type="petrinet:Place"/>
+          <xsd:element name="toTransition" type="petrinet:Transition"/>
+        </xsd:choice>
+        <xsd:attribute name="fromPlace" type="xsd:string"/>
+        <xsd:attribute name="toTransition" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PTEdge" type="petrinet:PTEdge"/>
+  <xsd:complexType name="TPEdge">
+    <xsd:complexContent>
+      <xsd:extension base="petrinet:Edge">
+        <xsd:choice maxOccurs="unbounded" minOccurs="0">
+          <xsd:element name="fromTransition" type="petrinet:Transition"/>
+          <xsd:element name="toPlace" type="petrinet:Place"/>
+        </xsd:choice>
+        <xsd:attribute name="fromTransition" type="xsd:string"/>
+        <xsd:attribute name="toPlace" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TPEdge" type="petrinet:TPEdge"/>
+</xsd:schema>

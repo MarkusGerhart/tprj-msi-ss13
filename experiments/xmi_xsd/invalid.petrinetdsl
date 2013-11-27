@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<petrinet:Petrinet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:petrinet="http://spray.eclipselabs.org/examples/Petrinet">
+  <mapelements xsi:type="petrinet:Place" name="xyd">
+    <mapelements xsi:type="petrinet:PTEdge" fromPlace="//@mapelements.0" toPlace="//@mapelements.2"/>
+    <tokens/>
+  </mapelements>
+  <mapelements xsi:type="petrinet:Transition" name="c">
+    <mapelements xsi:type="petrinet:TPEdge" fromTransition="//@mapelements.1" toPlace="//@mapelements.2"/>
+  </mapelements>
+  <mapelements xsi:type="petrinet:Place" name="jj"/>
+</petrinet:Petrinet>
