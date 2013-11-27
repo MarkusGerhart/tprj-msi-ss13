@@ -1,3 +1,14 @@
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2013 Simon Schneeberger
+ ****************************************/
+/**
+ * @class htwg.spray.Factory
+ * Spray Shape Factory
+ *
+ * @author Simon Schneeberger
+ */
+
 var htwg = htwg || {};
 htwg.spray = htwg.spray || {};
 
