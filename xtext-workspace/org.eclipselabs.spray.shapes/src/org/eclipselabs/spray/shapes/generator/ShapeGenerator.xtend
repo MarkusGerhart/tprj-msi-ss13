@@ -19,6 +19,7 @@ import org.eclipselabs.spray.shapes.shape.AnchorPredefinied
 import org.eclipselabs.spray.shapes.shape.AnchorManual
 import org.eclipselabs.spray.shapes.shape.AnchorRelativePosition
 import org.eclipselabs.spray.shapes.shape.AnchorFixPointPosition
+import org.eclipselabs.spray.shapes.generator.util.ShapeSizeCalculator
 
 /**
  * Generates code from your model files on save.
@@ -43,12 +44,17 @@ class ShapeGenerator implements IGenerator {
 	def outerShape(ShapeDefinition d) '''
 	{
 		name: "«d.name»",
-		«IF d.shapeLayout.minwidth > 0 && d.shapeLayout.minheight > 0
-			&& d.shapeLayout.maxwidth > 0 && d.shapeLayout.maxheight > 0
-			&& d.shapeLayout.stretchH != null && d.shapeLayout.stretchV != null
-			&& d.shapeLayout.proportional != null
+		«val boundingbox = new ShapeSizeCalculator().getContainerSize(d)»
+		«IF d.shapeLayout.minwidth > 0 || d.shapeLayout.minheight > 0
+			|| d.shapeLayout.maxwidth > 0 || d.shapeLayout.maxheight > 0
+			|| d.shapeLayout.stretchH != null || d.shapeLayout.stretchV != null
+			|| d.shapeLayout.proportional != null
+			|| boundingbox.width > 0 || boundingbox.heigth > 0
 		»
 		params: {
+			«IF boundingbox.width > 0 && boundingbox.heigth > 0»
+			size: {witdh: «boundingbox.width», height: «boundingbox.heigth»},
+			«ENDIF»
 			«IF d.shapeLayout.minwidth > 0»
 			minWidth: «d.shapeLayout.minwidth»,
 			«ENDIF»
@@ -153,7 +159,7 @@ class ShapeGenerator implements IGenerator {
 	{
 		name: "«name»",
 		params: {
-			«IF d.layout.common.xcor != null && d.layout.common.ycor != null»
+			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
 			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
 			«ENDIF»
 			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
@@ -169,7 +175,7 @@ class ShapeGenerator implements IGenerator {
 	{
 		name: "«name»",
 		params: {
-			«IF d.layout.common.xcor != null && d.layout.common.ycor != null»
+			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
 			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
 			«ENDIF»
 			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
@@ -188,7 +194,7 @@ class ShapeGenerator implements IGenerator {
 	{
 		name: "«name»",
 		params: {
-			«IF d.layout.common.xcor != null && d.layout.common.ycor != null»
+			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
 			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
 			«ENDIF»
 			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
@@ -234,7 +240,7 @@ class ShapeGenerator implements IGenerator {
 	{
 		name: "«name»",
 		params: {
-			«IF d.layout.common.xcor != null && d.layout.common.ycor != null»
+			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
 			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
 			«ENDIF»
 			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},

@@ -362,8 +362,8 @@ CommonLayout: {CommonLayout}
 (
     (
         'position' '(' 
-            'x' '=' xcor=N_INT ',' 
-            'y' '=' ycor=N_INT 
+            'x' '=' xcor=INT ',' 
+            'y' '=' ycor=INT 
         ')'
     )? 
     & (
@@ -389,7 +389,7 @@ TextBody: {TextBody}
 Point: {Point} 
 (
     'point' '(' 
-        'x' '=' xcor=N_INT ',' 'y' '=' ycor=N_INT 
+        'x' '=' xcor=INT ',' 'y' '=' ycor=INT 
         (
             ',' 'curveBefore' '=' curveBefore=INT 
             ',' 'curveAfter'  '=' curveAfter=INT

@@ -1,3 +1,14 @@
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2013 Simon Schneeberger
+ ****************************************/
+/**
+ * @class htwg.spray.Toolbar
+ * Toolbar
+ *
+ * @author Simon Schneeberger
+ */
+
 var htwg = htwg || {};
 htwg.spray = htwg.spray || {};
 
@@ -27,12 +38,12 @@ htwg.spray.Toolbar = function($){
         // CommandStack. This is required to update the state of
         // the Undo/Redo Buttons.
         //
-        //SPRAY.htwg.view.getCommandStack().addEventListener(this);
+        //htwg.spray.view.getCommandStack().addEventListener(this);
 
-        // Register a Selection listener for the state hnadling
+        // Register a Selection listener for the state handling
         // of the Delete Button
         //
-        //SPRAY.htwg.view.addSelectionListener(this);
+        //htwg.spray.view.addSelectionListener(this);
 
         // Inject the UNDO Button and the callbacks
         //
@@ -46,6 +57,20 @@ htwg.spray.Toolbar = function($){
         this.redoButton  = $("#redo");
         this.redoButton.click($.proxy(function(){
             that.view.getCommandStack().redo();
+        },this));
+
+        // Inject the SAVE Button and the callback
+        //
+        this.saveButton  = $("#save");
+        this.saveButton.click($.proxy(function(){
+            that.view.getModel();
+        },this));
+
+        // Inject the SAVE Button and the callback
+        //
+        this.loadButton  = $("#load");
+        this.loadButton.click($.proxy(function(){
+            that.view.setModel();
         },this));
 
     };

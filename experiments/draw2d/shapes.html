@@ -1104,10 +1104,12 @@
         PI_CentralHeatingUnit.setPosition(0,1250);
 
         var rect3 = new spray2d.shape.basic.Rectangle(100,100);
-        rect3.setDimensionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect3.getWidth(), PI_CentralHeatingUnit.getHeight()/rect3.getHeight() );
-        rect3.setRadius(20);
         rect3.setPosition(0,30);
+        rect3.setDimensionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect3.getWidth(), PI_CentralHeatingUnit.getHeight()/rect3.getHeight() );
+        rect3.setPositionRatioToRoot( PI_CentralHeatingUnit.getWidth()/rect3.getPosition().x, PI_CentralHeatingUnit.getHeight()/rect3.getPosition().y );
+        rect3.setRadius(20);
         rect3.setBackgroundColor("#ffffff");
+        rect3.setUserData({"type":"Rectangle"});
 
         PI_CentralHeatingUnit.addFigure(rect3, new spray2d.layout.locator.FigureLocator());
         PI_CentralHeatingUnit.attachResizeListener(rect3);
