@@ -117,6 +117,8 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
      * @template
      */
     onMouseDrag:function(canvas, dx, dy, dx2, dy2){
+        //console.log("on mouse drag");
+
         this.mouseMovedDuringMouseDown = true;
 
         if (this.mouseDraggingElement !== null) {
@@ -155,7 +157,15 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
             }
 
             var p = canvas.fromDocumentToCanvasCoordinate(canvas.mouseDownX + (dx/canvas.zoomFactor), canvas.mouseDownY + (dy/canvas.zoomFactor));
+            console.log("this.mouseDraggingElement ID: " + this.mouseDraggingElement.getId());
             var target = canvas.getBestFigure(p.x, p.y,this.mouseDraggingElement);
+
+            /*if (target !== null) {
+                console.log("taget name: " + target.NAME);
+                console.log("taget ID: " + target.getId());
+            }  else {
+                console.log("target is null");
+            }*/
 
             if (target !== canvas.currentDropTarget) {
                 if (canvas.currentDropTarget !== null) {
@@ -163,8 +173,16 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                     canvas.currentDropTarget = null;
                 }
                 if (target !== null) {
-                    canvas.currentDropTarget = target.onDragEnter(this.mouseDraggingElement);
+                    //console.log("taget name: " + target.NAME);
+                    //console.log("this.mouseDraggingElement name: " + this.mouseDraggingElement.NAME);
+                    //canvas.currentDropTarget = target.onDragEnter(this.mouseDraggingElement);
+                    canvas.currentDropTarget = target;
+                    //console.log("canvas.currentDropTarget: " + canvas.currentDropTarget);
+                } else {
+                    //console.log("target is null");
                 }
+            } else {
+                //console.log("target == canva.currentDropTarget");
             }
         }
         // Connection didn't support panning at the moment. There is no special reason for that. Just an interaction
@@ -185,11 +203,14 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
      */
     onMouseUp: function(canvas, x, y){
         if (this.mouseDraggingElement !== null) {
+            //console.log("mouseDraggingElementName : " + this.mouseDraggingElement.NAME);
             var sel =canvas.getSelection().getAll();
             if(!sel.contains(this.mouseDraggingElement)){
+                console.log("sel does NOT cotain mouseDraggingElement");
                 this.mouseDraggingElement.onDragEnd();
             }
             else{
+                //console.log("sel does NOT cotain mouseDraggingElement");
                 canvas.getCommandStack().startTransaction();
                 canvas.getSelection().getAll().each(function(i,figure){
                     figure.onDragEnd();
@@ -197,11 +218,16 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                 canvas.getCommandStack().commitTransaction();
             }
             if(canvas.currentDropTarget!==null){
+                //console.log("dropTargetName : " + canvas.currentDropTarget.NAME);
                 this.mouseDraggingElement.onDrop(canvas.currentDropTarget);
                 canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);
                 canvas.currentDropTarget = null;
+            } else {
+                //console.log("dropTarget == null");
             }
             this.mouseDraggingElement = null;
+        } else {
+            //console.log("mouseDraggingElement == null");
         }
 
         // Reset the current selection if the user click in the blank canvas.

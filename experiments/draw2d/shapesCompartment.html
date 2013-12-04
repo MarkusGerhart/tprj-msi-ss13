@@ -425,7 +425,7 @@
 
         var rect = new spray2d.shape.basic.Rectangle(120,60);
         rect.setDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth(), PI_Vessel_Vertical.getHeight()/rect.getHeight() );
-        rect.setRadius(50);
+        //rect.setRadius(50);
         rect.setBackgroundColor("#ffffff");
 
         PI_Vessel_Vertical.addFigure(rect,  new spray2d.layout.locator.FigureLocator(PI_Vessel_Vertical));
@@ -437,7 +437,7 @@
 
         var PI_Valve_Manual_SIMON_TEST = new spray2d.shape.basic.BoundingBox(120,120);
         PI_Valve_Manual_SIMON_TEST.setAlpha(0);
-        PI_Valve_Manual_SIMON_TEST.setPosition(10,10);
+        PI_Valve_Manual_SIMON_TEST.setPosition(10,100);
 
         var polygon2 = new spray2d.shape.basic.Polygon(PI_Valve_Manual_SIMON_TEST);
         polygon2.addPoint(new draw2d.geo.Point(0,60), new draw2d.geo.Point(120,120));
@@ -453,7 +453,7 @@
         ovaltest.setPositionRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth()/ovaltest.getPosition().x, PI_Valve_Manual_SIMON_TEST.getHeight()/ovaltest.getPosition().y );
         ovaltest.setBackgroundColor("#ffffff");
         polygon2.addFigure(ovaltest);
-        ovaltest.setDraggable(true);
+        //ovaltest.setDraggable(true);
 
         var ovaltest2 = new spray2d.shape.basic.Ellipse(30,30);
         ovaltest2.setUserData({"type":"Ellipse"});
@@ -464,6 +464,7 @@
         ovaltest.addFigure(ovaltest2, new spray2d.layout.locator.FigureLocator());
         ovaltest.attachResizeListener(ovaltest2);
         ovaltest2.setDraggable(true);
+        ovaltest2.setId("123");
 
         var line9 = new spray2d.shape.basic.Line(60,30,60,90);
         line9.setStartRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight() );
