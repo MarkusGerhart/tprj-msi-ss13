@@ -1,20 +1,25 @@
 /*****************************************
  *   Library is under GPL License (GPL)
- *   Copyright (c) 2012 Andreas Herz
+ *   Copyright (c) 2013 Simon Schneeberger
  ****************************************/
 /**
- * @class draw2d.policy.canvas.SingleSelectionPolicy
- * 
+ * @class spray2d.shape.basic.Rectangle
+ * A Spray Rectangle Figure.
  *
- * @author Andreas Herz
+ * @author Thorsten Niehues
  * @extends draw2d.policy.canvas.SelectionPolicy
  */
-draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPolicy.extend({
+
+var spray2d = spray2d || {};
+spray2d.policy = spray2d.policy || {};
+spray2d.policy.canvas = spray2d.policy.canvas || {};
+
+spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.SelectionPolicy.extend({
 
     NAME : "draw2d.policy.canvas.SingleSelectionPolicy",
-    
+
     /**
-     * @constructor 
+     * @constructor
      * Creates a new Router object
      */
     init: function(){
@@ -23,20 +28,20 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
         this.mouseDraggingElement = null;
         this.mouseDownElement = null;
     },
-   
+
     select: function(canvas, figure){
         if(canvas.getSelection().getAll().contains(figure)){
             return; // nothing to to
         }
-        
+
         if(canvas.getSelection().getPrimary()!==null){
             this.unselect(canvas, canvas.getSelection().getPrimary());
         }
-      
+
         if(figure !==null) {
             figure.select(true); // primary selection
         }
-        
+
         canvas.getSelection().setPrimary(figure);
 
         // inform all selection listeners about the new selection.
@@ -45,11 +50,11 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
             w.onSelectionChanged(figure);
         });
     },
-    
+
 
     /**
      * @method
-     * 
+     *
      * @param {draw2d.Canvas} canvas
      * @param {Number} x the x-coordinate of the mouse down event
      * @param {Number} y the y-coordinate of the mouse down event
@@ -63,7 +68,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
         // check if the user click on a child shape. DragDrop and movement must redirect
         // to the parent
         // Exception: Port's
-        while((figure!==null && figure.getParent()!==null) && !(figure instanceof draw2d.Port)){
+        while((figure!==null && figure.getParent()!==null) && !(figure instanceof draw2d.Port) && !figure.isDraggable()){
             figure = figure.getParent();
         }
 
@@ -100,10 +105,10 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
             }
         }
     },
-    
+
     /**
      * @method
-     * 
+     *
      * @param {draw2d.Canvas} canvas
      * @param {Number} dx The x diff between start of dragging and this event
      * @param {Number} dy The y diff between start of dragging and this event
@@ -113,7 +118,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
      */
     onMouseDrag:function(canvas, dx, dy, dx2, dy2){
         this.mouseMovedDuringMouseDown = true;
-        
+
         if (this.mouseDraggingElement !== null) {
             // it is only necessary to repaint all connections if we change the layout of any connection
             // This can only happen if we:
@@ -123,7 +128,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
                 var nodeConnections = this.mouseDraggingElement.getConnections();
                 var newLineIntersections = canvas.lineIntersections.clone();
                 canvas.lineIntersections.each($.proxy(function(i, inter){
-                    
+
                     if(nodeConnections.contains(inter.line) || nodeConnections.contains(inter.other)){
                         newLineIntersections.remove(inter);
                         canvas.linesToRepaintAfterDragDrop.add(inter.line);
@@ -136,7 +141,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
                     line.repaint();
                 });
             }
-            
+
             // Can be a ResizeHandle or a normal Figure
             //
             var sel =canvas.getSelection().getAll();
@@ -148,31 +153,31 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
                     figure.onDrag(dx, dy, dx2, dy2);
                 });
             }
-            
-            var p = canvas.fromDocumentToCanvasCoordinate(canvas.mouseDownX + (dx/canvas.zoomFactor), canvas.mouseDownY + (dy/canvas.zoomFactor));           
+
+            var p = canvas.fromDocumentToCanvasCoordinate(canvas.mouseDownX + (dx/canvas.zoomFactor), canvas.mouseDownY + (dy/canvas.zoomFactor));
             var target = canvas.getBestFigure(p.x, p.y,this.mouseDraggingElement);
-            
+
             if (target !== canvas.currentDropTarget) {
                 if (canvas.currentDropTarget !== null) {
-                    canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);                     
+                    canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);
                     canvas.currentDropTarget = null;
                 }
                 if (target !== null) {
                     canvas.currentDropTarget = target.onDragEnter(this.mouseDraggingElement);
                 }
             }
-       }
-       // Connection didn't support panning at the moment. There is no special reason for that. Just an interaction
-       // decision.
-       //
-       else if(this.mouseDownElement!==null && !(this.mouseDownElement instanceof draw2d.Connection)){
-           this.mouseDownElement.onPanning(dx, dy, dx2, dy2);
-       } 
+        }
+        // Connection didn't support panning at the moment. There is no special reason for that. Just an interaction
+        // decision.
+        //
+        else if(this.mouseDownElement!==null && !(this.mouseDownElement instanceof draw2d.Connection)){
+            this.mouseDownElement.onPanning(dx, dy, dx2, dy2);
+        }
     },
-    
+
     /**
      * @method
-     * 
+     *
      * @param {draw2d.Canvas} canvas
      * @param {Number} x the x-coordinate of the mouse up event
      * @param {Number} y the y-coordinate of the mouse up event
@@ -187,7 +192,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
             else{
                 canvas.getCommandStack().startTransaction();
                 canvas.getSelection().getAll().each(function(i,figure){
-                     figure.onDragEnd();
+                    figure.onDragEnd();
                 });
                 canvas.getCommandStack().commitTransaction();
             }
@@ -198,7 +203,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
             }
             this.mouseDraggingElement = null;
         }
-        
+
         // Reset the current selection if the user click in the blank canvas.
         // Don't reset the selection if the user pan the canvas
         //

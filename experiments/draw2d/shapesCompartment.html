@@ -407,6 +407,7 @@
 <SCRIPT src="../spray2d/src/shape/basic/Polyline.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/shape/basic/Polygon.js"> </SCRIPT>
 <SCRIPT src="../spray2d/src/layout/locator/FigureLocator.js"> </SCRIPT>
+<SCRIPT src="../spray2d/src/policy/canvas/CompartmentSelectionPolicy.js"> </SCRIPT>
 
 <script type="text/javascript">
 
@@ -416,6 +417,22 @@
         // create the canvas for the user interaction
         //
         var canvas = new draw2d.Canvas("gfx_holder");
+        canvas.installEditPolicy(new spray2d.policy.canvas.CompartmentSelectionPolicy())
+
+        var PI_Vessel_Vertical = new spray2d.shape.basic.BoundingBox(120,60);
+        PI_Vessel_Vertical.setAlpha(0);
+        PI_Vessel_Vertical.setPosition(0,0);
+
+        var rect = new spray2d.shape.basic.Rectangle(120,60);
+        rect.setDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth(), PI_Vessel_Vertical.getHeight()/rect.getHeight() );
+        rect.setRadius(50);
+        rect.setBackgroundColor("#ffffff");
+
+        PI_Vessel_Vertical.addFigure(rect,  new spray2d.layout.locator.FigureLocator(PI_Vessel_Vertical));
+        PI_Vessel_Vertical.attachResizeListener(rect);
+
+
+        canvas.addFigure(PI_Vessel_Vertical);
 
 
         var PI_Valve_Manual_SIMON_TEST = new spray2d.shape.basic.BoundingBox(120,120);
