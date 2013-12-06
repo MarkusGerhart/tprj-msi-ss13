@@ -743,6 +743,12 @@ draw2d.Figure = Class.extend({
      **/
     onDragLeave:function( draggedFigure )
     {
+        if (this !== draggedFigure.getParent() && draggedFigure.getParent() !== null) {
+            //console.log("parent != new parent , parent name:" + draggedFigure.getParent().NAME);
+            //draggedFigure.getParent().resetChildren();
+            this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
+            draggedFigure.setDraggable(true);
+        }
     },
 
     
