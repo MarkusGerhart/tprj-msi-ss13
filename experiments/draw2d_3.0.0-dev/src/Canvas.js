@@ -973,8 +973,7 @@ draw2d.Canvas = Class.extend(
         {
             testFigure = this.resizeHandles.get(i);
             if (testFigure.isVisible()===true && testFigure.hitTest(x, y) === true && testFigure !== figureToIgnore) 
-            {
-               // console.log("return 1")
+            { 
                 return testFigure; 
             }
         }
@@ -986,8 +985,7 @@ draw2d.Canvas = Class.extend(
             if(testFigure !== figureToIgnore)
             {
                 if (testFigure.isVisible()===true && testFigure.hitTest(x, y) === true) 
-                {
-                   // console.log("return 2")
+                { 
                     return testFigure; 
                 }
             }
@@ -997,7 +995,6 @@ draw2d.Canvas = Class.extend(
         //
         result = this.getBestLine(x,y,figureToIgnore);
         if(result !==null){
-            //console.log("return 3")
             return result;
         }
         
@@ -1014,7 +1011,6 @@ draw2d.Canvas = Class.extend(
                     if(result===null&&e.isVisible()===true && e.hitTest(x,y)===true && e !== figureToIgnore){
                         result = e;
                     }
-                    //console.log("return 4")
                     return result===null; // break the each-loop if we found an element
                 });
             };
@@ -1032,8 +1028,7 @@ draw2d.Canvas = Class.extend(
                 }
             }
 
-            if(result !==null && result !== figureToIgnore){
-                //console.log("return 5")
+            if(result !==null){
                 return result;
             }
         }
@@ -1049,15 +1044,12 @@ draw2d.Canvas = Class.extend(
           children.each(function(i,e){
               if(e.isVisible()===true && e.hitTest(x,y)===true){
                   result = e;
-                  //console.log("return 6.1")
                   return false;
               }
-              //console.log("return 6.2")
               return true;
           });
         }
-
-        //console.log("return 6.3")
+        
        return result;
     },
 
