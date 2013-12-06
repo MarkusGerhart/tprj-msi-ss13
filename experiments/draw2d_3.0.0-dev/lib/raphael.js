@@ -14,6 +14,10 @@
 // │ Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license. │ \\
 // └──────────────────────────────────────────────────────────────────────────────────────┘ \\
 
+// THIS FILES IS PATCHED BY FREEGROUP
+// you can't replace this file with a new version without migrate all changes
+// tagged with "FREEGROUP"
+//
 (function (glob) {
     var version = "0.3.4",
         has = "hasOwnProperty",
@@ -4191,12 +4195,18 @@ window.Raphael.svg && function (R) {
                         }
                         break;
                     case "stroke-width":
+                        /* FREEGROUP fix
+                         * draw2d version 3.0.3
+                         * 
+                         * don't scale the line width if th euser resize an shape/element
+                         * obscure stroke-width in case of "Draw2D touch" usage
                         if (o._.sx != 1 || o._.sy != 1) {
                             value /= mmax(abs(o._.sx), abs(o._.sy)) || 1;
                         }
                         if (o.paper._vbSize) {
                             value *= o.paper._vbSize;
                         }
+                        */
                         node.setAttribute(att, value);
                         if (attrs["stroke-dasharray"]) {
                             addDashes(o, attrs["stroke-dasharray"], params);

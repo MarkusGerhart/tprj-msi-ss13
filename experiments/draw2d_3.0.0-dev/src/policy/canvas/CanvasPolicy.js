@@ -29,12 +29,17 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
     
     /**
      * @method
+     * Called by the canvas if the user click on a figure.
      * 
      * @param {draw2d.Canvas} canvas
-     * @param {draw2d.geo.Point} mousePosition
+     * @param {Number} mouseX the x coordinate of the mouse during the click event
+     * @param {Number} mouseY the y coordinate of the mouse during the click event
+     * 
+     * @since 3.0.0
+     * 
      * @template
      */
-    onClick: function(figure, mousePosition){
+    onClick: function(figure, mouseX, mouseY){
     },
     
     /**
@@ -46,7 +51,6 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @template
      */
     onMouseMove:function(canvas, x, y){
-
     },
     
     /**

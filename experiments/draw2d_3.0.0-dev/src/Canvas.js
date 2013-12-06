@@ -48,7 +48,6 @@ draw2d.Canvas = Class.extend(
           }
         }
 
-        
         this.setScrollArea(document.body);
         this.canvasId = canvasId;
         this.html = $("#"+canvasId);
@@ -745,7 +744,8 @@ draw2d.Canvas = Class.extend(
      * Returns the line with the given id.
      *
      * @param {String} id The id of the line.
-     * @type draw2d.Line
+     * 
+     * @type draw2d.shape.basic.Line
      **/
     getLine:function( id)
     {
@@ -908,6 +908,14 @@ draw2d.Canvas = Class.extend(
      **/
     setCurrentSelection:function( figure )
     {
+        this.selection.each($.proxy(function(i,e){
+            this.editPolicy.each($.proxy(function(i,policy){
+                if(typeof policy.select==="function"){
+                    policy.unselect(this,e);
+                }
+            },this));
+        },this));
+ 
         this.editPolicy.each($.proxy(function(i,policy){
             if(typeof policy.select==="function"){
                 policy.select(this,figure);
@@ -1008,7 +1016,7 @@ draw2d.Canvas = Class.extend(
             var checkRecursive = function(children){
                 children.each(function(i,e){
                     checkRecursive(e.getChildren());
-                    if(result===null&&e.isVisible()===true && e.hitTest(x,y)===true && e !== figureToIgnore){
+                    if(result===null&&e.isVisible()===true && e.hitTest(x,y)===true){
                         result = e;
                     }
                     return result===null; // break the each-loop if we found an element
@@ -1241,7 +1249,16 @@ draw2d.Canvas = Class.extend(
 
         if(figure!==null){
             figure.onClick();
+            
+            // forward the event to all install policies ass well
+            // (since 3.0.0)
+            this.editPolicy.each($.proxy(function(i,policy){
+                if(typeof policy.onClick==="function"){
+                    policy.onClick(figure, x,y);
+                }
+            },this));
         }
+
     },
 
     /**

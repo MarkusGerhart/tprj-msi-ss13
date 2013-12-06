@@ -267,7 +267,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     **/
    setStroke:function(w)
    {
-     this.stroke=w;
+     this.stroke=parseFloat(w);
      
      this.repaint();
      
@@ -438,6 +438,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
    {
        var result = new draw2d.util.ArrayList();
        result.add({start: this.getStartPoint(), end: this.getEndPoint()});
+       
        return result;
    },
    
@@ -459,7 +460,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
 
    /**
     * @method
-    * Returns the angle of the line in degree
+    * Returns the angle of the line in degree.
     *
     * <pre>
     *                                 270°
@@ -502,7 +503,8 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
 
    /**
     * @method
-    * Returns the Command to perform the specified Request or null.
+    * Returns the Command to perform the specified Request or null if the shape want cancel the 
+    * operation or it can't operate the command.
     *
     * @param {draw2d.command.CommandType} request describes the Command being requested
     * @return {draw2d.command.Command} null or a Command
@@ -541,6 +543,13 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
      return draw2d.shape.basic.Line.hit(this.corona, this.start.x,this.start.y, this.end.x, this.end.y, px,py);
    },
    
+   /**
+    * @method
+    * Return all intersection points between the given Line.
+    * 
+    * @param other
+    * @returns {draw2d.util.ArrayList}
+    */
    intersection: function (other){
        var result = new draw2d.util.ArrayList();
        
@@ -599,13 +608,18 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
        this._super(memento);
 
        if(typeof memento.stroke !=="undefined"){
-           this.setStroke(parseInt(memento.stroke));
+           this.setStroke(parseFloat(memento.stroke));
        }
        if(typeof memento.color !=="undefined"){
            this.setColor(memento.color);
        }
        if(typeof memento.policy !=="undefined"){
-           this.installEditPolicy(eval("new "+memento.policy +"()" ));
+           try{
+               this.installEditPolicy(eval("new "+memento.policy +"()" ));
+           }
+           catch(exc){
+               debug.warn("Unable to install edit policy '"+memento.policy+"' forced by "+this.NAME+".setPersistendAttributes. Using default.");
+           }
        }
    }
 });

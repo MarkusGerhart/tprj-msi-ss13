@@ -116,6 +116,7 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
         }
         
         this._super(attributes);
+
     },
 
 
@@ -137,7 +138,39 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
             var rs = "...S"+ratio+","+reverseRatio+","+(this.getAbsoluteX() +this.getWidth()/2)+","+(this.getAbsoluteY() +this.getHeight()/2);
         	this.svgNodes.transform(rs);
         }
+        
+        this.svgNodes.attr({"stroke-width":1});
     },
+    
+    /**
+     * @method
+     * Moves the element so it is the closest to the viewer’s eyes, on top of other elements. Additional
+     * the internal model changed as well.
+     * 
+     * @since 3.0.0
+     */
+    toFront: function(){
+
+        this._super();
+ 
+        if(this.svgNodes!==null){
+            this.svgNodes.toFront();
+        }
+         
+        // the ports must always the top most
+        //
+        this.getPorts().each(function(i,port){
+            port.getConnections().each(function(i,connection){
+                connection.toFront();
+            });
+            port.toFront();
+        });
+
+        
+        return this;
+    },
+    
+    
     
     /**
      * @private

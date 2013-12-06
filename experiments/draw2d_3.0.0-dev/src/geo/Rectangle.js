@@ -300,7 +300,7 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
 	 * Return all points of the rectangle as array. Starting at topLeft and the
 	 * clockwise.
 	 * 
-	 * @return {draw2d.util.ArrayList} the points starting at top/left and the clockwiese
+	 * @return {draw2d.util.ArrayList} the points starting at top/left and the clockwise
 	 */
 	getPoints:function()
 	{
@@ -464,7 +464,7 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
      */
     determineOctant: function( r2){
         
-        var HISTERESE= 3; // Tolleranz um diese vermieden wird, dass der Octant "8" zurückgegeben wird
+        var HISTERESE= 3; // Tolleranz um diese vermieden wird, dass der Octant "8" zur√ºckgegeben wird
         
         var ox = this.x+HISTERESE;
         var oy = this.y+HISTERESE;

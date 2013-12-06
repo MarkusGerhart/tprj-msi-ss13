@@ -52,7 +52,26 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
         this.portRelayoutRequired=true;
     },
     
-
+    /**
+     * @method
+     * Moves the element so it is the closest to the viewer’s eyes, on top of other elements. Additional
+     * the internal model changed as well.
+     * 
+     * @since 3.0.0
+     */
+    toFront: function(){
+        this._super();
+        
+        this.getPorts().each(function(i,port){
+            port.getConnections().each(function(i,connection){
+                connection.toFront();
+            });
+            port.toFront();
+        });
+        
+        return this;
+    },
+    
     /**
      * @method
      * Return all ports of the node.
@@ -69,9 +88,7 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
           this.cachedPorts.addAll(this.hybridPorts);
           
           this.children.each($.proxy(function(i,e){
-	      if (e.figure.NAME != "draw2d.shape.basic.OurLine") {
-                this.cachedPorts.addAll( e.figure.getPorts());
-              }
+              this.cachedPorts.addAll( e.figure.getPorts());
           },this));
       }
               

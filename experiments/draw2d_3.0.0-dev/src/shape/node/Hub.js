@@ -30,7 +30,7 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
 	 * @param {Number} width initial width of the bus shape
 	 * @param {Number} height height of the bus
 	 */
-	init : function(width, height, label)
+	init : function(width, height, labelString)
     {
  	    this.label = null;
 	    
@@ -68,17 +68,8 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
         //
         this.setColor(this.DEFAULT_COLOR.darker());
         this.setBackgroundColor(this.BACKGROUND_COLOR);
-        if(typeof label !== "undefined"){
-            // Create any Draw2D figure as decoration for the connection
-            //
-            this.label = new draw2d.shape.basic.Label(label);
-            this.label.setColor("#0d0d0d");
-            this.label.setFontColor("#0d0d0d");
-            this.label.setStroke(0);
-            
-            // add the new decoration to the connection with a position locator.
-            //
-            this.addFigure(this.label, new draw2d.layout.locator.CenterLocator(this));
+        if(typeof labelString !== "undefined"){
+            this.setLabel(labelString);
         }
     },
     
@@ -140,6 +131,31 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
      
      /**
       * @method
+      * set the label for the Hub
+      * 
+      * @param {String} labelString
+      * @since 3.0.4
+      */
+     setLabel: function( labelString){
+         // Create any Draw2D figure as decoration for the connection
+         //
+         if(this.label===null){
+             this.label = new draw2d.shape.basic.Label(labelString);
+             this.label.setColor("#0d0d0d");
+             this.label.setFontColor("#0d0d0d");
+             this.label.setStroke(0);
+             // add the new decoration to the connection with a position locator.
+             //
+             this.addFigure(this.label, new draw2d.layout.locator.CenterLocator(this));
+         }
+         else{
+             this.label.setText();
+         }
+         
+     },
+     
+     /**
+      * @method
       * Set the strategy for the connection direction calculation.<br>
       * <br>
       * 
@@ -171,6 +187,9 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
          var memento = this._super();
          
          memento.dirStrategy = this.CONNECTION_DIR_STRATEGY.indexOf(this.port.getConnectionDirection);
+         if(this.label !==null){
+             memento.label = this.label.getText();
+         }
          
          return memento;
      },
@@ -184,8 +203,13 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
       */
      setPersistentAttributes : function(memento) {
          this._super(memento);
+         
          if(typeof memento.dirStrategy ==="number") {
              this.setConnectionDirStrategy( memento.dirStrategy);
+         }
+         
+         if(typeof memento.label !== "undefined"){
+             this.setLabel(memento.label);
          }
      }
      

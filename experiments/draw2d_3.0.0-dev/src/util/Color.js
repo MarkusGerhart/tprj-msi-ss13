@@ -25,7 +25,7 @@ draw2d.util.Color = Class.extend({
      * @constructor
      * Create a new Color object
      * 
-     * @param {Number|String|draw2d.util.Color} red 
+     * @param {Number|String|draw2d.util.Color, Array} red 
      * @param {Number} green 
      * @param {Number} blue 
      */
@@ -33,7 +33,7 @@ draw2d.util.Color = Class.extend({
     
       this.hashString = null;
       
-      if(typeof red ==="undefined" || red===null){
+      if(typeof red === "undefined" || red===null){
           this.hashString = "none";
       }
       else if(red instanceof draw2d.util.Color){
@@ -41,18 +41,39 @@ draw2d.util.Color = Class.extend({
           this.green = red.green;
           this.blue = red.blue;
       }
-      else if(typeof green === "undefined")
+      else if(typeof red === "string")
       {
         var rgb = this.hex2rgb(red);
         this.red= rgb[0];
         this.green = rgb[1];
         this.blue = rgb[2];
       }
+      // JSON struct of {red:###, green:###, blue:### }
+      else if(typeof red === "object" && typeof red.red==="number")
+      {
+        this.red= red.red;
+        this.green = red.green;
+        this.blue = red.blue;
+      }
+      // array detection 1
+      else if(red instanceof Array && red.length===3)
+      {
+        this.red= red[0];
+        this.green = red[1];
+        this.blue = red[2];
+      }
+      // array detection 2
+      else if(typeof red === "object" && typeof red.length ==="number" && red.length===3)
+      {
+        this.red= red[0];
+        this.green = red[1];
+        this.blue = red[2];
+      }
       else
       {
-        this.red= red;
-        this.green = green;
-        this.blue = blue;
+        this.red= parseInt(red);
+        this.green = parseInt(green);
+        this.blue = parseInt(blue);
       }
     },
     

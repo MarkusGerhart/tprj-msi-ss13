@@ -38,7 +38,7 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
        // corner radius
        this.radius = 2;
        this.dasharray = null;
-
+       
       this._super();
 
       this.setBackgroundColor( new draw2d.util.Color(100,100,100));
@@ -147,6 +147,7 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
         
         return memento;
     },
+   
     
     /**
      * @method 
@@ -163,5 +164,5 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
             this.radius = memento.radius;
         }
     }
-
+    
 });

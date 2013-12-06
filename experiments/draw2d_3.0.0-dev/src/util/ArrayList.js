@@ -233,8 +233,9 @@ draw2d.util.ArrayList = Class.extend({
      remove:function( obj)
      {
         var index = this.indexOf(obj);
-        if(index>=0)
-         return this.removeElementAt(index);
+        if(index>=0){
+           return this.removeElementAt(index);
+        }
         
         return null;
      },
@@ -442,21 +443,24 @@ draw2d.util.ArrayList = Class.extend({
       * @method
       * Iterate over the array and call the callback method with the given index and element
       *
-      * @param {Function} the callback function to call for each element
+      * @param {Function} func the callback function to call for each element
+      * @param {boolean} reveser optional parameter. Iterate the collection if it set to <b>true</b>
       * @return {boolean}
       */
-      each:function(func) 
+      each:function(func, reverse) 
       {
-          /*
-         if(typeof func !== "function"){
-             throw "parameter must type of 'function'";
-         }
-         */
-//         var s= this.getSize();
-         for (var i=0; i<this.size; i++) 
-         {
-            if(func(i, this.data[i])===false)
-                break;
+
+         if(typeof reverse !=="undefined" && reverse===true){
+             for (var i=this.size-1; i>=0; i--) {
+                 if(func(i, this.data[i])===false)
+                     break;
+              }
+          }
+         else{
+             for (var i=0; i<this.size; i++) {
+                if(func(i, this.data[i])===false)
+                    break;
+             }
          }
       },
      

@@ -26,17 +26,33 @@ draw2d.shape.node.VerticalBus = draw2d.shape.node.Hub.extend({
 	 * @param {Number} width initial width of the bus shape
 	 * @param {Number} height height of the bus
 	 */
-	init : function(width, height, label)
+	init : function(width, height, labelString)
     {
-        this._super(width,height,label);
+        this._super(width,height,labelString);
         
-        if(this.label!==null){
-            this.label.setRotationAngle(90);
-        }
 
         this.setConnectionDirStrategy(2);
         this.installEditPolicy(new draw2d.policy.figure.VBusSelectionFeedbackPolicy());
     },
+    
+    
+    /**
+     * @method
+     * set the label for the Hub
+     * 
+     * @param {String} labelString
+     * @since 3.0.4
+     */
+    setLabel: function( labelString){
+        var mustAdjustTheAngel = this.label === null;
+        
+        this._super(labelString);
+        
+        if(mustAdjustTheAngel===true && this.label !==null){
+            this.label.setRotationAngle(90);
+        }
+    },
+    
     
     /**
      * @method
@@ -49,7 +65,12 @@ draw2d.shape.node.VerticalBus = draw2d.shape.node.Hub.extend({
         if (this.shape === null && this.label === null) {
             return 0;
         }
-        return this.label.getMinWidth();
+        
+        if(this.label!==null){
+            return this.label.getMinWidth();
+        }
+        
+        return this._super();
     },
     
     /**
@@ -63,7 +84,12 @@ draw2d.shape.node.VerticalBus = draw2d.shape.node.Hub.extend({
         if (this.shape === null && this.label === null) {
             return 0;
         }
-        return this.label.getMinHeight();
+        
+        if(this.label!==null){
+            return this.label.getMinHeight();
+        }
+        
+        return this._super();
     }
 
     

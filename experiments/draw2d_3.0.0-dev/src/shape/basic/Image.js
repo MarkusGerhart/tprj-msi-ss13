@@ -61,7 +61,7 @@ draw2d.shape.basic.Image = draw2d.shape.node.Node.extend({
     repaint : function(attributes)
     {
         if (this.repaintBlocked===true || this.shape === null){
-            return;
+            return this;
         }
 
         if(typeof attributes === "undefined" ){
@@ -75,6 +75,8 @@ draw2d.shape.basic.Image = draw2d.shape.node.Node.extend({
         attributes.src = this.path;
         
         this._super(attributes);
+        
+        return this;
     },
 
     /**

@@ -93,6 +93,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         }
 
         this._super(attributes);
+        
+        return this;
     },
 
 
@@ -172,7 +174,48 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
    getColor:function()
    {
      return this.color;
-   }
+   },
+   
+   
+   /**
+    * @method 
+    * Return an objects with all important attributes for XML or JSON serialization
+    * 
+    * @returns {Object}
+    */
+   getPersistentAttributes : function()
+   {
+       var memento= this._super();
+
+       memento.bgColor = this.bgColor.hash();
+       memento.color   = this.color.hash();
+       
+       return memento;
+   },
+   
+   /**
+    * @method 
+    * Read all attributes from the serialized properties and transfer them into the shape.
+    * 
+    * @param {Object} memento
+    * @return
+    */
+   setPersistentAttributes : function(memento)
+   {
+       this._super(memento);
+       
+       if(typeof memento.bgColor !== "undefined"){
+           this.setBackgroundColor(memento.bgColor);
+       }
+       
+       if(typeof memento.color !== "undefined"){
+           this.setColor(memento.color);
+       }
+       
+       
+       return this;
+   }  
+
 
 });
 

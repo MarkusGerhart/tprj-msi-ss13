@@ -55,7 +55,7 @@ draw2d.ui.LabelInplaceEditor =  draw2d.ui.LabelEditor.extend({
         $("body").bind("click",this.commitCallback);
       
         // append the input field to the document and register 
-        // the ENTER and ESC key for commit /cancel the operation
+        // the ENTER and ESC key to commit /cancel the operation
         //
         this.html = $('<input id="inplaceeditor">');
         this.html.val(label.getText());

@@ -10,9 +10,9 @@
  * 
  * @author Andreas Herz
  * 
- * @extends draw2d.policy.canvas.SnapToEditPolicy
+ * @extends draw2d.policy.canvas.CanvasPolicy
  */
-draw2d.policy.canvas.ShowGridEditPolicy = draw2d.policy.canvas.SnapToEditPolicy.extend({
+draw2d.policy.canvas.ShowGridEditPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
 
     NAME : "draw2d.policy.canvas.ShowGridEditPolicy",
     

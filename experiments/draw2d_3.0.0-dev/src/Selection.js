@@ -90,5 +90,13 @@ draw2d.Selection = Class.extend({
     getAll: function()
     {
         return this.all.clone();
+    },
+    
+    /**
+     * @method
+     * @param func
+     */
+    each: function( func){
+        this.all.each(func);
     }
 });

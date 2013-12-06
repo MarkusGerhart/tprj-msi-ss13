@@ -108,6 +108,7 @@ draw2d.Figure = Class.extend({
      * 
      * @param {boolean} [isPrimarySelection] true if the element should be the primary selection
      * @final
+     * @private
      */
     select: function(asPrimarySelection){
         if(typeof asPrimarySelection==="undefined"){
@@ -130,6 +131,7 @@ draw2d.Figure = Class.extend({
      * Unselect the figure and propagete this event to all edit policies.
      * 
      * @final
+     * @private
      **/
     unselect:function()
     {
@@ -245,6 +247,7 @@ draw2d.Figure = Class.extend({
 
     /**
      * @method
+     * 
      * It's important to note that this method does not replace a class. It simply adds the class, 
      * appending it to any which may already be assigned to the elements.
      * 
@@ -266,6 +269,8 @@ draw2d.Figure = Class.extend({
     },
 
     /**
+     * @method
+     * 
      * Remove the given css class name from the figure
      * 
      * @param {String} className the css class name to add
@@ -284,6 +289,8 @@ draw2d.Figure = Class.extend({
     },
     
     /**
+     * @method
+     * 
      * Add or remove the given css class name from the figure
      * 
      * @param {String} className the class name to toggle
@@ -399,6 +406,35 @@ draw2d.Figure = Class.extend({
      {
     	
      },
+     
+     /**
+      * @method
+      * Moves the element so it is the closest to the viewer’s eyes, on top of other elements. Additional
+      * the internal model changed as well.
+      * 
+      * @since 3.0.0
+      */
+     toFront: function(){
+         this.getShapeElement().toFront();
+         if(this.canvas!==null){
+             var figures = this.canvas.getFigures();
+             var lines = this.canvas.getLines();
+             if(figures.remove(this)!==null){
+                 figures.add(this);
+             }else if(lines.remove(this)!==null){
+                 lines.add(this);
+             }
+         }
+         
+         // bring all children figures in front of the parent
+         //
+         this.children.each(function(i,child){
+             child.figure.toFront();
+         });
+
+         return this;
+     },
+     
      
      /**
       * Install a new edit policy to the figure. Each editpolicy is able to focus on a single editing 
@@ -743,12 +779,6 @@ draw2d.Figure = Class.extend({
      **/
     onDragLeave:function( draggedFigure )
     {
-        if (this !== draggedFigure.getParent() && draggedFigure.getParent() !== null) {
-            //console.log("parent != new parent , parent name:" + draggedFigure.getParent().NAME);
-            //draggedFigure.getParent().resetChildren();
-            this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
-            draggedFigure.setDraggable(true);
-        }
     },
 
     
@@ -1582,7 +1612,7 @@ draw2d.Figure = Class.extend({
      * @method 
      * Return an objects with all important attributes for XML or JSON serialization
      * 
-     * @returns {Object}
+     *
      */
     getPersistentAttributes : function()
     {
@@ -1614,17 +1644,17 @@ draw2d.Figure = Class.extend({
     setPersistentAttributes : function(memento)
     {
         this.id    = memento.id;
-        this.x     = memento.x;
-        this.y     = memento.y;
+        this.x     = parseFloat(memento.x);
+        this.y     = parseFloat(memento.y);
         
         // width and height are optional parameter for the JSON stuff.
         // We use the defaults if the attributes not present
         if(typeof memento.width !== "undefined"){
-            this.width = memento.width;
+            this.width = parseFloat(memento.width);
         }
         
         if(typeof memento.height !== "undefined"){
-            this.height= memento.height;
+            this.height= parseFloat(memento.height);
         }
         
         if(typeof memento.userData !== "undefined"){

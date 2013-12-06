@@ -39,6 +39,8 @@
  */
 draw2d.io.json.Reader = draw2d.io.Reader.extend({
     
+    NAME : "draw2d.io.json.Reader",
+    
     init: function(){
         this._super();
     },
@@ -53,28 +55,48 @@ draw2d.io.json.Reader = draw2d.io.Reader.extend({
      */
     unmarshal: function(canvas, json){
         var node=null;
-        $.each(json, function(i, element){
-            var o = eval("new "+element.type+"()");
-            var source= null;
-            var target=null;
-            for(i in element){
-                var val = element[i];
-                if(i === "source"){
-                    node = canvas.getFigure(val.node);
-                    source = node.getPort(val.port);
+        $.each(json, $.proxy(function(i, element){
+            try{
+                var o = eval("new "+element.type+"()");
+                var source= null;
+                var target=null;
+                for(i in element){
+                    var val = element[i];
+                    if(i === "source"){
+                        node = canvas.getFigure(val.node);
+                        if(node===null){
+                            throw "Source figure with id '"+val.node+"' not found";
+                        }
+                        source = node.getPort(val.port);
+                        if(source===null){
+                            throw "Unable to find source port '"+val.port+"' at figure '"+val.node+"' to unmarschal '"+element.type+"'";
+                        }
+                    }
+                    else if (i === "target"){
+                        node = canvas.getFigure(val.node);
+                        if(node===null){
+                            throw "Target figure with id '"+val.node+"' not found";
+                        }
+                        target = node.getPort(val.port);
+                        if(target===null){
+                            throw "Unable to find target port '"+val.port+"' at figure '"+val.node+"' to unmarschal '"+element.type+"'";
+                        }
+                    }
                 }
-                else if (i === "target"){
-                    node = canvas.getFigure(val.node);
-                    target = node.getPort(val.port);
+                if(source!==null && target!==null){
+                    o.setSource(source);
+                    o.setTarget(target);
                 }
+                o.setPersistentAttributes(element);
+                canvas.addFigure(o);
             }
-            if(source!==null && target!==null){
-                o.setSource(source);
-                o.setTarget(target);
+            catch(exc){
+                debug.group("Unable to instantiate figure with id '"+element.id+"' during unmarshal by "+this.NAME+". Skipping figure..");
+                debug.warn(exc);
+                debug.warn(element);
+                debug.groupEnd();
             }
-            o.setPersistentAttributes(element);
-            canvas.addFigure(o);
-        });
+        },this));
         
         // recalculate all crossings and repaint the connections with 
         // possible crossing decoration

@@ -55,8 +55,8 @@ draw2d.shape.basic.Diamond = draw2d.VectorFigure.extend({
     repaint : function(attributes)
     {
         if(this.repaintBlocked===true || this.shape===null){
-            return;
-        }
+            return this;
+        } 
         
         if (typeof attributes === "undefined") {
             attributes = {};
@@ -71,6 +71,8 @@ draw2d.shape.basic.Diamond = draw2d.VectorFigure.extend({
         attributes.path = path.join("");
 
         this._super(attributes);
+        
+        return this;
     },
 
 

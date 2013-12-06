@@ -77,8 +77,8 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
             return;
         }
 
-        junctionPoint.x = x;
-        junctionPoint.y = y;
+        junctionPoint.x = parseFloat(x);
+        junctionPoint.y = parseFloat(y);
         
         this.svgPathString = null;
         this.repaint();
@@ -167,6 +167,8 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
     
       // repaint the connection with the new router
       this.repaint();
+      
+      return this;
     },
     
     /**
@@ -368,7 +370,12 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
         this._super(memento);
 
         if(typeof memento.router !=="undefined"){
-            this.setRouter(eval("new "+memento.router+"()"));
+            try{
+                this.setRouter(eval("new "+memento.router+"()"));
+            }
+            catch(exc){
+                debug.warn("Unable to install router '"+memento.router+"' forced by "+this.NAME+".setPersistendAttributes. Using default");
+            }
         }
         
         this.router.setPersistentAttributes(this, memento);

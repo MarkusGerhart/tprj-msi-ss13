@@ -75,7 +75,7 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
         
         horizontal = !horizontal;
 
-        // dot product is zero if the vector orthogonal (90¡)
+        // dot product is zero if the vector orthogonal (90Â°)
         if (startNormal.dot(endNormal) === 0) {
             if ((startNormal.dot(direction) >= 0)  && (endNormal.dot(direction) <= 0)) {
                 // 0

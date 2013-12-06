@@ -21,7 +21,7 @@ draw2d.SVGFigure = draw2d.SetFigure.extend({
      */
     init: function(width, height) {
       this._super(width, height);
-
+      
     },
 
     /**
@@ -47,8 +47,15 @@ draw2d.SVGFigure = draw2d.SetFigure.extend({
         // Override the dimension from the JSON if the SVG contains any
         //
         var svgDOM= $(rawSVG);
-        if(svgDOM.attr("width") && svgDOM.attr("height")){
-            this.setDimension(svgDOM.attr("width"), svgDOM.attr("height"));
+        
+        // set the dimension of the element if the JSON import didn't provide
+        // a dimension already
+        //
+        if(typeof this._dimensionReadFromJSON ==="undefined"){
+            if(svgDOM.attr("width") && svgDOM.attr("height")){
+                this.setDimension(parseFloat(svgDOM.attr("width")), parseFloat(svgDOM.attr("height")));
+            }
+            delete this._dimensionReadFromJSON;
         }
         
         var findStyle = new RegExp('([a-z0-9\-]+) ?: ?([^ ;]+)[ ;]?','gi');
@@ -206,7 +213,35 @@ draw2d.SVGFigure = draw2d.SetFigure.extend({
       } catch (error) {
         alert('The SVG data you entered was invalid! (' + error + ')');
       }
+      
+      
       return set;
-    }
+    },
+    
+    /**
+     * @method 
+     * Read all attributes from the serialized properties and transfer them into the shape.
+     * 
+     * @param {Object} memento
+     * @return
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+       
+        // keep a temp flag to indicate the we have read the dimension of the
+        // element from the JSON struct. In this case we didn't care about the dimension 
+        // from the SVG data
+        //
+        if(typeof memento.width !== "undefined"){
+            this._dimensionReadFromJSON=true;
+        }
+        else if(typeof memento.height !== "undefined"){
+            this._dimensionReadFromJSON=true;
+        }
+        
+        return this;
+    }  
+
 
 });
