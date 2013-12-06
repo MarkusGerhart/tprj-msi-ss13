@@ -1008,7 +1008,7 @@ draw2d.Canvas = Class.extend(
             var checkRecursive = function(children){
                 children.each(function(i,e){
                     checkRecursive(e.getChildren());
-                    if(result===null&&e.isVisible()===true && e.hitTest(x,y)===true){
+                    if(result===null&&e.isVisible()===true && e.hitTest(x,y)===true && e !== figureToIgnore){
                         result = e;
                     }
                     return result===null; // break the each-loop if we found an element
