@@ -731,8 +731,7 @@ draw2d.Figure = Class.extend({
      **/
     onDragEnter : function( draggedFigure )
     {
-    	//return null;
-        return draggedFigure;
+    	return null;
     },
  
     /**
@@ -744,19 +743,12 @@ draw2d.Figure = Class.extend({
      **/
     onDragLeave:function( draggedFigure )
     {
-        console.log("on drag leave");
-        console.log("this.NAME: " + this.NAME);
-        console.log("draggedFigure name: " + draggedFigure.NAME);
-
         if (this !== draggedFigure.getParent() && draggedFigure.getParent() !== null) {
-            console.log("parent != new parent , parent name:" + draggedFigure.getParent().NAME);
+            //console.log("parent != new parent , parent name:" + draggedFigure.getParent().NAME);
             //draggedFigure.getParent().resetChildren();
             this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
             draggedFigure.setDraggable(true);
-        } else {
-            console.log("parent == new parent or parent is null");
         }
-        //this.resetChildren();
     },
 
     
@@ -769,10 +761,6 @@ draw2d.Figure = Class.extend({
      **/
     onDrop:function(dropTarget)
     {
-        //console.log("on drop");
-        //dropTarget.addFigure(this, new spray2d.layout.locator.FigureLocator());
-        //console.log("dropTargetName: " + dropTarget.NAME);
-        //console.log("my name: " + this.NAME);
     },
    
 
