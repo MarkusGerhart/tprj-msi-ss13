@@ -157,7 +157,7 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
             }
 
             var p = canvas.fromDocumentToCanvasCoordinate(canvas.mouseDownX + (dx/canvas.zoomFactor), canvas.mouseDownY + (dy/canvas.zoomFactor));
-            console.log("this.mouseDraggingElement ID: " + this.mouseDraggingElement.getId());
+            //console.log("this.mouseDraggingElement ID: " + this.mouseDraggingElement.getId());
             var target = canvas.getBestFigure(p.x, p.y,this.mouseDraggingElement);
 
             /*if (target !== null) {
@@ -206,7 +206,6 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
             //console.log("mouseDraggingElementName : " + this.mouseDraggingElement.NAME);
             var sel =canvas.getSelection().getAll();
             if(!sel.contains(this.mouseDraggingElement)){
-                console.log("sel does NOT cotain mouseDraggingElement");
                 this.mouseDraggingElement.onDragEnd();
             }
             else{
