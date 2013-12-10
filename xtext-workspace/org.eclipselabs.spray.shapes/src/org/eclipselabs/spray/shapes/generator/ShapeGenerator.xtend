@@ -20,6 +20,15 @@ import org.eclipselabs.spray.shapes.shape.AnchorManual
 import org.eclipselabs.spray.shapes.shape.AnchorRelativePosition
 import org.eclipselabs.spray.shapes.shape.AnchorFixPointPosition
 import org.eclipselabs.spray.shapes.generator.util.ShapeSizeCalculator
+import org.eclipselabs.spray.shapes.shape.ShapeContainerElement
+import org.eclipselabs.spray.shapes.shape.ConnectionDefinition
+import org.eclipselabs.spray.shapes.shape.CDLine
+import org.eclipselabs.spray.shapes.shape.CDPolyline
+import org.eclipselabs.spray.shapes.shape.CDText
+import org.eclipselabs.spray.shapes.shape.CDRectangle
+import org.eclipselabs.spray.shapes.shape.CDRoundedRectangle
+import org.eclipselabs.spray.shapes.shape.CDPolygon
+import org.eclipselabs.spray.shapes.shape.CDEllipse
 
 /**
  * Generates code from your model files on save.
@@ -29,16 +38,172 @@ import org.eclipselabs.spray.shapes.generator.util.ShapeSizeCalculator
 class ShapeGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-		val e = resource.allContents.toIterable.filter(ShapeDefinition);
+		val e = resource.allContents.toIterable.filter(ShapeContainerElement);
 		fsa.generateFile('genshapes.js', e.compile)
 	}
 	
-	def compile(Iterable<ShapeDefinition> d_s) '''
-	var shapedefs = [
-		«FOR d: d_s»
-			«outerShape(d)»,
+	def compile(Iterable<ShapeContainerElement> shapeContainers) '''
+		var shapedefs = [
+		«FOR s : shapeContainers»
+			«IF s.eClass.name == "ShapeDefinition"»
+				«outerShape(s as ShapeDefinition)»,
+			«ENDIF»
+			«IF s.eClass.name == "ConnectionDefinition"»
+				«outerShape(s as ConnectionDefinition)»,
+			«ENDIF»
 		«ENDFOR»
-	]
+		]
+	'''
+	
+	def outerShape(ConnectionDefinition d) '''
+	{
+		name: "«d.name»",
+		connectionType: "«d.connectionStyle»",
+		placings: [
+			«FOR p : d.placing»
+				{
+					«IF p.offset != null»
+					offset: «p.offset»,
+					«ENDIF»
+					«IF p.distance > 0»
+					distance: «p.distance»,
+					«ENDIF»
+					«IF p.angle > 0»
+					angle: «p.angle»,
+					«ENDIF»
+					«IF p.shapeCon.eClass.name == "CDLine"»
+					shape: «innerShape(p.shapeCon as CDLine)»,
+					«ENDIF»
+					«IF p.shapeCon.eClass.name == "CDPolyline"»
+					shape: «innerShape(p.shapeCon as CDPolyline)»,
+					«ENDIF»
+					«IF p.shapeCon.eClass.name == "CDRectangle"»
+					shape: «innerShape(p.shapeCon as CDRectangle)»,
+					«ENDIF»
+					«IF p.shapeCon.eClass.name == "CDRoundedRectangle"»
+					shape: «innerShape(p.shapeCon as CDRoundedRectangle)»,
+					«ENDIF»
+					«IF p.shapeCon.eClass.name == "CDPolygon"»
+					shape: «innerShape(p.shapeCon as CDPolygon)»,
+					«ENDIF»
+					«IF p.shapeCon.eClass.name == "CDEllipse"»
+					shape: «innerShape(p.shapeCon as CDEllipse)»,
+					«ENDIF»
+					«IF p.shapeCon.eClass.name == "CDText"»
+					shape: «innerShape(p.shapeCon as CDText)»,
+					«ENDIF»
+				},
+			«ENDFOR»
+		]
+	}
+	'''
+	
+	def innerShape(CDLine d) '''
+	{
+		name: "Line",
+		params: {
+			points: [
+				«FOR point: d.layout.point»
+				{
+					x: «new Integer(point.xcor)»,
+					y: «new Integer(point.ycor)»,
+					curveBefore: «point.curveBefore»,
+					curveAfter: «point.curveAfter»
+				},
+				«ENDFOR»
+			]
+		}
+	}
+	'''
+	
+	def innerShape(CDPolyline d) '''
+	{
+		name: "Polyline",
+		params: {
+			points: [
+				«FOR point: d.layout.point»
+				{
+					x: «new Integer(point.xcor)»,
+					y: «new Integer(point.ycor)»,
+					curveBefore: «point.curveBefore»,
+					curveAfter: «point.curveAfter»
+				},
+				«ENDFOR»
+			]
+		}
+	}
+	'''
+	
+	def innerShape(CDText d) '''
+	{
+		name: "Text",
+		params: {
+			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
+			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
+			«ENDIF»
+			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
+			align: {
+				horizontal: "«d.layout.HAlign»",
+				vertical: "«d.layout.VAlign»"
+			},
+		}
+	}
+	'''
+
+	def innerShape(CDRectangle d) '''
+	{
+		name: "Rectangle",
+		params: {
+			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
+			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
+			«ENDIF»
+			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
+		},
+	}
+	'''
+
+	def innerShape(CDRoundedRectangle d) '''
+	{
+		name: "RoundedRectangle",
+		params: {
+			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
+			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
+			«ENDIF»
+			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
+			curve: {width: «d.layout.curveWidth», height: «d.layout.curveHeight»},
+			radius: «(d.layout.curveWidth + d.layout.curveHeight) / 2.0»
+		},
+	}
+	'''
+
+	def innerShape(CDPolygon d) '''
+	{
+		name: "Polygon",
+		params: {
+			points: [
+				«FOR point: d.layout.point»
+				{
+					x: «new Integer(point.xcor)»,
+					y: «new Integer(point.ycor)»,
+					curveBefore: «point.curveBefore»,
+					curveAfter: «point.curveAfter»
+				},
+				«ENDFOR»
+			]
+		},
+	}
+	'''
+
+	def innerShape(CDEllipse d) '''
+	{
+		name: "Ellipse",
+		params: {
+			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
+			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
+			«ENDIF»
+			size: {width: «d.layout.common.width», height: «d.layout.common.heigth»},
+		},
+	}
 	'''
 	
 	def outerShape(ShapeDefinition d) '''
@@ -126,8 +291,8 @@ class ShapeGenerator implements IGenerator {
 			points: [
 				«FOR point: d.layout.point»
 				{
-					x: «point.xcor»,
-					y: «point.ycor»,
+					x: «new Integer(point.xcor)»,
+					y: «new Integer(point.ycor)»,
 					curveBefore: «point.curveBefore»,
 					curveAfter: «point.curveAfter»
 				},
@@ -144,8 +309,8 @@ class ShapeGenerator implements IGenerator {
 			points: [
 				«FOR point: d.layout.point»
 				{
-					x: «point.xcor»,
-					y: «point.ycor»,
+					x: «new Integer(point.xcor)»,
+					y: «new Integer(point.ycor)»,
 					curveBefore: «point.curveBefore»,
 					curveAfter: «point.curveAfter»
 				},
@@ -236,8 +401,8 @@ class ShapeGenerator implements IGenerator {
 			points: [
 				«FOR point: d.layout.point»
 				{
-					x: «point.xcor»,
-					y: «point.ycor»,
+					x: «new Integer(point.xcor)»,
+					y: «new Integer(point.ycor)»,
 					curveBefore: «point.curveBefore»,
 					curveAfter: «point.curveAfter»
 				},

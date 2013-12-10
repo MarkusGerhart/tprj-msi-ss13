@@ -85,6 +85,25 @@ Only Rectangle and Ellipse can hold compartments.
 
 * compartment: {layout: fixed|vertical|horizontal|fit, spacing: Int, margin: Int, insisible: Bool, stretchH: Bool, stretchV: Bool}
 
+Connections:
+
+The connection shapes are explicitly seperated from the "normal" shapes.
+They have:
+
+* name: String
+* connectionType: String (freeform or manhattan)
+* placings
+
+The placings can contrain:
+
+* offset: Double
+* distance: Double
+* angle: Double
+* shape
+
+The shape is a primitive Shape, which is on it's own and therefore can't
+hold (nested) other shapes.
+
 PI Example
 ----------
 

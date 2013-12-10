@@ -37,8 +37,8 @@ class ShapeSizeCalculator {
 		var maxX = 0
 		var maxY = 0
 		for(point : element.layout.point) {
-			maxX = Math::max(maxX, point.xcor)
-			maxY = Math::max(maxY, point.ycor)
+			maxX = Math::max(maxX, new Integer(point.xcor))
+			maxY = Math::max(maxY, new Integer(point.ycor))
 		}
 		var size = new ShapeSizeWrapper(maxX, maxY);
 		return size;
@@ -57,8 +57,8 @@ class ShapeSizeCalculator {
 		var maxX = 0
 		var maxY = 0
 		for(point : element.layout.point) {
-			maxX = Math::max(maxX, point.xcor)
-			maxY = Math::max(maxY, point.ycor)
+			maxX = Math::max(maxX, new Integer(point.xcor))
+			maxY = Math::max(maxY, new Integer(point.ycor))
 		}		
 		var size = new ShapeSizeWrapper(maxX, maxY);
 		return size;
@@ -68,8 +68,8 @@ class ShapeSizeCalculator {
 		var maxX = 0
 		var maxY = 0
 		for(point : element.layout.point) {
-			maxX = Math::max(maxX, point.xcor)
-			maxY = Math::max(maxY, point.ycor)
+			maxX = Math::max(maxX, new Integer(point.xcor))
+			maxY = Math::max(maxY, new Integer(point.ycor))
 		}
 		var size = new ShapeSizeWrapper(maxX, maxY);
 		return size;

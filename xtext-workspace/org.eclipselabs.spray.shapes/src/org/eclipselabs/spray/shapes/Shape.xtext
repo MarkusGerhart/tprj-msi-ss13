@@ -389,7 +389,7 @@ TextBody: {TextBody}
 Point: {Point} 
 (
     'point' '(' 
-        'x' '=' xcor=INT ',' 'y' '=' ycor=INT 
+        'x' '=' xcor=N_INT ',' 'y' '=' ycor=N_INT 
         (
             ',' 'curveBefore' '=' curveBefore=INT 
             ',' 'curveAfter'  '=' curveAfter=INT
