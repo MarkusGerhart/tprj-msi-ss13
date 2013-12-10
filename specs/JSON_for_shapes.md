@@ -50,8 +50,7 @@ The params proptery holds information about the current shape, like
 * size-max : {width: Int, height: Int}
 * proportional : Bool
 * layout : {stretching | spacing : Int | margin : Int | invisible}
-* point : [{x: Int, y: Int, curveBefore: Int, curveAfter: Int}*]
-* id : String
+* points : [{x: Int, y: Int, curveBefore: Int, curveAfter: Int}*]
 
 Anchors:
 Only the top level shape can hold anchors. There are four types of anchors:
@@ -76,6 +75,15 @@ Also a boundingbox size will be calculated for the mother shape.
 This boundingbox size is based on the sizes of the child shapes.
 The size parameter in the mother shape is therefore the size of
 the invisible boundingbox.
+
+Compartments:
+
+Compartments are a special case of shapes. Shapes marked as compartment
+are able to host other shapes, which can be placed there via drag & drop.
+
+Only Rectangle and Ellipse can hold compartments.
+
+* compartment: {layout: fixed|vertical|horizontal|fit, spacing: Int, margin: Int, insisible: Bool, stretchH: Bool, stretchV: Bool}
 
 PI Example
 ----------

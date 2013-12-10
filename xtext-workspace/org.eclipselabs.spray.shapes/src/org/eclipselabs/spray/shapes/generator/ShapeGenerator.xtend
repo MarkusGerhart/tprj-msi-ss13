@@ -175,6 +175,24 @@ class ShapeGenerator implements IGenerator {
 	{
 		name: "«name»",
 		params: {
+			«IF d.compartmentInfo != null»
+			compartment: {
+				layout: "«d.compartmentInfo.compartmentLayout»",
+				invisible: «d.compartmentInfo.invisible»,
+				«IF d.compartmentInfo.spacing > 0»
+				spacing: «d.compartmentInfo.spacing»,
+				«ENDIF»
+				«IF d.compartmentInfo.margin > 0»
+				margin: «d.compartmentInfo.margin»,
+				«ENDIF»
+				«IF d.compartmentInfo.stretchH != null»
+				stretchH: «d.compartmentInfo.stretchH»,
+				«ENDIF»
+				«IF d.compartmentInfo.stretchV != null»
+				stretchV: «d.compartmentInfo.stretchV»,
+				«ENDIF»
+			},
+			«ENDIF»
 			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
 			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
 			«ENDIF»
@@ -240,6 +258,24 @@ class ShapeGenerator implements IGenerator {
 	{
 		name: "«name»",
 		params: {
+			«IF d.compartmentInfo != null»
+			compartment: {
+				layout: "«d.compartmentInfo.compartmentLayout»",
+				invisible: «d.compartmentInfo.invisible»,
+				«IF d.compartmentInfo.spacing > 0»
+				spacing: «d.compartmentInfo.spacing»,
+				«ENDIF»
+				«IF d.compartmentInfo.margin > 0»
+				margin: «d.compartmentInfo.margin»,
+				«ENDIF»
+				«IF d.compartmentInfo.stretchH != null»
+				stretchH: «d.compartmentInfo.stretchH»,
+				«ENDIF»
+				«IF d.compartmentInfo.stretchV != null»
+				stretchV: «d.compartmentInfo.stretchV»,
+				«ENDIF»
+			},
+			«ENDIF»
 			«IF d.layout.common.xcor != 0 && d.layout.common.ycor != 0»
 			position: {x: «d.layout.common.xcor», y: «d.layout.common.ycor»},
 			«ENDIF»
