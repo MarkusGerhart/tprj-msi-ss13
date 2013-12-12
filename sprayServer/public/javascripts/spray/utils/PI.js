@@ -2,7 +2,14 @@ var classdefs = [
     {
         name: "PI_Vessel_Vertical",
         shape: "PI_Vessel_Vertical",
-        palette: "Vessels"
+        palette: "Vessels",
+        connection:[
+            {
+                from: "fromElement",
+                to: "toElement"
+            }
+        ]
+
     },
     {
         name: "PI_Boiler",
@@ -73,11 +80,101 @@ var classdefs = [
         name: "PI_Location_DashLine",
         shape: "PI_Location_DashedLine",
         palette: "Locations"
+    },
+    {
+        name: "PI_Pipe",
+        connection: "PI_Pipe",
+        palette: "Connections"
+    },
+    {
+        name: "PI_Source_Exhaust_Start",
+        connection: "PI_Source_Exhaust",
+        palette: "Connections"
+    },
+    {
+        name: "PI_Source_Exhaust_Stop",
+        connection: "PI_Source_Exhaust",
+        palette: "Connections"
     }
+
 ];
 
 
 var shapedefs = [
+    {
+        name: "PI_Pipe",
+        connectionType: "freeform",
+        placings: [
+            {
+                offset: 0.5,
+                distance: 10,
+                angle: 90,
+                shape: {
+                    name: "Text",
+                    params: {
+                        size: {width: 60, height: 20},
+                        align: {
+                            horizontal: "left",
+                            vertical: "top"
+                        },
+                    }
+                }
+                ,
+            },
+        ]
+    }
+    ,
+    {
+        name: "PI_Source_Exhaust",
+        connectionType: "freeform",
+        placings: [
+            {
+                offset: 1.0,
+                shape: {
+                    name: "Polygon",
+                    params: {
+                        points: [
+                            {
+                                x: -10,
+                                y: -5,
+                                curveBefore: 0,
+                                curveAfter: 0
+                            },
+                            {
+                                x: -10,
+                                y: 5,
+                                curveBefore: 0,
+                                curveAfter: 0
+                            },
+                            {
+                                x: 0,
+                                y: 0,
+                                curveBefore: 0,
+                                curveAfter: 0
+                            },
+                        ]
+                    },
+                }
+                ,
+            },
+            {
+                offset: 0.3,
+                distance: 30,
+                angle: 45,
+                shape: {
+                    name: "Text",
+                    params: {
+                        size: {width: 150, height: 25},
+                        align: {
+                            horizontal: "left",
+                            vertical: "top"
+                        },
+                    }
+                }
+                ,
+            },
+        ]
+    },
 	{
 		name: "PI_Vessel_Vertical",
         params:{

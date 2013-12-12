@@ -281,3 +281,8 @@ footer a:hover { border-bottom: 1px dotted #ccc; color: #a9a9a9; }
     padding-left: 30px;
     font-size: 12px;
 }
+
+#menu .connection:hover{
+    cursor: pointer;
+    background-color: #3D8EA9;
+}

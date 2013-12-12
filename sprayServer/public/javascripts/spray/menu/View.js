@@ -57,7 +57,7 @@ htwg.spray.View = draw2d.Canvas.extend({
      **/
     onDrop : function(droppedDomNode, x, y)
     {
-        var type = $(droppedDomNode).attr('id')
+        var type = $(droppedDomNode).attr('lang')
         var figure = htwg.spray.factory.drawShape(type);
         figure.setPosition(x,y);
         this.addFigure(figure);
