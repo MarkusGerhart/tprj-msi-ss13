@@ -149,7 +149,7 @@ htwg.spray.View = draw2d.Canvas.extend({
             }
         });
 
-        console.log(this.model);
+        console.log(JSON.stringify(this.model));
     },
 
     getConnectionAsJSON: function(conn, figure){

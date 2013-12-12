@@ -218,7 +218,6 @@ footer a:hover { border-bottom: 1px dotted #ccc; color: #a9a9a9; }
 
 .palette_node_element{
     position:relative;
-    margin:10px 10px 10px 10px;
     cursor: pointer;
     padding-top:1px;
 }
@@ -230,12 +229,15 @@ footer a:hover { border-bottom: 1px dotted #ccc; color: #a9a9a9; }
     min-height: 500px;
 }
 
+#menu.cleft{
+    padding-left:0px;
+}
+
 .flyout{
     position:absolute;
     left: 50px;
-    height:25px;
-    background:yellow;
-    overflow: hidden;
+    background-color: #cccccc;
+    border: #35718F solid 1px;
     z-index:10000;
     display:none;
     font-size: 10px;
@@ -243,4 +245,39 @@ footer a:hover { border-bottom: 1px dotted #ccc; color: #a9a9a9; }
 }
 .palette_node_element:hover + .flyout{
     display:block;
+}
+
+#menu h3{
+    padding-left: 5px;
+    border-radius: 0px;
+    border-top:#2E627C solid 1px;
+    color: #000000;
+    background: none no-repeat scroll #C0C0C0;
+    margin-bottom: 1px;
+}
+
+#menu h3:before{
+    content:"";
+    background:url("../images/d.png") no-repeat -55px -19px #C0C0C0;
+    width:20px;
+    height:15px;
+    padding-top: 0px;
+    margin-right: 5px;
+    display:inline-block;
+}
+
+#menu h3.ui-state-active:before{
+    content:"";
+    background:url("../images/d.png") no-repeat -55px -35px #C0C0C0;
+    width:25px;
+    height:15px;
+    padding-top: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+    display:inline-block;
+}
+
+#menu ul{
+    padding-left: 30px;
+    font-size: 12px;
 }

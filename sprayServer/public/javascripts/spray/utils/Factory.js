@@ -23,19 +23,9 @@ htwg.spray.Factory = function($){
      */
     var that = this;
 
-    this.shapeElements = [];
-
-    this.initialize = function(){
-        $.each(shapedefs, function(i,shape){
-            if ( shape.hasOwnProperty("name") ){
-                that.shapeElements.push(shape.name);
-            }
-        });
-    },
-
     this.drawShape = function(name){
         var root = {};
-        $.each(shapedefs, function(i,shapeDef){
+        $.each(htwg.spray.shapeDefinition, function(i,shapeDef){
             if ( shapeDef.hasOwnProperty("name") ){
                 if (shapeDef.name == name ){
                     root = that.createBoundingBox(shapeDef);
@@ -378,6 +368,4 @@ htwg.spray.Factory = function($){
 
         return bbox;
     }
-
-    this.initialize();
 }

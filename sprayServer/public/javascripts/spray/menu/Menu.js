@@ -30,17 +30,23 @@ htwg.spray.Menu = function($){
 
     this.menu = jQuery("#menu");
 
-    this.buildMenu = function( shapes ){
+    this.buildMenu = function(){
 
         var topPosition = 0;
         var size = 80;
+        var accordion = $("#accordion");
 
-        $.each(shapes, function(i, item) {
+        $.each(htwg.spray.classDefinition, function(i, item) {
+
+            if ( accordion.find("#"+item.palette).length == 0 ){
+                accordion.append("<h3>"+item.palette+"</h3><div id='"+item.palette+"'><ul></ul></div>");
+            }
+
             canvasSize = size + 10;
-            canvasElem = $("<div style='width: "+canvasSize+"px; height: "+canvasSize+"px;' id='"+ item +"'></div>");
+            canvasElem = $("<div style='width: "+canvasSize+"px; height: "+canvasSize+"px;' id='"+ item.name +"'></div>");
             that.menu.append(canvasElem);
-            canvas = new draw2d.Canvas(item);
-            var figure = htwg.spray.factory.drawShape(item);
+            canvas = new draw2d.Canvas(item.name);
+            var figure = htwg.spray.factory.drawShape(item.shape);
 
             if ( figure.getWidth() > size || figure.getHeight() > size ){
                 if ( figure.getWidth() > figure.getHeight() ){
@@ -56,19 +62,27 @@ htwg.spray.Menu = function($){
                 var writer = new draw2d.io.svg.Writer();
                 writer.marshal(canvas, function(svg){
                     canvasElem.remove();
-                    menuElem = $("<div lang="+item+" class='palette_node_element draw2d_droppable ui-draggable' id='" + item+ "'>" +
-                                 "<div class='flyout'>"+item+"</div>" + svg + "</div>");
-                    that.menu.append(menuElem);
-                    $("#"+item).hover(function(){
+                    var list = $("#"+ item.palette + " ul");
+                    if ( list ){
+                        list.append("<li><div lang="+item.shape+" class='palette_node_element draw2d_droppable ui-draggable' id='" + item.shape+ "'>" +
+                            "<div class='flyout'>"+svg+"</div>"+item.name+"</div></li>");
+                    }
+                    $("#"+item.shape +" .flyout").css("width", figure.getWidth()+20+"px");
+                    $("#"+item.shape +" .flyout").css("height", figure.getHeight()+20+"px");
+
+                    $("#"+item.shape).hover(function(){
                         $(this).find('.flyout').show();
                     },function(){
                         $(this).find('.flyout').hide();
                     });
-                    $("#"+item).css("top", topPosition );
-                    $("#"+item).css("z-index",1);
-                    topPosition += figure.getHeight()+10;
                 });
             }
+
+
+        });
+
+        accordion.accordion({
+            collapsible: true
         });
     }
 
