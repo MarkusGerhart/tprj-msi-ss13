@@ -31,6 +31,16 @@ spray2d.shape.basic.Polyline = Class.extend({
         this.root = root;
         this.startRatioToRoot = 1;
         this.endRatioToRoot = 1;
+        this.connection = false;
+        this.offset = 0;
+    },
+
+    setConnection: function(conn){
+       this.connection = conn;
+    },
+
+    setOffset: function(offset){
+        this.offset = offset;
     },
 
     /**
@@ -44,10 +54,17 @@ spray2d.shape.basic.Polyline = Class.extend({
             return;
         }
         var line = new spray2d.shape.basic.Line(start.getX(), start.getY(), end.getX(), end.getY());
-        line.setStartRatioToRoot( this.root.getWidth(), this.root.getHeight() );
-        line.setEndRatioToRoot( this.root.getWidth(), this.root.getHeight() );
-        line.setUserData({"type":"Line"});
-        this.root.addFigure(line, new spray2d.layout.locator.FigureLocator(this.root));
+        if ( !this.connection ){
+            line.setStartRatioToRoot( this.root.getWidth(), this.root.getHeight() );
+            line.setEndRatioToRoot( this.root.getWidth(), this.root.getHeight() );
+            line.setUserData({"type":"Line"});
+            this.root.addFigure(line, new spray2d.layout.locator.FigureLocator(this.root));
+        }else{
+            line.setUserData({"type":"Line", "offset":this.offset});
+            line.setConnection(true);
+            this.root.addFigure(line, new draw2d.layout.locator.ConnectionLocator(line));
+        }
+
         this.root.attachMoveListener(line);
 
         this.lineSegments.add(line);

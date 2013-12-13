@@ -753,7 +753,7 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
  */
 draw2d.Connection.createConnection=function(sourcePort, targetPort){
     
-    return new draw2d.Connection();
+    return new draw2d.Connection(draw2d.Connection.DEFAULT_ROUTER);
 };
 
 
@@ -766,4 +766,4 @@ draw2d.Connection.DEFAULT_ROUTER= new draw2d.layout.connection.ManhattanConnecti
 //draw2d.Connection.DEFAULT_ROUTER= new draw2d.layout.connection.ManhattanBridgedConnectionRouter();
 //draw2d.Connection.DEFAULT_ROUTER= new draw2d.layout.connection.FanConnectionRouter();
 //draw2d.Connection.DEFAULT_ROUTER= new draw2d.layout.connection.SplineConnectionRouter();
-        
+

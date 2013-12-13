@@ -35,6 +35,7 @@ htwg.spray.Menu = function($){
         var topPosition = 0;
         var size = 80;
         var accordion = $("#accordion");
+        $("#selectedConnection").val("none");
 
         $.each(htwg.spray.classDefinition, function(i, item) {
 
@@ -47,7 +48,7 @@ htwg.spray.Menu = function($){
                 canvasElem = $("<div style='width: "+canvasSize+"px; height: "+canvasSize+"px;' id='"+ item.name +"'></div>");
                 that.menu.append(canvasElem);
                 canvas = new draw2d.Canvas(item.name);
-                var figure = htwg.spray.factory.drawShape(item.shape);
+                var figure = htwg.spray.shapeFactory.drawShape(item.shape);
 
                 if ( figure.getWidth() > size || figure.getHeight() > size ){
                     if ( figure.getWidth() > figure.getHeight() ){
@@ -84,7 +85,7 @@ htwg.spray.Menu = function($){
                     list.append("<li class='connection'><div id='" + item.name+ "'>" +item.name+"</div></li>");
                     if ( $("#selectedConnection").val() == "none" ){
                         $("#selectedConnection").val(item.name);
-                        $("#"+item.name).parent().css("backgroundColor", "#3D8EA9");
+                        $("#"+item.name).parent().css("background-color", "#3D8EA9");
                     }
                     $("#"+item.name).click(function(){
                         $("#selectedConnection").val(item.name);
@@ -93,7 +94,6 @@ htwg.spray.Menu = function($){
                     });
                 }
             }
-
 
         });
 

@@ -71,6 +71,8 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
 
         this.startRatioToRoot = { "x": 1, "y": 1};
         this.endRatioToRoot = { "x": 1, "y": 1};
+
+        this.connection = false;
     },
 
 
@@ -637,20 +639,43 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
         return this.absoluteEndPoint;
     },
 
+    setConnection:function(conn){
+        this.connection = conn;
+    },
+
     onOtherFigureIsMoving:function(figure){
 
-        var positionStartX = parseInt(this.absoluteStartPoint.x * figure.getWidth()/this.startRatioToRoot.x);
-        var positionStartY = parseInt(this.absoluteStartPoint.y * figure.getHeight()/this.startRatioToRoot.y);
-        var positionEndX = parseInt(this.absoluteEndPoint.x * figure.getWidth()/this.endRatioToRoot.x);
-        var positionEndY = parseInt(this.absoluteEndPoint.y* figure.getHeight()/this.endRatioToRoot.y);
+        if ( !this.connection ){
+            var positionStartX = parseInt(this.absoluteStartPoint.x * figure.getWidth()/this.startRatioToRoot.x);
+            var positionStartY = parseInt(this.absoluteStartPoint.y * figure.getHeight()/this.startRatioToRoot.y);
+            var positionEndX = parseInt(this.absoluteEndPoint.x * figure.getWidth()/this.endRatioToRoot.x);
+            var positionEndY = parseInt(this.absoluteEndPoint.y* figure.getHeight()/this.endRatioToRoot.y);
 
-        positionStartX = parseInt( positionStartX + figure.getAbsolutePosition().x);
-        positionStartY = parseInt( positionStartY + figure.getAbsolutePosition().y);
-        positionEndX = parseInt( positionEndX + figure.getAbsolutePosition().x);
-        positionEndY = parseInt( positionEndY + figure.getAbsolutePosition().y);
+            positionStartX = parseInt( positionStartX + figure.getAbsolutePosition().x);
+            positionStartY = parseInt( positionStartY + figure.getAbsolutePosition().y);
+            positionEndX = parseInt( positionEndX + figure.getAbsolutePosition().x);
+            positionEndY = parseInt( positionEndY + figure.getAbsolutePosition().y);
 
-        this.setStartPoint(positionStartX,positionStartY);
-        this.setEndPoint(positionEndX,positionEndY);
+            this.setStartPoint(positionStartX,positionStartY);
+            this.setEndPoint(positionEndX,positionEndY);
+        }else{
+            var userData = this.getUserData();
+
+            var startX = figure.getStartPoint().x;
+            var startY = figure.getStartPoint().y;
+
+            var endX = figure.getEndPoint().x;
+            var endY = figure.getEndPoint().y;
+
+            var diffX = endX - startX;
+            var diffY = endY - startY;
+
+            var newPosX = diffX * userData.offset;
+            var newPosY = diffY * userData.offset;
+
+            this.setStartPoint(startX + newPosX + this.absoluteStartPoint.x,startY + newPosY + this.absoluteStartPoint.y);
+            this.setEndPoint(startX + newPosX + this.absoluteEndPoint.x,startY + newPosY + this.absoluteEndPoint.y);
+        }
     },
 
     onDoubleClick: function(){

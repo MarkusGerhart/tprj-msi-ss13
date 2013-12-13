@@ -3,7 +3,7 @@
  *   Copyright (c) 2013 Simon Schneeberger
  ****************************************/
 /**
- * @class htwg.spray.Factory
+ * @class htwg.spray.ShapeFactory
  * Spray Shape Factory
  *
  * @author Simon Schneeberger
@@ -12,7 +12,7 @@
 var htwg = htwg || {};
 htwg.spray = htwg.spray || {};
 
-htwg.spray.Factory = function($){
+htwg.spray.ShapeFactory = function($){
 
     /**
      * Scope duplicator / parent this

@@ -102,6 +102,7 @@ var classdefs = [
 
 var shapedefs = [
     {
+        //vertauscht zum test
         name: "PI_Pipe",
         connectionType: "freeform",
         placings: [
@@ -147,8 +148,8 @@ var shapedefs = [
                                 curveAfter: 0
                             },
                             {
-                                x: 0,
-                                y: 0,
+                                x: 10,
+                                y: 5,
                                 curveBefore: 0,
                                 curveAfter: 0
                             },
