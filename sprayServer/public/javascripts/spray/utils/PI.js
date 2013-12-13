@@ -148,8 +148,8 @@ var shapedefs = [
                                 curveAfter: 0
                             },
                             {
-                                x: 10,
-                                y: 5,
+                                x: 0,
+                                y: 0,
                                 curveBefore: 0,
                                 curveAfter: 0
                             },

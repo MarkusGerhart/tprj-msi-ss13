@@ -49,8 +49,6 @@ spray2d.layout.connection.ManhattanConnectionRouter = draw2d.layout.connection.M
      */
     onInstall: function(connection)
     {
-        connection.setSourceDecorator(new draw2d.decoration.connection.DiamondDecorator());
-        connection.setTargetDecorator(new draw2d.decoration.connection.DiamondDecorator())
     },
 
     /**
