@@ -487,7 +487,16 @@ draw2d.Figure = Class.extend({
          
          return this;
      },
-     
+
+    removeChild: function(child) {
+        var childs = this.children;
+        this.children.each(function(i,e){
+            if (e.figure == child) {
+                e.figure.setCanvas(null);
+                childs.remove(child);
+            }
+        });
+    },
 
      /**
      * @method
@@ -761,6 +770,7 @@ draw2d.Figure = Class.extend({
                 } else {
                     console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
                     console.log("allowed childs: " + this.allowedCompartmentChilds);
+                    draggedFigure.getParent().removeChild(draggedFigure);
                 }
             } else {
                 console.log("allowed child list is not defined");
