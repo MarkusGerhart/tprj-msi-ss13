@@ -13,11 +13,11 @@ draw2d.Figure = Class.extend({
 	NAME : "draw2d.Figure",
     
 	MIN_TIMER_INTERVAL: 50, // minimum timer interval in milliseconds
-	
+
     /**
      * @constructor
      * Creates a new figure element which are not assigned to any canvas.
-     * 
+     *
      * @param {Number} [width] initial width of the shape
      * @param {Number} [height] initial height of the shape
      */
@@ -100,6 +100,8 @@ draw2d.Figure = Class.extend({
 
         
         this.installEditPolicy(new draw2d.policy.figure.RectangleSelectionFeedbackPolicy());
+
+        this.allowedCompartmentChilds = new Array();
     },
     
     /**
@@ -743,14 +745,28 @@ draw2d.Figure = Class.extend({
      **/
     onDragLeave:function( draggedFigure )
     {
+    },
+
+    updateCompartment:function( draggedFigure ) {
         if (this !== draggedFigure.getParent() && draggedFigure.getParent() !== null) {
             //console.log("parent != new parent , parent name:" + draggedFigure.getParent().NAME);
             //draggedFigure.getParent().resetChildren();
-            this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
-            draggedFigure.setDraggable(true);
+
+            if (this.allowedCompartmentChilds !== null) {
+                if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0) {
+                    this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
+                    draggedFigure.setDraggable(true);
+                    console.log("add " + draggedFigure.NAME + " to " + this.NAME);
+                    console.log("allowed childs: " + this.allowedCompartmentChilds);
+                } else {
+                    console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
+                    console.log("allowed childs: " + this.allowedCompartmentChilds);
+                }
+            } else {
+                console.log("allowed child list is not defined");
+            }
         }
     },
-
     
     /**
      * @method
@@ -762,7 +778,10 @@ draw2d.Figure = Class.extend({
     onDrop:function(dropTarget)
     {
     },
-   
+
+    setAllowedCompartmentChilds: function(_allowedCompartmentChilds) {
+        this.allowedCompartmentChilds = _allowedCompartmentChilds;
+    },
 
     /**
      * @method

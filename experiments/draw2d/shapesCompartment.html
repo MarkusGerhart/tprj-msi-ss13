@@ -427,6 +427,8 @@
         rect.setDimensionRatioToRoot( PI_Vessel_Vertical.getWidth()/rect.getWidth(), PI_Vessel_Vertical.getHeight()/rect.getHeight() );
         //rect.setRadius(50);
         rect.setBackgroundColor("#ffffff");
+        var allowedChilds = new Array("spray2d.shape.basic.Rectangle", "spray2d.shape.basic.Ellipse");
+        rect.setAllowedCompartmentChilds(allowedChilds);
 
         PI_Vessel_Vertical.addFigure(rect,  new spray2d.layout.locator.FigureLocator(PI_Vessel_Vertical));
         PI_Vessel_Vertical.attachResizeListener(rect);
@@ -454,6 +456,7 @@
         ovaltest.setBackgroundColor("#ffffff");
         polygon2.addFigure(ovaltest);
         //ovaltest.setDraggable(true);
+        //console.log("PI_Vessel_Vertical ID: " + ovaltest.getId());
 
         var ovaltest2 = new spray2d.shape.basic.Ellipse(30,30);
         ovaltest2.setUserData({"type":"Ellipse"});
@@ -465,6 +468,7 @@
         ovaltest.attachResizeListener(ovaltest2);
         ovaltest2.setDraggable(true);
         ovaltest2.setId("123");
+        //console.log("PI_Vessel_Vertical ID: " + ovaltest2.getId());
 
         var line9 = new spray2d.shape.basic.Line(60,30,60,90);
         line9.setStartRatioToRoot( PI_Valve_Manual_SIMON_TEST.getWidth(), PI_Valve_Manual_SIMON_TEST.getHeight() );
