@@ -757,7 +757,19 @@ draw2d.Figure = Class.extend({
     {
     },
    
-
+	setConnectTo:function(list) {
+		this.connectTo = list;
+	},
+	getConnectTo:function() {
+		return this.connectTo;
+	},
+	setConnectFrom:function(list) {
+		this.connectFrom = list;
+	},
+	getConnectFrom:function() {
+		return this.connectFrom;
+	},
+	
     /**
      * @method
      * Callback method for the mouse enter event. Usefull for mouse hover-effects.

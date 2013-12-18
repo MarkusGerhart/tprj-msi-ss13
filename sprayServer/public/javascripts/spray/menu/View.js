@@ -59,6 +59,12 @@ htwg.spray.View = draw2d.Canvas.extend({
     {
         var type = $(droppedDomNode).attr('lang')
         var figure = htwg.spray.shapeFactory.drawShape(type);
+
+		// TODO Simon : set appropriate allowed connections
+		figure.setConnectTo(new Array("PI_Pipe"));
+		figure.setConnectFrom(new Array("PI_Pipe"));
+		console.log("figure " + figure.NAME + " connectTo " + figure.getConnectTo());
+
         figure.setPosition(x,y);
         this.addFigure(figure);
 

@@ -529,10 +529,16 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         request.canvas = this.parent.getCanvas();
         request.source = dropTarget;
         request.target = this;
+
+var conName = $("#selectedConnection").val();
         var command = this.createCommand(request);
         
         if(command!==null){
-           this.parent.getCanvas().getCommandStack().execute(command);
+			if (request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0) {
+				this.parent.getCanvas().getCommandStack().execute(command);
+			} else {
+				alert('This connection is not allowed');
+			}
         }
         this.setGlow(false);
     },
