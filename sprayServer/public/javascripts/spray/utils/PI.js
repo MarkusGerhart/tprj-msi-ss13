@@ -2,14 +2,7 @@ var classdefs = [
     {
         name: "PI_Vessel_Vertical",
         shape: "PI_Vessel_Vertical",
-        palette: "Vessels",
-        connection:[
-            {
-                from: "fromElement",
-                to: "toElement"
-            }
-        ]
-
+        palette: "Vessels"
     },
     {
         name: "PI_Boiler",
@@ -84,16 +77,22 @@ var classdefs = [
     {
         name: "PI_Pipe",
         connection: "PI_Pipe",
+        from: "fromElement",
+        to: "toElement",
         palette: "Connections"
     },
     {
         name: "PI_Source_Exhaust_Start",
         connection: "PI_Source_Exhaust",
+        from: "fromElement",
+        to: "toElement",
         palette: "Connections"
     },
     {
         name: "PI_Source_Exhaust_Stop",
         connection: "PI_Source_Exhaust",
+        from: "fromElement",
+        to: "toElement",
         palette: "Connections"
     }
 

@@ -55,9 +55,10 @@ htwg.spray.ConnectionFactory = function($){
 
         var rect = new spray2d.shape.basic.Rectangle(0,0);
 
-        //TODO: Distance?!
-
         var offset = 0;
+        var angle = 0;
+        var distance = 0;
+
         if ( shapeDef.hasOwnProperty("offset")){
             offset = shapeDef.offset;
         }
@@ -66,11 +67,14 @@ htwg.spray.ConnectionFactory = function($){
         }
 
         if ( shapeDef.hasOwnProperty("angle")){
-            //EXPERIMENTAL
-            rect.setRotationAngle(shapeDef.angle);
+            angle = shapeDef.angle;
         }
 
-        rect.setUserData({"type":"Rectangle", "offset":offset});
+        if ( shapeDef.hasOwnProperty("distance") && shapeDef.distance > 0 ){
+            distance = shapeDef.distance;
+        }
+
+        rect.setUserData({"type":"Rectangle", "offset":offset, "angle":angle, "distance":distance});
 
         if ( typeof shapeDef.shape.params != "undefined" ){
 
@@ -90,9 +94,10 @@ htwg.spray.ConnectionFactory = function($){
 
         var rect = new spray2d.shape.basic.Rectangle(0,0);
 
-        //TODO: Distance?!
-
         var offset = 0;
+        var angle = 0;
+        var distance = 0;
+
         if ( shapeDef.hasOwnProperty("offset")){
             offset = shapeDef.offset;
         }
@@ -101,11 +106,14 @@ htwg.spray.ConnectionFactory = function($){
         }
 
         if ( shapeDef.hasOwnProperty("angle")){
-            //EXPERIMENTAL
-            rect.setRotationAngle(shapeDef.angle);
+            angle = shapeDef.angle;
         }
 
-        rect.setUserData({"type":"Rectangle", "offset":offset});
+        if ( shapeDef.hasOwnProperty("distance") && shapeDef.distance > 0 ){
+            distance = shapeDef.distance;
+        }
+
+        rect.setUserData({"type":"Rectangle", "offset":offset, "angle":angle, "distance":distance});
 
         if ( typeof shapeDef.shape.params != "undefined" ){
 
@@ -124,9 +132,11 @@ htwg.spray.ConnectionFactory = function($){
 
         var ellipse = new spray2d.shape.basic.Ellipse(0,0);
 
-        //TODO: Distance?!
-
         var offset = 0;
+        var angle = 0;
+        var distance = 0;
+
+
         if ( shapeDef.hasOwnProperty("offset")){
             offset = shapeDef.offset;
         }
@@ -135,11 +145,14 @@ htwg.spray.ConnectionFactory = function($){
         }
 
         if ( shapeDef.hasOwnProperty("angle")){
-            //EXPERIMENTAL
-            ellipse.setRotationAngle(shapeDef.angle);
+            angle = shapeDef.angle;
         }
 
-        ellipse.setUserData({"type":"Ellipse", "offset":offset});
+        if ( shapeDef.hasOwnProperty("distance") && shapeDef.distance > 0 ){
+            distance = shapeDef.distance;
+        }
+
+        ellipse.setUserData({"type":"Ellipse", "offset":offset, "angle":angle, "distance":distance});
 
         if ( typeof shapeDef.shape.params != "undefined" ){
 
@@ -160,9 +173,10 @@ htwg.spray.ConnectionFactory = function($){
         label.setStroke(0);
         label.setAlpha(0);
 
-        //TODO: Distance?!
-
         var offset = 0;
+        var angle = 0;
+        var distance = 0;
+
         if ( shapeDef.hasOwnProperty("offset")){
             offset = shapeDef.offset;
         }
@@ -171,11 +185,14 @@ htwg.spray.ConnectionFactory = function($){
         }
 
         if ( shapeDef.hasOwnProperty("angle")){
-            //EXPERIMENTAL
-            label.setRotationAngle(shapeDef.angle);
+            angle = shapeDef.angle;
         }
 
-        label.setUserData({"type":"Label", "offset":offset});
+        if ( shapeDef.hasOwnProperty("distance") && shapeDef.distance > 0 ){
+            distance = shapeDef.distance;
+        }
+
+        label.setUserData({"type":"Label", "offset":offset, "angle":angle, "distance":distance});
 
         if ( typeof shapeDef.shape.params != "undefined" ){
             var params = shapeDef.shape.params;
@@ -201,11 +218,22 @@ htwg.spray.ConnectionFactory = function($){
 
         if ( typeof shapeDef.shape.params != "undefined" ){
             var offset = 0;
+            var angle = 0;
+            var distance = 0;
+
             if ( shapeDef.hasOwnProperty("offset")){
                 offset = shapeDef.offset;
             }
-            if ( offset >= 1 ){
+            if ( offset > 1 ){
                 offset = 1;
+            }
+
+            if ( shapeDef.hasOwnProperty("angle")){
+                angle = shapeDef.angle;
+            }
+
+            if ( shapeDef.hasOwnProperty("distance") && shapeDef.distance > 0 ){
+                distance = shapeDef.distance;
             }
 
             var params = shapeDef.shape.params;
@@ -213,8 +241,7 @@ htwg.spray.ConnectionFactory = function($){
             var line = new spray2d.shape.basic.Line(params.points[0].x, params.points[0].y,
                                                     params.points[1].x, params.points[1].y);
             line.setConnection(true);
-
-            line.setUserData({"type":"Line", "offset":offset});
+            line.setUserData({"type":"Line", "offset":offset, "angle":angle, "distance":distance});
 
             if ( params.hasOwnProperty("style")){
 
@@ -252,13 +279,26 @@ htwg.spray.ConnectionFactory = function($){
             var polyline = new spray2d.shape.basic.Polyline(parent);
             polyline.setConnection(true);
             var offset = 0;
+            var angle = 0;
+            var distance = 0;
+
             if ( shapeDef.hasOwnProperty("offset")){
                 offset = shapeDef.offset;
             }
-            if ( offset >= 1 ){
+            if ( offset > 1 ){
                 offset = 1;
             }
+
+            if ( shapeDef.hasOwnProperty("angle")){
+                angle = shapeDef.angle;
+            }
+
+            if ( shapeDef.hasOwnProperty("distance") && shapeDef.distance > 0 ){
+                distance = shapeDef.distance;
+            }
             polyline.setOffset(offset);
+            polyline.setDistance(distance);
+            polyline.setAngle(angle);
             $.each(params.points, function(i, point){
                 if ( i == params.points.length-1 ){
                     return;
@@ -278,13 +318,26 @@ htwg.spray.ConnectionFactory = function($){
             var polygon = new spray2d.shape.basic.Polygon(parent);
             polygon.setConnection(true);
             var offset = 0;
+            var angle = 0;
+            var distance = 0;
+
             if ( shapeDef.hasOwnProperty("offset")){
                 offset = shapeDef.offset;
             }
-            if ( offset >= 1 ){
+            if ( offset > 1 ){
                 offset = 1;
             }
+
+            if ( shapeDef.hasOwnProperty("angle")){
+                angle = shapeDef.angle;
+            }
+
+            if ( shapeDef.hasOwnProperty("distance") && shapeDef.distance > 0 ){
+                distance = shapeDef.distance;
+            }
             polygon.setOffset(offset);
+            polygon.setDistance(distance);
+            polygon.setAngle(angle);
             $.each(params.points, function(i, point){
                 if ( i == params.points.length-1 ){
                     return;
