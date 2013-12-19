@@ -61,8 +61,8 @@ htwg.spray.View = draw2d.Canvas.extend({
         var figure = htwg.spray.shapeFactory.drawShape(type);
 
 		// TODO Thorsten : set appropriate allowed connections
-		figure.setConnectTo(new Array("PI_Pipe", "PI_Source_Exhaust_Start","PI_Source_Exhaust_End"));
-		figure.setConnectFrom(new Array("PI_Pipe","PI_Source_Exhaust_Start","PI_Source_Exhaust_End"));
+		figure.setConnectTo(new Array("PI_Pipe"));
+		figure.setConnectFrom(new Array("PI_Pipe"));
 		console.log("figure " + figure.NAME + " connectTo " + figure.getConnectTo());
 
         figure.setPosition(x,y);

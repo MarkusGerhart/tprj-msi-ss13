@@ -265,6 +265,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
     onMouseLeave:function()
     {
         this.setStroke(1);
+        //$('html,body').css('cursor','default');
     },
 
 
@@ -488,6 +489,14 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         request.target = draggedFigure;
         var command = draggedFigure.createCommand(request);
 
+        var conName = $("#selectedConnection").val();
+
+        if(command!==null){
+            if (!(request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0)) {
+                $("#drawArea").css("cursor","not-allowed");
+            }
+        }
+
         if (command === null) {
             return null;
         }
@@ -503,6 +512,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      **/
     onDragLeave:function( figure )
     {
+        $("#drawArea").css("cursor","default");
+
 		// Ports accepts only Ports as DropTarget
 		//
 		if(!(figure instanceof draw2d.Port)){
@@ -529,15 +540,13 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         request.canvas = this.parent.getCanvas();
         request.source = dropTarget;
         request.target = this;
-
-var conName = $("#selectedConnection").val();
         var command = this.createCommand(request);
-        
+
+        var conName = $("#selectedConnection").val();
+
         if(command!==null){
 			if (request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0) {
 				this.parent.getCanvas().getCommandStack().execute(command);
-			} else {
-				alert('This connection is not allowed');
 			}
         }
         this.setGlow(false);
