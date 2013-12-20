@@ -98,7 +98,6 @@ var classdefs = [
 
 ];
 
-
 var shapedefs = [
     {
         //vertauscht zum test
