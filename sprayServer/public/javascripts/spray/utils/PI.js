@@ -84,8 +84,8 @@ var classdefs = [
     {
         name: "PI_Source_Exhaust_Start",
         connection: "PI_Source_Exhaust",
-        from: "fromElement",
-        to: "toElement",
+        from: ["PI_HeatExchanger", "PI_CentralHeatingUnit"],
+        to: ["PI_HeatExchanger", "PI_CentralHeatingUnit"],
         palette: "Connections"
     },
     {

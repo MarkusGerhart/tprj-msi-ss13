@@ -37,6 +37,8 @@ htwg.spray.ShapeFactory = function($){
                 that.drawAnchor(anchorDef, root);
             });
         }
+
+		root['sprayName'] = name;
         return root;
     },
 

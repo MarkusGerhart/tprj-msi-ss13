@@ -490,9 +490,13 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         var command = draggedFigure.createCommand(request);
 
         var conName = $("#selectedConnection").val();
+		var conClass = htwg.spray.classDefinitionByName[conName];
+		var srcParentName = request.source.getParent()['sprayName'];
+		var destParentName = request.target.getParent()['sprayName'];
 
         if(command!==null){
-            if (!(request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0)) {
+            //if (!(request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0)) {
+			if (!(conClass['to'].indexOf(destParentName) >= 0 && conClass['from'].indexOf(srcParentName) >= 0)) {
                 $("#drawArea").css("cursor","not-allowed");
             }
         }
@@ -542,10 +546,14 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         request.target = this;
         var command = this.createCommand(request);
 
-        var conName = $("#selectedConnection").val();
+		var conName = $("#selectedConnection").val();
+		var conClass = htwg.spray.classDefinitionByName[conName];
+		var srcParentName = request.source.getParent()['sprayName'];
+		var destParentName = request.target.getParent()['sprayName'];
 
         if(command!==null){
-			if (request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0) {
+			//if (request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0) {
+			if ((conClass['to'].indexOf(destParentName) >= 0 && conClass['from'].indexOf(srcParentName) >= 0)) {
 				this.parent.getCanvas().getCommandStack().execute(command);
 			}
         }
