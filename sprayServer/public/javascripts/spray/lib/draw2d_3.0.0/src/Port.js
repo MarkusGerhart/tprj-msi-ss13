@@ -265,7 +265,6 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
     onMouseLeave:function()
     {
         this.setStroke(1);
-        //$('html,body').css('cursor','default');
     },
 
 
