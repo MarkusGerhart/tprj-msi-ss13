@@ -342,6 +342,7 @@ class ShapeGenerator implements IGenerator {
 		params: {
 			«IF d.compartmentInfo != null»
 			compartment: {
+				locationId: "«d.compartmentInfo.id.value»",
 				layout: "«d.compartmentInfo.compartmentLayout»",
 				invisible: «d.compartmentInfo.invisible»,
 				«IF d.compartmentInfo.spacing > 0»
@@ -425,6 +426,7 @@ class ShapeGenerator implements IGenerator {
 		params: {
 			«IF d.compartmentInfo != null»
 			compartment: {
+				locationId: "«d.compartmentInfo.id.value»",
 				layout: "«d.compartmentInfo.compartmentLayout»",
 				invisible: «d.compartmentInfo.invisible»,
 				«IF d.compartmentInfo.spacing > 0»
