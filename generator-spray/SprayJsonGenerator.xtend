@@ -28,6 +28,16 @@ class SprayJsonGenerator implements IGenerator {
 			«ELSE»
 				«val shape = mc.representedBy as ShapeFromDsl»
 				shape: "«shape.shape.dslShape.name»",
+				«IF shape.references.length > 0»
+					compartments: [
+						«FOR compartment : shape.references»
+							{
+								canContain: "«compartment.reference.EReferenceType.name»",
+								atLocationId: "«compartment.shapeDslKey.dslKey»",
+							},
+						«ENDFOR»
+					],
+				«ENDIF»
 			«ENDIF»
 			«FOR behavior : mc.behaviors»
 				«IF behavior.eClass.name == "CreateBehavior"»
