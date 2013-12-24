@@ -53,6 +53,9 @@ draw2d.layout.locator.ConnectionLocator= draw2d.layout.locator.Locator.extend({
             if ( userData.hasOwnProperty('type')){
                 switch ( userData.type ){
                     case "Label":
+                        var rotationXPos = Math.round( 0 + userData.distance * Math.cos(userData.angle * Math.PI/180) );
+                        var rotationYPos =  Math.round( 0 - userData.distance * Math.sin(userData.angle * Math.PI/180) );
+
                         var startX = target.parent.getStartPoint().x;
                         var startY = target.parent.getStartPoint().y;
 
@@ -62,12 +65,15 @@ draw2d.layout.locator.ConnectionLocator= draw2d.layout.locator.Locator.extend({
                         var diffX = endX - startX;
                         var diffY = endY - startY;
 
-                        var newPosX = diffX * userData.offset;
-                        var newPosY = diffY * userData.offset;
+                        var newPosX = diffX * userData.offset + rotationXPos;
+                        var newPosY = diffY * userData.offset + rotationYPos;
 
                         target.setPosition(startX + newPosX, startY + newPosY);
                         break;
                     case "Rectangle":
+                        var rotationXPos = Math.round( 0 + userData.distance * Math.cos(userData.angle * Math.PI/180) );
+                        var rotationYPos =  Math.round( 0 - userData.distance * Math.sin(userData.angle * Math.PI/180) );
+
                         var startX = target.parent.getStartPoint().x;
                         var startY = target.parent.getStartPoint().y;
 
@@ -77,12 +83,15 @@ draw2d.layout.locator.ConnectionLocator= draw2d.layout.locator.Locator.extend({
                         var diffX = endX - startX;
                         var diffY = endY - startY;
 
-                        var newPosX = diffX * userData.offset;
-                        var newPosY = diffY * userData.offset;
+                        var newPosX = diffX * userData.offset + rotationXPos;
+                        var newPosY = diffY * userData.offset + rotationYPos;
 
                         target.setPosition(startX + newPosX, startY + newPosY);
                         break;
                     case "Ellipse":
+                        var rotationXPos = Math.round( 0 + userData.distance * Math.cos(userData.angle * Math.PI/180) );
+                        var rotationYPos =  Math.round( 0 - userData.distance * Math.sin(userData.angle * Math.PI/180) );
+
                         var startX = target.parent.getStartPoint().x;
                         var startY = target.parent.getStartPoint().y;
 
@@ -92,12 +101,15 @@ draw2d.layout.locator.ConnectionLocator= draw2d.layout.locator.Locator.extend({
                         var diffX = endX - startX;
                         var diffY = endY - startY;
 
-                        var newPosX = diffX * userData.offset;
-                        var newPosY = diffY * userData.offset;
+                        var newPosX = diffX * userData.offset + rotationXPos;
+                        var newPosY = diffY * userData.offset + rotationYPos;
 
                         target.setPosition(startX + newPosX, startY + newPosY);
                         break;
                     case "Line":
+                        var rotationXPos = Math.round( 0 + userData.distance * Math.cos(userData.angle * Math.PI/180) );
+                        var rotationYPos =  Math.round( 0 - userData.distance * Math.sin(userData.angle * Math.PI/180) );
+
                         var startX = target.parent.getStartPoint().x;
                         var startY = target.parent.getStartPoint().y;
 
@@ -110,8 +122,10 @@ draw2d.layout.locator.ConnectionLocator= draw2d.layout.locator.Locator.extend({
                         var newPosX = diffX * userData.offset;
                         var newPosY = diffY * userData.offset;
 
-                        target.setStartPoint(startX + newPosX + target.getAbsoluteStartPoint().x,startY + newPosY + target.getAbsoluteStartPoint().y);
-                        target.setEndPoint(startX + newPosX + target.getAbsoluteEndPoint().x,startY + newPosY + target.getAbsoluteEndPoint().y);
+                        target.setStartPoint(startX + newPosX + target.getAbsoluteStartPoint().x + rotationXPos,
+                                             startY + newPosY + target.getAbsoluteStartPoint().y + rotationYPos);
+                        target.setEndPoint(startX + newPosX + target.getAbsoluteEndPoint().x + rotationXPos,
+                                           startY + newPosY + target.getAbsoluteEndPoint().y + rotationYPos);
                         break;
                     default: target.setPosition(target.getPosition().x,target.getPosition().y);
                 }

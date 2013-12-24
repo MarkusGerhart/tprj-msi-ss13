@@ -34,6 +34,8 @@ spray2d.shape.basic.Polygon = Class.extend({
 
         this.connection = false;
         this.offset = 0;
+        this.distance = 0;
+        this.angle = 0;
     },
 
     setConnection: function(conn){
@@ -42,6 +44,14 @@ spray2d.shape.basic.Polygon = Class.extend({
 
     setOffset: function(offset){
         this.offset = offset;
+    },
+
+    setAngle: function(angle){
+        this.angle = angle;
+    },
+
+    setDistance: function(distance){
+        this.distance = distance;
     },
 
     /**
@@ -61,7 +71,7 @@ spray2d.shape.basic.Polygon = Class.extend({
             //line.setUserData({"type":"Line"});
             this.root.addFigure(line, new spray2d.layout.locator.FigureLocator(this.root));
         }else{
-            line.setUserData({"type":"Line", "offset":this.offset});
+            line.setUserData({"type":"Line", "offset":this.offset, "distance":this.distance, "angle":this.angle});
             line.setConnection(true);
             this.root.addFigure(line, new draw2d.layout.locator.ConnectionLocator(line));
         }

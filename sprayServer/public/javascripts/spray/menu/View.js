@@ -24,6 +24,7 @@ htwg.spray.View = draw2d.Canvas.extend({
 
         this.model = [];
         this.labels = [];
+        this.connectionLabels = [];
     },
 
     /**
@@ -59,6 +60,13 @@ htwg.spray.View = draw2d.Canvas.extend({
     {
         var type = $(droppedDomNode).attr('lang')
         var figure = htwg.spray.shapeFactory.drawShape(type);
+
+		// TODO Thorsten : set appropriate allowed connections
+        // TODO Thorsten : set allowed connections also after loading the model in line number 229
+		figure.setConnectTo(new Array("PI_Pipe"));
+		figure.setConnectFrom(new Array("PI_Pipe"));
+		console.log("figure " + figure.NAME + " connectTo " + figure.getConnectTo());
+
         figure.setPosition(x,y);
         this.addFigure(figure);
 
@@ -187,16 +195,19 @@ htwg.spray.View = draw2d.Canvas.extend({
 
                 if ( !alreadyInserted ){
                     var connections = {};
-
-                    /*TODO: name should be the connection name (e.g. PI_Source_Exhaust) from Spray Model
-                            The type manhattan or freeform should then be set in the factory! */
-                    connections["name"] = "Manhattan";
+                    connections["name"] = conn.getUserData().name;
                     connections["id"] = conn.getId();
                     connections["from"] = {"id":sourceParentObj.getId(),
-                        "anchor":sourceAnchorID};
+                                           "anchor":sourceAnchorID};
                     connections["to"] = {"id":targetParentObj.getId(),
-                        "anchor":targetAnchorID};
+                                         "anchor":targetAnchorID};
 
+                    this.getAllLabels( conn );
+                    if ( this.labels.length > 0 ){
+                        connections["labels"] = this.labels;
+                    }
+
+                    this.labels = [];
                     this.model.connections.push(connections);
                 }
             }
@@ -208,35 +219,41 @@ htwg.spray.View = draw2d.Canvas.extend({
         var entities = this.model.entities;
         var connections = this.model.connections;
         var that = this;
+        var oldSelectedConn = $("#selectedConnection").val();
 
         $.each(entities,function(i,entity){
 
-            var figure = htwg.spray.factory.drawShape(entity.name);
+            var figure = htwg.spray.shapeFactory.drawShape(entity.name);
             figure.setPosition(entity.params.x,entity.params.y);
             figure.setDimension(entity.params.width, entity.params.height);
             figure.setId(entity.id);
+            that.addFigure(figure);
 
             if ( entity.hasOwnProperty("labels") && entity.labels.length > 0 ){
                 that.labels = $.extend(true, [], entity.labels);
                 that.setAllLabels(figure);
+                that.labels = [];
             }
-            that.addFigure(figure);
-
         });
 
         $.each(connections, function(i,conn){
-            /*TODO: name should be the connection name (e.g. PI_Source_Exhaust) from Spray Model
-                    The type manhattan or freeform should then be set in the factory! */
-            var c = new draw2d.Connection();
-            c.setRouter(new draw2d.layout.connection.ManhattanConnectionRouter());
-
+            $("#selectedConnection").val(conn.name);
+            var c = new draw2d.Connection(draw2d.Connection.DEFAULT_ROUTER);
             var sourceFigure = that.getFigure(conn.from.id);
             var targetFigure = that.getFigure(conn.to.id);
             c.setSource(sourceFigure.getHybridPort(conn.from.anchor));
             c.setTarget(targetFigure.getHybridPort(conn.to.anchor));
             c.setId(conn.id);
             that.addFigure(c);
+
+            if ( conn.hasOwnProperty("labels") && conn.labels.length > 0 ){
+                that.labels = $.extend(true, [], conn.labels);
+                that.setAllLabels(c);
+                that.labels = [];
+            }
         });
+
+        $("#selectedConnection").val(oldSelectedConn);
     },
 
     getAllLabels: function(figure){

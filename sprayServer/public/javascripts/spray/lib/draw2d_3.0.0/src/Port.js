@@ -488,6 +488,18 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         request.target = draggedFigure;
         var command = draggedFigure.createCommand(request);
 
+        var conName = $("#selectedConnection").val();
+		var conClass = htwg.spray.classDefinitionByName[conName];
+		var srcParentName = request.source.getParent()['sprayName'];
+		var destParentName = request.target.getParent()['sprayName'];
+
+        if(command!==null){
+            //if (!(request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0)) {
+			if (!(conClass['to'].indexOf(destParentName) >= 0 && conClass['from'].indexOf(srcParentName) >= 0)) {
+                $("#drawArea").css("cursor","not-allowed");
+            }
+        }
+
         if (command === null) {
             return null;
         }
@@ -503,6 +515,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      **/
     onDragLeave:function( figure )
     {
+        $("#drawArea").css("cursor","default");
+
 		// Ports accepts only Ports as DropTarget
 		//
 		if(!(figure instanceof draw2d.Port)){
@@ -530,9 +544,17 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         request.source = dropTarget;
         request.target = this;
         var command = this.createCommand(request);
-        
+
+		var conName = $("#selectedConnection").val();
+		var conClass = htwg.spray.classDefinitionByName[conName];
+		var srcParentName = request.source.getParent()['sprayName'];
+		var destParentName = request.target.getParent()['sprayName'];
+
         if(command!==null){
-           this.parent.getCanvas().getCommandStack().execute(command);
+			//if (request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0) {
+			if ((conClass['to'].indexOf(destParentName) >= 0 && conClass['from'].indexOf(srcParentName) >= 0)) {
+				this.parent.getCanvas().getCommandStack().execute(command);
+			}
         }
         this.setGlow(false);
     },

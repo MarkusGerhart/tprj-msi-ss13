@@ -52,6 +52,7 @@ spray2d.layout.connection.DirectRouter = draw2d.layout.connection.DirectRouter.e
         var selectedConnection = $("#selectedConnection").val();
         $.each(htwg.spray.classDefinition, function(i, item) {
             if ( item.name == selectedConnection && item.hasOwnProperty("connection") ){
+                connection.setUserData({"name":item.name});
                 var connectionShape = item.connection;
                 $.each(htwg.spray.shapeDefinition, function(i, shape) {
                     if ( shape.name == connectionShape ){

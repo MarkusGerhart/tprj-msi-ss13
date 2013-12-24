@@ -418,6 +418,7 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
      **/
     setSource:function( port)
     {
+        console.log("setSource");
       if(this.sourcePort!==null){
         this.sourcePort.detachMoveListener(this);
         this.sourcePort.onDisconnect(this);
@@ -455,6 +456,7 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
      **/
     setTarget:function( port)
     {
+        console.log("setTarget");
       if(this.targetPort!==null){
         this.targetPort.detachMoveListener(this);
         this.targetPort.onDisconnect(this);
@@ -752,7 +754,8 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
  * @returns {draw2d.Connection}
  */
 draw2d.Connection.createConnection=function(sourcePort, targetPort){
-    
+    console.log("createConnection");
+    console.log("TODO : check if connection is allowed");
     return new draw2d.Connection();
 };
 

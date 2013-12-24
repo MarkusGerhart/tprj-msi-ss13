@@ -5,7 +5,15 @@
         jQuery(document).ready(function() {
 
             htwg.spray.classDefinition = classdefs;
+			htwg.spray.classDefinitionByName = {};
+			for (i=0; i<classdefs.length; i++) {
+				htwg.spray.classDefinitionByName[classdefs[i].name] = classdefs[i];
+			}
             htwg.spray.shapeDefinition = shapedefs;
+			htwg.spray.shapeDefinitionByName = {};
+			for (i=0; i<shapedefs.length; i++) {
+				htwg.spray.shapeDefinitionByName[shapedefs[i].name] = shapedefs[i];
+			}
 
             htwg.spray.shapeFactory = new htwg.spray.ShapeFactory(jQuery);
             htwg.spray.connectionFactory = new htwg.spray.ConnectionFactory(jQuery);

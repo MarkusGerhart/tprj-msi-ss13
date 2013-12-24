@@ -25,24 +25,20 @@ htwg.spray.ShapeFactory = function($){
 
     this.drawShape = function(name){
         var root = {};
-        $.each(htwg.spray.shapeDefinition, function(i,shapeDef){
-            if ( shapeDef.hasOwnProperty("name") ){
-                if (shapeDef.name == name ){
-                    root = that.createBoundingBox(shapeDef);
-                    if ( shapeDef.hasOwnProperty("shapes")){
-                        $.each(shapeDef.shapes, function(i,childShapeDef){
-                             that.drawChild(childShapeDef, root, root);
-                        });
-                    }
-                    if ( shapeDef.hasOwnProperty("anchors")){
-                        $.each(shapeDef.anchors, function(i,anchorDef){
-                            that.drawAnchor(anchorDef, root);
-                        });
-                    }
-                    return;
-                }
-            }
-        });
+		var shapeDef = htwg.spray.shapeDefinitionByName[name];
+        root = that.createBoundingBox(shapeDef);
+        if ( shapeDef.hasOwnProperty("shapes")){
+            $.each(shapeDef.shapes, function(i,childShapeDef){
+                 that.drawChild(childShapeDef, root, root);
+            });
+        }
+        if ( shapeDef.hasOwnProperty("anchors")){
+            $.each(shapeDef.anchors, function(i,anchorDef){
+                that.drawAnchor(anchorDef, root);
+            });
+        }
+
+		root['sprayName'] = name;
         return root;
     },
 

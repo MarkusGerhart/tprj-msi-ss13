@@ -661,6 +661,9 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
         }else{
             var userData = this.getUserData();
 
+            var rotationXPos = Math.round( 0 + userData.distance * Math.cos(userData.angle * Math.PI/180) );
+            var rotationYPos =  Math.round( 0 - userData.distance * Math.sin(userData.angle * Math.PI/180) );
+
             var startX = figure.getStartPoint().x;
             var startY = figure.getStartPoint().y;
 
@@ -673,8 +676,10 @@ spray2d.shape.basic.Line = draw2d.VectorFigure.extend({
             var newPosX = diffX * userData.offset;
             var newPosY = diffY * userData.offset;
 
-            this.setStartPoint(startX + newPosX + this.absoluteStartPoint.x,startY + newPosY + this.absoluteStartPoint.y);
-            this.setEndPoint(startX + newPosX + this.absoluteEndPoint.x,startY + newPosY + this.absoluteEndPoint.y);
+            this.setStartPoint(startX + newPosX + this.absoluteStartPoint.x + rotationXPos,
+                               startY + newPosY + this.absoluteStartPoint.y + rotationYPos);
+            this.setEndPoint(startX + newPosX + this.absoluteEndPoint.x + rotationXPos,
+                             startY + newPosY + this.absoluteEndPoint.y + rotationYPos);
         }
     },
 
