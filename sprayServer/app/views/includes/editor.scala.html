@@ -22,6 +22,7 @@
             htwg.spray.menu.buildMenu();
 
             htwg.spray.view = new htwg.spray.View("drawArea");
+            htwg.spray.utils = new htwg.spray.Utils(jQuery);
             htwg.spray.toolbar = new htwg.spray.Toolbar(jQuery);
 
             draw2d.Connection.DEFAULT_ROUTER= new spray2d.layout.connection.DirectRouter();

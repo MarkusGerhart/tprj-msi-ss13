@@ -756,19 +756,6 @@ draw2d.Figure = Class.extend({
     onDrop:function(dropTarget)
     {
     },
-   
-	setConnectTo:function(list) {
-		this.connectTo = list;
-	},
-	getConnectTo:function() {
-		return this.connectTo;
-	},
-	setConnectFrom:function(list) {
-		this.connectFrom = list;
-	},
-	getConnectFrom:function() {
-		return this.connectFrom;
-	},
 	
     /**
      * @method

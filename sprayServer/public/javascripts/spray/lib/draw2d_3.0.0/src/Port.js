@@ -73,10 +73,17 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         
         this.setCanSnapToHelper(false);
         
-        this.installEditPolicy(new draw2d.policy.port.IntrusivePortsFeedbackPolicy());
-    //    this.installEditPolicy(new draw2d.policy.port.ElasticStrapFeedbackPolicy());
+        //this.installEditPolicy(new draw2d.policy.port.IntrusivePortsFeedbackPolicy());
+        //this.installEditPolicy(new draw2d.policy.port.ElasticStrapFeedbackPolicy());
+        this.installEditPolicy(new spray2d.policy.port.SprayPortsFeedbackPolicy());
+        
+        this.spraySpecialPort = false;
     },
 
+    setSpraySpecialPort: function(spraySpecialPort){
+    	this.spraySpecialPort = spraySpecialPort;
+    },
+    
     /**
      * @method
      * set the maximal possible count of connections for this port
@@ -429,7 +436,13 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
       // port.
       // draw2d.shape.basic.Rectangle.prototype.onDragEnd.call(this); DON'T call the super implementation!!!
     
-      this.setAlpha(1.0);
+      /*PATCH BY SISCHNEE*/
+      if ( this.spraySpecialPort ){
+    	  this.setAlpha(0);
+      }else{
+          this.setAlpha(1.0);
+      }
+      /*END PATCH*/
     
       // 1.) Restore the old Position of the node
       //
@@ -475,6 +488,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
     		return null;
     	}
     	
+    	draggedFigure.setAlpha(0);
+    	
     	// consider the max possible connections for this port
     	//
     	if(this.getConnections().getSize() >= this.maxFanOut){
@@ -484,8 +499,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         // dropTarget did have a corona
         var request = new draw2d.command.CommandType(draw2d.command.CommandType.CONNECT);
         request.canvas = this.parent.getCanvas();
-        request.source = this;
-        request.target = draggedFigure;
+        request.source = draggedFigure;
+        request.target = this;
         var command = draggedFigure.createCommand(request);
 
         var conName = $("#selectedConnection").val();
@@ -493,11 +508,20 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
 		var srcParentName = request.source.getParent()['sprayName'];
 		var destParentName = request.target.getParent()['sprayName'];
 
+		var source = false;
+		var target = false;
+		
+		if ( conClass.from == srcParentName || conClass.from == "fromElement" || jQuery.inArray(srcParentName,conClass.from) >= 0 ){
+			source = true;
+		}
+		if ( conClass.to == destParentName || conClass.to == "toElement" || jQuery.inArray(destParentName,conClass.to ) >= 0 ){
+			target = true;
+		}
+		
         if(command!==null){
-            //if (!(request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0)) {
-			if (!(conClass['to'].indexOf(destParentName) >= 0 && conClass['from'].indexOf(srcParentName) >= 0)) {
-                $("#drawArea").css("cursor","not-allowed");
-            }
+        	if ( !(source && target) ){
+				$("#drawArea").css("cursor","not-allowed");
+			}
         }
 
         if (command === null) {
@@ -547,15 +571,25 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
 
 		var conName = $("#selectedConnection").val();
 		var conClass = htwg.spray.classDefinitionByName[conName];
-		var srcParentName = request.source.getParent()['sprayName'];
-		var destParentName = request.target.getParent()['sprayName'];
-
+		var srcParentName = request.target.getParent()['sprayName'];
+		var destParentName = request.source.getParent()['sprayName'];
+        
+		var source = false;
+		var target = false;
+		
+		if ( conClass.from == srcParentName || conClass.from == "fromElement" || jQuery.inArray(srcParentName,conClass.from) >= 0 ){
+			source = true;
+		}
+		if ( conClass.to == destParentName || conClass.to == "toElement" || jQuery.inArray(destParentName,conClass.to ) >= 0 ){
+			target = true;
+		}
+		
         if(command!==null){
-			//if (request.source.getParent().getConnectTo().indexOf(conName) >= 0 && request.target.getParent().getConnectFrom().indexOf(conName) >= 0) {
-			if ((conClass['to'].indexOf(destParentName) >= 0 && conClass['from'].indexOf(srcParentName) >= 0)) {
+        	if ( source && target ){
 				this.parent.getCanvas().getCommandStack().execute(command);
-			}
+            }
         }
+        
         this.setGlow(false);
     },
    

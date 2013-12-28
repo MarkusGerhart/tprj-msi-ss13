@@ -30,6 +30,7 @@ htwg.spray.Toolbar = function($){
 
     this.menu = jQuery("#toolbar");
 
+    this.utils = htwg.spray.utils;
     this.view = htwg.spray.view;
 
     this.initialize = function(){
@@ -63,14 +64,14 @@ htwg.spray.Toolbar = function($){
         //
         this.saveButton  = $("#save");
         this.saveButton.click($.proxy(function(){
-            that.view.getModel();
+            that.utils.getModel();
         },this));
 
         // Inject the SAVE Button and the callback
         //
         this.loadButton  = $("#load");
         this.loadButton.click($.proxy(function(){
-            that.view.setModel();
+            that.utils.setModel();
         },this));
 
     };

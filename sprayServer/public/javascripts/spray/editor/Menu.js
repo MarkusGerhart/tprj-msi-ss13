@@ -48,7 +48,7 @@ htwg.spray.Menu = function($){
                 canvasElem = $("<div style='width: "+canvasSize+"px; height: "+canvasSize+"px;' id='"+ item.name +"'></div>");
                 that.menu.append(canvasElem);
                 canvas = new draw2d.Canvas(item.name);
-                var figure = htwg.spray.shapeFactory.drawShape(item.shape);
+                var figure = htwg.spray.shapeFactory.drawShape(item.name);
 
                 if ( figure.getWidth() > size || figure.getHeight() > size ){
                     if ( figure.getWidth() > figure.getHeight() ){
@@ -69,10 +69,10 @@ htwg.spray.Menu = function($){
                             list.append("<li><div lang="+item.shape+" class='palette_node_element draw2d_droppable ui-draggable' id='" + item.name+ "'>" +
                                 "<div class='flyout'>"+svg+"</div>"+item.name+"</div></li>");
                         }
-                        $("#"+item.shape +" .flyout").css("width", figure.getWidth()+20+"px");
-                        $("#"+item.shape +" .flyout").css("height", figure.getHeight()+20+"px");
+                        $("#"+item.name +" .flyout").css("width", figure.getWidth()+20+"px");
+                        $("#"+item.name +" .flyout").css("height", figure.getHeight()+20+"px");
 
-                        $("#"+item.shape).hover(function(){
+                        $("#"+item.name).hover(function(){
                             $(this).find('.flyout').show();
                         },function(){
                             $(this).find('.flyout').hide();

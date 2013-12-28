@@ -50,25 +50,36 @@ spray2d.layout.connection.DirectRouter = draw2d.layout.connection.DirectRouter.e
     onInstall: function(connection)
     {
         var selectedConnection = $("#selectedConnection").val();
-        $.each(htwg.spray.classDefinition, function(i, item) {
-            if ( item.name == selectedConnection && item.hasOwnProperty("connection") ){
-                connection.setUserData({"name":item.name});
-                var connectionShape = item.connection;
-                $.each(htwg.spray.shapeDefinition, function(i, shape) {
-                    if ( shape.name == connectionShape ){
-                        if ( shape.hasOwnProperty("connectionType") && shape.connectionType == "manhatten" ){
-                            connection.setRouter(new spray2d.layout.connection.ManhattanConnectionRouter());
-                        }
-
-                        if ( shape.hasOwnProperty("placings") ){
-                            $.each(shape.placings, function(i,placing){
-                                htwg.spray.connectionFactory.drawChild(placing, connection);
-                            });
-                        }
-                    }
+        var item = htwg.spray.classDefinitionByName[selectedConnection];
+        if ( item.hasOwnProperty("connection") ){
+        	connection.setUserData({"name":item.name});
+            var shape = htwg.spray.shapeDefinitionByName[item.connection];
+            if ( shape.hasOwnProperty("connectionType") && shape.connectionType == "manhatten" ){
+                connection.setRouter(new spray2d.layout.connection.ManhattanConnectionRouter());
+            }
+            if ( shape.hasOwnProperty("placings") ){
+                $.each(shape.placings, function(i,placing){
+                    htwg.spray.connectionFactory.drawChild(placing, connection);
                 });
             }
-        });
+
+            if ( htwg.spray.utils.notifyEcore ){
+                var source = connection.getSource().getParent();
+                var target = connection.getTarget().getParent();
+                var fromID = htwg.spray.utils.getIndexFromID(source.getId());
+                var toID = htwg.spray.utils.getIndexFromID(target.getId());
+
+                if ( fromID >= 0 && toID >= 0 ){
+                    htwg.spray.websocketEcore.send({"type":"ecore",
+                        "command":"createConnection",
+                        "domainObj":item.name,
+                        "fromObj":item.from,
+                        "toObj":item.to,
+                        "fromID":fromID.toString(),
+                        "toID":toID.toString()});
+                }
+            }
+        }
     },
 
     /**
@@ -81,7 +92,26 @@ spray2d.layout.connection.DirectRouter = draw2d.layout.connection.DirectRouter.e
      */
     onUninstall: function(connection)
     {
+        if ( htwg.spray.utils.notifyEcore ){
+            var userData = connection.getUserData();
+            if ( userData.hasOwnProperty("name") ){
+                var item = htwg.spray.classDefinitionByName[userData.name];
+                var source = connection.getSource().getParent();
+                var target = connection.getTarget().getParent();
+                var fromID = htwg.spray.utils.getIndexFromID(source.getId());
+                var toID = htwg.spray.utils.getIndexFromID(target.getId());
 
+                if ( fromID >= 0 && toID >= 0 ){
+                    htwg.spray.websocketEcore.send({"type":"ecore",
+                                                    "command":"removeConnection",
+                                                    "domainObj":item.name,
+                                                    "fromObj":item.from,
+                                                    "toObj":item.to,
+                                                    "fromID":fromID.toString(),
+                                                    "toID":toID.toString()});
+                }
+            }
+        }
     },
 
 

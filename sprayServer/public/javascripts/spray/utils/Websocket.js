@@ -36,9 +36,13 @@ htwg.spray.WebSocket.prototype.onerror = function (event) {
 }
 
 htwg.spray.WebSocket.prototype.send = function (message) {
-  console.log("WebSocket send: " + message);
-  this.sock.send(message);
-  return message;
+  try{
+      console.log("WebSocket send: " + JSON.stringify(message));
+      this.sock.send(JSON.stringify( message ));
+      return message;
+  }catch(e){
+      console.log(e);
+  }
 }
 
 htwg.spray.require = function (dep) {

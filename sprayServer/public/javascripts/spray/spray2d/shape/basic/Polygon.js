@@ -69,7 +69,7 @@ spray2d.shape.basic.Polygon = Class.extend({
             line.setStartRatioToRoot( this.root.getWidth(), this.root.getHeight() );
             line.setEndRatioToRoot( this.root.getWidth(), this.root.getHeight() );
             //line.setUserData({"type":"Line"});
-            this.root.addFigure(line, new spray2d.layout.locator.FigureLocator(this.root));
+            this.root.addFigure(line, new spray2d.layout.locator.FigureLocator(line));
         }else{
             line.setUserData({"type":"Line", "offset":this.offset, "distance":this.distance, "angle":this.angle});
             line.setConnection(true);

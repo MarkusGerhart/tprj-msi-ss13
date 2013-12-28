@@ -86,6 +86,20 @@ draw2d.command.CommandDelete = draw2d.command.Command.extend({
             port.setCanvas(null);
           }
         }
+
+        //PATCH BY SISCHNEE
+        if ( htwg.spray.utils.notifyEcore ){
+            var ID = htwg.spray.utils.getIndexFromID(this.figure.getId());
+
+            if ( ID >= 0 ){
+                htwg.spray.websocketEcore.send({"type":"ecore",
+                                                "command":"removeObj",
+                                                "domainObj":this.figure.sprayName,
+                                                "ID":ID.toString()});
+            }
+        }
+        //END OF PATCH
+
         this.canvas.removeFigure(this.figure);
     
        if(this.connections===null)

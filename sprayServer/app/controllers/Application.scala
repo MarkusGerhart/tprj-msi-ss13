@@ -1,12 +1,16 @@
 package controllers
 
 import play.api._
+import play.api.libs.concurrent._
+import play.api.libs.iteratee._
+import play.api.libs.json._
 import play.api.mvc._
 import play.api.templates._
-import play.api.libs.json._
-import play.api.libs.iteratee._
+
 
 object Application extends Controller {
+  
+  var out: Enumerator.Pushee[JsValue] = _
   
   def index = Action { implicit request =>
     Ok(
@@ -14,46 +18,54 @@ object Application extends Controller {
     )
   }
 
-  def websocket = WebSocket.using[String] { request => 
-    
-    // Log events to the console
-    // val in = Iteratee.foreach[String](println).mapDone { _ =>
-    //   println("Disconnected")
-    // }
-    val in = Iteratee.foreach[String](WebSocketHandler.onmessage)
+  def websocket = WebSocket.async[JsValue] { request =>
 
-    // Send a single 'Hello!' message
-    //val out = Enumerator("Hello!")
-    val out = Enumerator.pushee[String] {
-      websocketOutputInstance => websocketOutputInstance.push(
-        "Hello world."
-      )
-      WebSocketHandler.websocketoutput = websocketOutputInstance
+    val in = Iteratee.foreach[JsValue](this.commandHandling)
+
+    val out = Enumerator.pushee[JsValue] {
+      pushee => pushee.push(
+        JsObject(Seq(
+          "type" -> JsString("editor"),
+          "command" -> JsString("load"),
+          "text" -> JsString("Happy Coding!"))
+        ).as[JsValue])
+      this.out = pushee
     }
-    
-    (in, out)
+
+    Promise.pure((in,out))
   }
 
-  def send = Action { request =>
-    WebSocketHandler.sendmessage("msg from server!")
-    Ok("send?")
-  }
   
-}
+  def loadError = JsObject(Seq(
+      "type" -> JsString("ecore"),
+      "command" -> JsString("error"),
+      "text" -> JsString("Something went wrong while storing to ecore!"))
+    ).as[JsValue];
+  
+// 	public abstract void createEObject(String domainObj);
+/*  def createEObject(domainObj: String) = {
+    val factory: WebToEcoreFactory = WebToEcoreFactoryImpl.getInstance()
+    factory.createEObject(domainObj)
+  } */
 
-object WebSocketHandler {
+  
+  /*****
+*
+* TODO 1. Mapping in eine model class auslagern
+*
+*/
 
-  var websocketoutput: Enumerator.Pushee[String] = _
+  def commandHandling(msg: JsValue) = {
+    //TODO: ERROR when js key not exists or IO Exception
+    val command = (msg \ "command").as[String]
 
-  def onmessage(message: String) = {
-    println(message)
-  }
-
-  def sendmessage(message: String) = {
-    if (websocketoutput != null) {
-      websocketoutput.push(message)
-      println("send: " + message)
+    command match {
+      /*case "create" => {
+        val param0 = (msg \ "param0").as[String]
+        println(param0)
+        createEObject(param0)
+      } */
+      case "" => out.push(loadError)
     }
   }
-
 }
