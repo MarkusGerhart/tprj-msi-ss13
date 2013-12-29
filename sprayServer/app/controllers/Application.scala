@@ -7,14 +7,23 @@ import play.api.libs.json._
 import play.api.mvc._
 import play.api.templates._
 
+import Ecore._  // Our Ecore Model Implementation
 
 object Application extends Controller {
   
   var out: Enumerator.Pushee[JsValue] = _
   
   def index = Action { implicit request =>
+    // Test ECore
+    val factory: WebToEcoreFactory = WebToEcoreFactoryImpl.getInstance();
+    factory.createEObject("Place");
+    factory.createEObject("Transition");
+    factory.createEObject("Transition");
+    factory.createEObject("PTEdge", "Place", "Transition", 0, 1);
+    factory.createEObject("PTEdge", "Place", "Transition", 0, 2);
+    factory.removeEObject("Transition",2);
     Ok(
-      views.html.index("Welcome to spray")
+      views.html.index("Welcome to spray " + factory)
     )
   }
 

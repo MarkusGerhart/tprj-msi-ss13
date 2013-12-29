@@ -10,7 +10,10 @@ object ApplicationBuild extends Build {
   val appDependencies = Seq(
     // Add your project dependencies here,
     jdbc,
-    anorm
+    anorm,
+    "org.eclipse.emf" % "org.eclipse.emf.ecore" % "2.9.1-v20130827-0309",
+    "org.eclipse.emf" % "org.eclipse.emf.ecore.xmi" % "2.9.1-v20130827-0309",
+    "org.eclipse.emf" % "org.eclipse.emf.common" % "2.9.1-v20130827-0309"
   )
 
 
