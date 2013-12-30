@@ -13,7 +13,33 @@ draw2d.Figure = Class.extend({
 	NAME : "draw2d.Figure",
     
 	MIN_TIMER_INTERVAL: 50, // minimum timer interval in milliseconds
-	
+
+    updateCompartment:function( draggedFigure ) {
+        if (this !== draggedFigure.getParent() && draggedFigure.getParent() !== null) {
+            //console.log("parent != new parent , parent name:" + draggedFigure.getParent().NAME);
+            //draggedFigure.getParent().resetChildren();
+
+            if (this.allowedCompartmentChilds !== null) {
+                if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0) {
+                    this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
+                    draggedFigure.setDraggable(true);
+                    console.log("add " + draggedFigure.NAME + " to " + this.NAME);
+                    console.log("allowed childs: " + this.allowedCompartmentChilds);
+                } else {
+                    console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
+                    console.log("allowed childs: " + this.allowedCompartmentChilds);
+                    draggedFigure.getParent().removeChild(draggedFigure);
+                }
+            } else {
+                console.log("allowed child list is not defined");
+            }
+        }
+    },
+
+    setAllowedCompartmentChilds: function(_allowedCompartmentChilds) {
+        this.allowedCompartmentChilds = _allowedCompartmentChilds;
+    },
+
     /**
      * @constructor
      * Creates a new figure element which are not assigned to any canvas.
@@ -22,6 +48,8 @@ draw2d.Figure = Class.extend({
      * @param {Number} [height] initial height of the shape
      */
     init: function( width, height ) {
+        this.allowedCompartmentChilds = new Array();
+
         this.id = draw2d.util.UUID.create();
         
         // required in the SelectionEditPolicy to indicate the type of figure

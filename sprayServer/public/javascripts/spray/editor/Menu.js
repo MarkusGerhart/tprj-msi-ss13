@@ -48,6 +48,8 @@ htwg.spray.Menu = function($){
                 canvasElem = $("<div style='width: "+canvasSize+"px; height: "+canvasSize+"px;' id='"+ item.name +"'></div>");
                 that.menu.append(canvasElem);
                 canvas = new draw2d.Canvas(item.name);
+                canvas.installEditPolicy(new spray2d.policy.canvas.CompartmentSelectionPolicy());
+
                 var figure = htwg.spray.shapeFactory.drawShape(item.name);
 
                 if ( figure.getWidth() > size || figure.getHeight() > size ){

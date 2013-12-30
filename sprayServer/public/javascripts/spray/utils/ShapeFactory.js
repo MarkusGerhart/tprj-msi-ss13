@@ -76,6 +76,10 @@ htwg.spray.ShapeFactory = function($){
         }
 
         if ( shape != null ){
+            if ( shapeDef.hasOwnProperty("compartment")){
+                shape.setDraggable(true);
+            }
+
             if ( shapeDef.hasOwnProperty("shapes")){
                 $.each(shapeDef.shapes, function(i,childShapeDef){
                     if ( typeof shape != "undefined" ){
