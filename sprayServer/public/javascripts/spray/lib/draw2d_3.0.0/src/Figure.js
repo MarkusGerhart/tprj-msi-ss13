@@ -40,6 +40,16 @@ draw2d.Figure = Class.extend({
         this.allowedCompartmentChilds = _allowedCompartmentChilds;
     },
 
+    removeChild: function(child) {
+        var childs = this.children;
+        this.children.each(function(i,e){
+            if (e.figure == child) {
+                e.figure.setCanvas(null);
+                childs.remove(child);
+            }
+        });
+    },
+
     /**
      * @constructor
      * Creates a new figure element which are not assigned to any canvas.

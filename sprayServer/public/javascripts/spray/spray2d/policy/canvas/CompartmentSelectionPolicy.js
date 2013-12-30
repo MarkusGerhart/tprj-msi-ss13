@@ -60,16 +60,32 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
      * @param {Number} y the y-coordinate of the mouse down event
      */
     onMouseDown:function(canvas, x,y){
+        console.log("on mouse down");
+
         this.mouseMovedDuringMouseDown  = false;
         var canDragStart = true;
 
         var figure = canvas.getBestFigure(x, y);
+
+        if (figure == null) {
+            console.log("figure: " + figure);
+        } else {
+            console.log("figure.NAME: " + figure.NAME);
+            console.log("figure: " + figure);
+        }
 
         // check if the user click on a child shape. DragDrop and movement must redirect
         // to the parent
         // Exception: Port's
         while((figure!==null && figure.getParent()!==null) && !(figure instanceof draw2d.Port) && !figure.isDraggable()){
             figure = figure.getParent();
+        }
+
+        if (figure == null) {
+            console.log("figure: " + figure);
+        } else {
+            console.log("figure.NAME: " + figure.NAME);
+            console.log("figure: " + figure);
         }
 
         if (figure !== null && figure.isDraggable()) {

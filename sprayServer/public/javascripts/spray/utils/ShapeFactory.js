@@ -76,8 +76,11 @@ htwg.spray.ShapeFactory = function($){
         }
 
         if ( shape != null ){
-            if ( shapeDef.hasOwnProperty("compartment")){
+            console.log("shape is not null");
+
+            if ( shapeDef.hasOwnProperty("params") && shapeDef.params.hasOwnProperty("compartment")){
                 shape.setDraggable(true);
+                console.log("set draggable for compartment");
             }
 
             if ( shapeDef.hasOwnProperty("shapes")){
