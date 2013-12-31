@@ -60,19 +60,10 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
      * @param {Number} y the y-coordinate of the mouse down event
      */
     onMouseDown:function(canvas, x,y){
-        console.log("on mouse down");
-
         this.mouseMovedDuringMouseDown  = false;
         var canDragStart = true;
 
         var figure = canvas.getBestFigure(x, y);
-
-        if (figure == null) {
-            console.log("figure: " + figure);
-        } else {
-            console.log("figure.NAME: " + figure.NAME);
-            console.log("figure: " + figure);
-        }
 
         // check if the user click on a child shape. DragDrop and movement must redirect
         // to the parent
@@ -81,12 +72,12 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
             figure = figure.getParent();
         }
 
-        if (figure == null) {
+        /*if (figure == null) {
             console.log("figure: " + figure);
         } else {
             console.log("figure.NAME: " + figure.NAME);
             console.log("figure: " + figure);
-        }
+        }*/
 
         if (figure !== null && figure.isDraggable()) {
             canDragStart = figure.onDragStart(x - figure.getAbsoluteX(), y - figure.getAbsoluteY());
@@ -241,7 +232,28 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
 
                 canvas.currentDropTarget = null;
             } else {
-                //console.log("dropTarget == null");
+                var excludes = new Array("draw2d.InputPort", "draw2d.OutputPort", "draw2d.HybridPort");
+                if (this.mouseDraggingElement.getParent() !== null && excludes.indexOf(this.mouseDraggingElement.NAME) < 0) {
+                    console.log("dropTarget == null -> delete element and get new one from the factory");
+
+                    //var type = $(droppedDomNode).attr('id')
+                    var type = this.mouseDraggingElement.NAME.substr(this.mouseDraggingElement.NAME.lastIndexOf(".") + 1);
+                    console.log("type: " + type);
+                    var figure = htwg.spray.shapeFactory.drawShape(type);
+
+                    figure.setPosition(x,y);
+                    canvas.addFigure(figure);
+
+                    // create a command for the undo/redo support
+                    var command = new draw2d.command.CommandAdd(this, figure, x, y);
+                    canvas.getCommandStack().execute(command);
+
+                    if ( htwg.spray.utils.notifyEcore ){
+                        htwg.spray.websocketEcore.send({"type":"ecore", "command":"createObj", "domainObj":type});
+                    }
+
+                    this.mouseDraggingElement.getParent().removeChild(this.mouseDraggingElement);
+                }
             }
             this.mouseDraggingElement = null;
         } else {
