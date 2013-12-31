@@ -33,6 +33,18 @@ draw2d.Figure = Class.extend({
             } else {
                 console.log("allowed child list is not defined");
             }
+        } else {
+            console.log("else - do something !");
+            console.log("allowed childs: " + this.allowedCompartmentChilds);
+            console.log("dragged figure name: " + draggedFigure.NAME);
+            console.log("spray name: " + draggedFigure['sprayName']);
+
+            /*var figure = htwg.spray.shapeFactory.drawShape(draggedFigure['sprayName']);
+            this.addFigure(figure, new spray2d.layout.locator.FigureLocator());
+            this.attachResizeListener(figure);*/
+
+            this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
+
         }
     },
 
