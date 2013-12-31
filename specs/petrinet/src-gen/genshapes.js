@@ -2,7 +2,7 @@ var shapedefs = [
 {
 	name: "PlaceShape",
 	params: {
-		size: {witdh: 40, height: 70},
+		size: {witdh: 40, height: 70}
 	},
 	shapes: [
 		{
@@ -12,7 +12,7 @@ var shapedefs = [
 				align: {
 					horizontal: "left",
 					vertical: "top"
-				},
+				}
 			}
 		}
 		,
@@ -22,10 +22,10 @@ var shapedefs = [
 				compartment: {
 					locationId: "tokensCompartment",
 					layout: "fixed",
-					invisible: false,
+					invisible: false
 				},
-				size: {width: 40, height: 40},
-			},
+				size: {width: 40, height: 40}
+			}
 		}
 		,
 	]
@@ -34,7 +34,7 @@ var shapedefs = [
 {
 	name: "TransitionShape",
 	params: {
-		size: {witdh: 40, height: 70},
+		size: {witdh: 40, height: 70}
 	},
 	shapes: [
 		{
@@ -44,7 +44,7 @@ var shapedefs = [
 				align: {
 					horizontal: "left",
 					vertical: "top"
-				},
+				}
 			}
 		}
 		,
@@ -52,7 +52,7 @@ var shapedefs = [
 			name: "Rectangle",
 			params: {
 				size: {width: 40, height: 40},
-			},
+			}
 		}
 		,
 	]
@@ -61,14 +61,14 @@ var shapedefs = [
 {
 	name: "TokenShape",
 	params: {
-		size: {witdh: 8, height: 8},
+		size: {witdh: 8, height: 8}
 	},
 	shapes: [
 		{
 			name: "Ellipse",
 			params: {
-				size: {width: 8, height: 8},
-			},
+				size: {width: 8, height: 8}
+			}
 		}
 		,
 	]
@@ -103,11 +103,9 @@ var shapedefs = [
 							curveAfter: 0
 						},
 					]
-				},
+				}
 			}
-			,
-		},
+		}
 	]
 }
-,
 ]
