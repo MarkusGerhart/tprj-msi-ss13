@@ -218,7 +218,7 @@ class ShapeGenerator implements IGenerator {
 		»
 		params: {
 			«IF boundingbox.width > 0 && boundingbox.heigth > 0»
-			size: {witdh: «boundingbox.width», height: «boundingbox.heigth»},
+			size: {width: «boundingbox.width», height: «boundingbox.heigth»},
 			«ENDIF»
 			«IF d.shapeLayout.minwidth > 0»
 			minWidth: «d.shapeLayout.minwidth»,
