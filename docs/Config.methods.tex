@@ -1,0 +1,35 @@
+\newcommand{\autor}{Sven Hodapp, Thorsten Niehues, Simon Schneeberger}
+\newcommand{\documenttype}{Teamprojekt Dokumentation}
+\newcommand{\thema}{Spray auf HTML/JavaScript Basis}
+\newcommand{\subtitle}{
+  Potierung der generierten Spray-Editoren auf Webtechnologie als Rich Internet Application
+}
+\newcommand{\institute}{Hochschule Konstanz\\Fakultät Informatik\\Betreuer: Prof. Dr. Marko Boger}
+\newcommand{\keywords}{spray, graphiti, model driven, javascript, ria, rich internet application}
+
+\input{Titlepages/Default}  % Choose one Titlepage (must provide \typesetTitle)
+
+\newcommand{\titlepageAreal}{
+  \thispagestyle{empty}
+  \typesetTitle
+  \newpage
+  \clearpage
+  \setcounter{page}{1}
+}
+\newcommand{\tableOfContentsAreal}{
+  \pagenumbering{roman}
+  \tableofcontents
+  \newpage
+  \pagenumbering{arabic}
+}
+\newcommand{\bibliographyAreal}{
+  \newpage
+  \addcontentsline{toc}{section}{Literaturverzeichnis}
+  % gerabbrv == [1], [2], ...
+  % apalike == [Autor, 1987], ...
+  % alphadin == [Au87], ...
+  % natdin == DIN 1505 == (Autor 1987), ...
+  \bibliographystyle{natdin}
+  \bibliography{bibliography}
+}
+
