@@ -251,18 +251,8 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                         //var type = this.mouseDraggingElement.NAME.substr(this.mouseDraggingElement.NAME.lastIndexOf(".") + 1);
                         var type = this.mouseDraggingElement['sprayName'];
                         console.log("type: " + type);
-                        var figure = htwg.spray.shapeFactory.drawShape(type);
 
-                        figure.setPosition(x,y);
-                        canvas.addFigure(figure);
-
-                        // create a command for the undo/redo support
-                        var command = new draw2d.command.CommandAdd(canvas, figure, x, y);
-                        canvas.getCommandStack().execute(command);
-
-                        if ( htwg.spray.utils.notifyEcore ){
-                            htwg.spray.websocketEcore.send({"type":"ecore", "command":"createObj", "domainObj":type});
-                        }
+                        htwg.spray.commandHelper.makeAndExecuteShapeCommandAdd(type, x, y, canvas);
 
                         var draggingElement = this.mouseDraggingElement;
                         draggingElement.getParent().children.each(function(i,e){
