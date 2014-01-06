@@ -415,7 +415,7 @@ htwg.spray.ShapeFactory = function($){
             for (i=1; i<classDef.compartments.length; i++) {
                 allowedChilds.push(classDef.compartments[i].canContain);
             }
-            //console.log("set allowed compartment childs: " + allowedChilds);
+            console.log("set allowed compartment childs: " + allowedChilds);
             bbox.setAllowedCompartmentChilds(allowedChilds);
         } else {
             console.log("NO compartment childs allowed");

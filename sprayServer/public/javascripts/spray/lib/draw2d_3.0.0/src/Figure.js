@@ -20,11 +20,25 @@ draw2d.Figure = Class.extend({
             return;
         }
 
-        if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0) {
+        if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0 || this.allowedCompartmentChilds.indexOf(draggedFigure['sprayName']) >= 0) {
             this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
             draggedFigure.setDraggable(true);
             console.log("add " + draggedFigure.NAME + " to " + this.NAME);
+            console.log("add " + draggedFigure['sprayName'] + " to " + this['sprayName']);
             console.log("allowed childs: " + this.allowedCompartmentChilds);
+
+            var childs = draggedFigure.children;
+            var myFigure = this;
+            draggedFigure.children.each(function(i,e){
+                if (typeof(e.figure.NAME) != "undefined") {
+                    console.log("e.figure.Name : " + e.figure.NAME);
+                    myFigure.addFigure(e.figure, new spray2d.layout.locator.FigureLocator());
+                    e.figure.setDraggable(true);
+                } else {
+                    console.log("e.figure.NAME is undefined");
+                    console.log("e : " + e);
+                }
+            });
         } else {
             console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
             console.log("allowed childs: " + this.allowedCompartmentChilds);
