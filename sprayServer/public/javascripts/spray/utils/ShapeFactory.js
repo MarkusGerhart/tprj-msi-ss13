@@ -27,7 +27,7 @@ htwg.spray.ShapeFactory = function($){
         var root = {};
 		var classDef = htwg.spray.classDefinitionByName[name];
 		var shapeDef = htwg.spray.shapeDefinitionByName[classDef.shape];
-        root = that.createBoundingBox(shapeDef);
+        root = that.createBoundingBox(shapeDef, classDef);
         if ( shapeDef.hasOwnProperty("shapes")){
             $.each(shapeDef.shapes, function(i,childShapeDef){
                  that.drawChild(childShapeDef, root, root);
@@ -76,6 +76,13 @@ htwg.spray.ShapeFactory = function($){
         }
 
         if ( shape != null ){
+            /*console.log("shape is not null");
+
+            if ( shapeDef.hasOwnProperty("params") && shapeDef.params.hasOwnProperty("compartment")){
+                shape.setDraggable(true);
+                console.log("set draggable for compartment");
+            }*/
+
             if ( shapeDef.hasOwnProperty("shapes")){
                 $.each(shapeDef.shapes, function(i,childShapeDef){
                     if ( typeof shape != "undefined" ){
@@ -357,7 +364,7 @@ htwg.spray.ShapeFactory = function($){
         return null;
     },
 
-    this.createBoundingBox = function( shape ){
+    this.createBoundingBox = function( shape, classDef ){
         var bbox = new spray2d.shape.basic.BoundingBox(100,100);
         bbox.setAlpha(0);
         bbox.setPosition(10,10);
@@ -401,6 +408,17 @@ htwg.spray.ShapeFactory = function($){
             if ( params.hasOwnProperty("stretchV") ){
                 bbox.setStretchingVertical( params.stretchV );
             }
+        }
+
+        if (classDef.hasOwnProperty("compartments")) {
+            var allowedChilds = classDef.compartments[0].canContain;
+            for (i=1; i<classDef.compartments.length; i++) {
+                allowedChilds.push(classDef.compartments[i].canContain);
+            }
+            console.log("set allowed compartment childs: " + allowedChilds);
+            bbox.setAllowedCompartmentChilds(allowedChilds);
+        } else {
+            console.log("NO compartment childs allowed");
         }
 
         return bbox;

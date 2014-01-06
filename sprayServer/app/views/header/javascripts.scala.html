@@ -38,6 +38,7 @@
 <SCRIPT src="@routes.Assets.at("javascripts/spray/lib/draw2d_3.0.0/src/command/CommandReconnect.js")"> </SCRIPT>
 <SCRIPT src="@routes.Assets.at("javascripts/spray/lib/draw2d_3.0.0/src/command/CommandDelete.js")"> </SCRIPT>
 <SCRIPT src="@routes.Assets.at("javascripts/spray/lib/draw2d_3.0.0/src/command/CommandAdd.js")"> </SCRIPT>
+<SCRIPT src="@routes.Assets.at("javascripts/spray/lib/draw2d_3.0.0/src/command/CommandAddFigure.js")"> </SCRIPT>
 <SCRIPT src="@routes.Assets.at("javascripts/spray/lib/draw2d_3.0.0/src/command/CommandAddJunctionPoint.js")"> </SCRIPT>
 <SCRIPT src="@routes.Assets.at("javascripts/spray/lib/draw2d_3.0.0/src/command/CommandRemoveJunctionPoint.js")"> </SCRIPT>
 <SCRIPT src="@routes.Assets.at("javascripts/spray/lib/draw2d_3.0.0/src/layout/connection/ConnectionRouter.js")"> </SCRIPT>
@@ -393,7 +394,7 @@
 <SCRIPT src="@routes.Assets.at("javascripts/spray/lib/draw2d_3.0.0/lib/jquery.layout.js")"></SCRIPT>
 
 <!-- import spray2d -->
-
+<script src="@routes.Assets.at("javascripts/spray/spray2d/command/CommandCompart.js")"></script>
 <script src="@routes.Assets.at("javascripts/spray/spray2d/shape/basic/BoundingBox.js")"></script>
 <script src="@routes.Assets.at("javascripts/spray/spray2d/shape/basic/Ellipse.js")"></script>
 <script src="@routes.Assets.at("javascripts/spray/spray2d/shape/basic/Label.js")"></script>
@@ -406,9 +407,11 @@
 <script src="@routes.Assets.at("javascripts/spray/spray2d/layout/connection/DirectRouter.js")"></script>
 <script src="@routes.Assets.at("javascripts/spray/spray2d/layout/connection/ManhattanConnectionRouter.js")"></script>
 <script src="@routes.Assets.at("javascripts/spray/spray2d/policy/port/SprayPortsFeedbackPolicy.js")"></script>
+<script src="@routes.Assets.at("javascripts/spray/spray2d/policy/canvas/CompartmentSelectionPolicy.js")"></script>
 
 <!-- import htwg.spray -->
 <script src="@routes.Assets.at("javascripts/spray/utils/ShapeFactory.js")"></script>
+<script src="@routes.Assets.at("javascripts/spray/utils/CommandHelper.js")"></script>
 <script src="@routes.Assets.at("javascripts/spray/utils/ConnectionFactory.js")"></script>
 <script src="@routes.Assets.at("javascripts/spray/utils/Utils.js")"></script>
 <script src="@routes.Assets.at("javascripts/spray/utils/Websocket.js")"></script>

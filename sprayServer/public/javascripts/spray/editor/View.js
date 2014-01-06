@@ -21,6 +21,8 @@ htwg.spray.View = draw2d.Canvas.extend({
         this.setScrollArea("#"+id);
 
         this.currentDropConnection = null;
+
+        this.installEditPolicy(new spray2d.policy.canvas.CompartmentSelectionPolicy());
     },
 
     /**
