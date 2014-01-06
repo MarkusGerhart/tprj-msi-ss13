@@ -15,36 +15,22 @@ draw2d.Figure = Class.extend({
 	MIN_TIMER_INTERVAL: 50, // minimum timer interval in milliseconds
 
     updateCompartment:function( draggedFigure ) {
-        if (this !== draggedFigure.getParent() && draggedFigure.getParent() !== null) {
-            //console.log("parent != new parent , parent name:" + draggedFigure.getParent().NAME);
-            //draggedFigure.getParent().resetChildren();
+        if (this.allowedCompartmentChilds === null) {
+            console.log("allowed child list is not defined");
+            return;
+        }
 
-            if (this.allowedCompartmentChilds !== null) {
-                if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0) {
-                    this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
-                    draggedFigure.setDraggable(true);
-                    console.log("add " + draggedFigure.NAME + " to " + this.NAME);
-                    console.log("allowed childs: " + this.allowedCompartmentChilds);
-                } else {
-                    console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
-                    console.log("allowed childs: " + this.allowedCompartmentChilds);
-                    draggedFigure.getParent().removeChild(draggedFigure);
-                }
-            } else {
-                console.log("allowed child list is not defined");
-            }
-        } else {
-            console.log("else - do something !");
-            console.log("allowed childs: " + this.allowedCompartmentChilds);
-            console.log("dragged figure name: " + draggedFigure.NAME);
-            console.log("spray name: " + draggedFigure['sprayName']);
-
-            /*var figure = htwg.spray.shapeFactory.drawShape(draggedFigure['sprayName']);
-            this.addFigure(figure, new spray2d.layout.locator.FigureLocator());
-            this.attachResizeListener(figure);*/
-
+        if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0) {
             this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
-
+            draggedFigure.setDraggable(true);
+            console.log("add " + draggedFigure.NAME + " to " + this.NAME);
+            console.log("allowed childs: " + this.allowedCompartmentChilds);
+        } else {
+            console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
+            console.log("allowed childs: " + this.allowedCompartmentChilds);
+            if (draggedFigure.getParent() !== null) {
+                draggedFigure.getParent().removeChild(draggedFigure);
+            }
         }
     },
 

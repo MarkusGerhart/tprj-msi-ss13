@@ -757,24 +757,20 @@ draw2d.Figure = Class.extend({
     },
 
     updateCompartment:function( draggedFigure ) {
-        if (this !== draggedFigure.getParent() && draggedFigure.getParent() !== null) {
-            //console.log("parent != new parent , parent name:" + draggedFigure.getParent().NAME);
-            //draggedFigure.getParent().resetChildren();
+        if (this.allowedCompartmentChilds === null) {
+            console.log("allowed child list is not defined");
+            return;
+        }
 
-            if (this.allowedCompartmentChilds !== null) {
-                if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0) {
-                    this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
-                    draggedFigure.setDraggable(true);
-                    console.log("add " + draggedFigure.NAME + " to " + this.NAME);
-                    console.log("allowed childs: " + this.allowedCompartmentChilds);
-                } else {
-                    console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
-                    console.log("allowed childs: " + this.allowedCompartmentChilds);
-                    draggedFigure.getParent().removeChild(draggedFigure);
-                }
-            } else {
-                console.log("allowed child list is not defined");
-            }
+        if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0) {
+            this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
+            draggedFigure.setDraggable(true);
+            console.log("add " + draggedFigure.NAME + " to " + this.NAME);
+            console.log("allowed childs: " + this.allowedCompartmentChilds);
+        } else {
+            console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
+            console.log("allowed childs: " + this.allowedCompartmentChilds);
+            draggedFigure.getParent().removeChild(draggedFigure);
         }
     },
     

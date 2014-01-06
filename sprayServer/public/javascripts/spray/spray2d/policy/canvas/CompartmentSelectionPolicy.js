@@ -174,12 +174,12 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
             //console.log("this.mouseDraggingElement ID: " + this.mouseDraggingElement.getId());
             var target = canvas.getBestFigure(p.x, p.y,this.mouseDraggingElement);
 
-            if (target !== null) {
+            /*if (target !== null) {
                 console.log("taget name: " + target.NAME);
                 console.log("taget ID: " + target.getId());
             }  else {
                 console.log("target is null");
-            }
+            }*/
 
             if (target !== canvas.currentDropTarget) {
                 if (canvas.currentDropTarget !== null) {
@@ -243,6 +243,7 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
 
                     canvas.currentDropTarget = null;
                 } else {
+                    console.log("dropTarget IS NULL ");
                     if (this.mouseDraggingElement.getParent() !== null) {
                         console.log("dropTarget == null -> delete element and get new one from the factory");
 
