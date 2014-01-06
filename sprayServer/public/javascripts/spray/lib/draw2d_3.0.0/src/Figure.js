@@ -21,8 +21,12 @@ draw2d.Figure = Class.extend({
         }
 
         if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0 || this.allowedCompartmentChilds.indexOf(draggedFigure['sprayName']) >= 0) {
-            this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
+            //this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
+            var command = new draw2d.command.CommandAddFigure(this, draggedFigure, new spray2d.layout.locator.FigureLocator(), draggedFigure.getParent(), null)
+            this.getCanvas().getCommandStack().execute(command);
+
             draggedFigure.setDraggable(true);
+
             console.log("add " + draggedFigure.NAME + " to " + this.NAME);
             console.log("add " + draggedFigure['sprayName'] + " to " + this['sprayName']);
             console.log("allowed childs: " + this.allowedCompartmentChilds);
@@ -31,7 +35,11 @@ draw2d.Figure = Class.extend({
             draggedFigure.children.each(function(i,e){
                 if (typeof(e.figure.NAME) != "undefined") {
                     console.log("e.figure.Name : " + e.figure.NAME);
-                    myFigure.addFigure(e.figure, new spray2d.layout.locator.FigureLocator());
+
+                    //myFigure.addFigure(e.figure, new spray2d.layout.locator.FigureLocator());
+                    var command = new draw2d.command.CommandAddFigure(myFigure, e.figure, new spray2d.layout.locator.FigureLocator(), e.figure.getParent(), e.locator)
+                    myFigure.getCanvas().getCommandStack().execute(command);
+
                     e.figure.setDraggable(true);
                     e.figure['sprayName'] = draggedFigure['sprayName'];
                     e.figure['groupId'] = draggedFigure.id;
