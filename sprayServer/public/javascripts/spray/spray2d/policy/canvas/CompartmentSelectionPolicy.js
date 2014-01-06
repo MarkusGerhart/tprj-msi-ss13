@@ -257,13 +257,27 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                         canvas.addFigure(figure);
 
                         // create a command for the undo/redo support
-                        var command = new draw2d.command.CommandAdd(this, figure, x, y);
+                        var command = new draw2d.command.CommandAdd(canvas, figure, x, y);
                         canvas.getCommandStack().execute(command);
 
                         if ( htwg.spray.utils.notifyEcore ){
                             htwg.spray.websocketEcore.send({"type":"ecore", "command":"createObj", "domainObj":type});
                         }
 
+                        var draggingElement = this.mouseDraggingElement;
+                        draggingElement.getParent().children.each(function(i,e){
+                            if (typeof(e.figure['groupId']) != "undefined" && draggingElement['groupId'] == e.figure['groupId']) {
+                                console.log("e.figure.Name : " + e.figure.NAME);
+                                console.log("remove child width ID: " + e.figure['groupId']);
+                                draggingElement.removeChild(e.figure);
+                            } else {
+                                if (typeof(e.figure['groupId']) == "undefined") {
+                                    console.log("e.figure['groupId'] is undefined");
+                                } else {
+                                    console.log("e.figure['groupId'] : " + e.figure['groupId'] + " is different");
+                                }
+                            }
+                        });
                         this.mouseDraggingElement.getParent().removeChild(this.mouseDraggingElement);
                     }
                 }

@@ -27,13 +27,15 @@ draw2d.Figure = Class.extend({
             console.log("add " + draggedFigure['sprayName'] + " to " + this['sprayName']);
             console.log("allowed childs: " + this.allowedCompartmentChilds);
 
-            var childs = draggedFigure.children;
             var myFigure = this;
             draggedFigure.children.each(function(i,e){
                 if (typeof(e.figure.NAME) != "undefined") {
                     console.log("e.figure.Name : " + e.figure.NAME);
                     myFigure.addFigure(e.figure, new spray2d.layout.locator.FigureLocator());
                     e.figure.setDraggable(true);
+                    e.figure['sprayName'] = draggedFigure['sprayName'];
+                    e.figure['groupId'] = draggedFigure.id;
+                    console.log("groupId: " + e.figure['groupId']);
                 } else {
                     console.log("e.figure.NAME is undefined");
                     console.log("e : " + e);
