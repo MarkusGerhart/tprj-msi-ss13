@@ -66,6 +66,7 @@ draw2d.command.CommandAddFigure = draw2d.command.Command.extend({
         } else if (this.oldCanvas != null) {
             console.log("add figure to old canvas");
             this.oldCanvas.addFigure(this.figure);
+            this.parent.removeChild(this.figure);
         }
         //this.canvas.removeFigure(this.figure);
         //this.parent.removeChild(this.figure);

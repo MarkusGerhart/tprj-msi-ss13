@@ -21,9 +21,11 @@ draw2d.Figure = Class.extend({
         }
 
         if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0 || this.allowedCompartmentChilds.indexOf(draggedFigure['sprayName']) >= 0) {
+            /*var cmdCol = new draw2d.command.CommandCollection();
             //this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
             var command = new draw2d.command.CommandAddFigure(this, draggedFigure, new spray2d.layout.locator.FigureLocator(), draggedFigure.getParent(), null)
-            this.getCanvas().getCommandStack().execute(command);
+            cmdCol.add(command);
+            //this.getCanvas().getCommandStack().execute(command);
 
             draggedFigure.setDraggable(true);
 
@@ -38,7 +40,8 @@ draw2d.Figure = Class.extend({
 
                     //myFigure.addFigure(e.figure, new spray2d.layout.locator.FigureLocator());
                     var command = new draw2d.command.CommandAddFigure(myFigure, e.figure, new spray2d.layout.locator.FigureLocator(), e.figure.getParent(), e.locator)
-                    myFigure.getCanvas().getCommandStack().execute(command);
+                    cmdCol.add(command);
+                    //myFigure.getCanvas().getCommandStack().execute(command);
 
                     e.figure.setDraggable(true);
                     e.figure['sprayName'] = draggedFigure['sprayName'];
@@ -49,6 +52,11 @@ draw2d.Figure = Class.extend({
                     console.log("e : " + e);
                 }
             });
+
+            this.getCanvas().getCommandStack().execute(cmdCol);*/
+            //var cmd = new spray2.command.CommandCompart(this, draggedFigure);
+            var cmd = new spray2d.command.CommandCompart(this, draggedFigure);
+            this.getCanvas().getCommandStack().execute(cmd);
         } else {
             console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
             console.log("allowed childs: " + this.allowedCompartmentChilds);
