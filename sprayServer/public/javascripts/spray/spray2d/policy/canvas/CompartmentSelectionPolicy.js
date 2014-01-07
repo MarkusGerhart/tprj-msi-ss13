@@ -239,16 +239,13 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                     console.log("dropTargetName : " + canvas.currentDropTarget.NAME);
                     //this.mouseDraggingElement.onDrop(canvas.currentDropTarget);
                     //canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);
-                    canvas.currentDropTarget.updateCompartment(this.mouseDraggingElement);
+                    canvas.currentDropTarget.updateCompartment(this.mouseDraggingElement, x, y);
 
                     canvas.currentDropTarget = null;
                 } else {
                     console.log("dropTarget IS NULL ");
                     if (this.mouseDraggingElement.getParent() !== null) {
                         console.log("dropTarget == null -> delete element and get new one from the factory");
-
-                        //var type = $(droppedDomNode).attr('id')
-                        //var type = this.mouseDraggingElement.NAME.substr(this.mouseDraggingElement.NAME.lastIndexOf(".") + 1);
                         var type = this.mouseDraggingElement['sprayName'];
                         console.log("type: " + type);
 

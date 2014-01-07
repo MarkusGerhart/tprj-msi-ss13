@@ -30,7 +30,7 @@ htwg.spray.ShapeFactory = function($){
         root = that.createBoundingBox(shapeDef, classDef);
         if ( shapeDef.hasOwnProperty("shapes")){
             $.each(shapeDef.shapes, function(i,childShapeDef){
-                 that.drawChild(childShapeDef, root, root);
+                 that.drawChild(childShapeDef, root, root, classDef);
             });
         }
         
@@ -48,7 +48,7 @@ htwg.spray.ShapeFactory = function($){
         return root;
     },
 
-    this.drawChild = function(shapeDef, parent, root){
+    this.drawChild = function(shapeDef, parent, root, classDef){
         var shape = null;
         switch( shapeDef.name ){
             case "RoundedRectangle":
@@ -76,12 +76,18 @@ htwg.spray.ShapeFactory = function($){
         }
 
         if ( shape != null ){
-            /*console.log("shape is not null");
-
             if ( shapeDef.hasOwnProperty("params") && shapeDef.params.hasOwnProperty("compartment")){
-                shape.setDraggable(true);
-                console.log("set draggable for compartment");
-            }*/
+                //shape.setDraggable(true);
+
+                var allowedChilds = new Array();
+                for (var i=0; i<classDef.compartments.length; i++) {
+                    console.log("class: " + classDef.compartments[i].atLocationId + " shape: " + shapeDef.params.compartment.locationId);
+                    if (classDef.compartments[i].atLocationId == shapeDef.params.compartment.locationId) {
+                        allowedChilds.push(classDef.compartments[i].canContain);
+                    }
+                }
+                shape.setAllowedCompartmentChilds(allowedChilds);
+            }
 
             if ( shapeDef.hasOwnProperty("shapes")){
                 $.each(shapeDef.shapes, function(i,childShapeDef){
@@ -420,16 +426,13 @@ htwg.spray.ShapeFactory = function($){
             }
         }
 
-        if (classDef.hasOwnProperty("compartments")) {
+        /*if (classDef.hasOwnProperty("compartments")) {
             var allowedChilds = classDef.compartments[0].canContain;
             for (i=1; i<classDef.compartments.length; i++) {
                 allowedChilds.push(classDef.compartments[i].canContain);
             }
-            console.log("set allowed compartment childs: " + allowedChilds);
             bbox.setAllowedCompartmentChilds(allowedChilds);
-        } else {
-            console.log("NO compartment childs allowed");
-        }
+        }*/
 
         return bbox;
     }
