@@ -40,7 +40,7 @@ htwg.spray.ShapeFactory = function($){
                 that.drawAnchor(anchorDef, root);
             });
         }else if ( this.checkForConnectionReference(name) ){
-        	var anchorDef = {"type":"free"};
+        	var anchorDef = {"type":"default"};
             that.drawAnchor(anchorDef, root);
         }
 
@@ -111,8 +111,9 @@ htwg.spray.ShapeFactory = function($){
                 var anchor_topright = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), 0);
                 var anchor_bottomleft = new spray2d.layout.locator.CustomPortLocator(0, parent.getHeight());
                 var anchor_bottomright = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), parent.getHeight());
+            default:
                 var anchor_topmiddle = new spray2d.layout.locator.CustomPortLocator(parseInt(parent.getWidth()/2), 0);
-                var anchor_leftmiddle = new spray2d.layout.locator.CustomPortLocator(0, parseInt(parent.getHeight/2));
+                var anchor_leftmiddle = new spray2d.layout.locator.CustomPortLocator(0, parseInt(parent.getHeight()/2));
                 var anchor_rightmiddle = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), parseInt(parent.getHeight()/2));
                 var anchor_bottommiddle = new spray2d.layout.locator.CustomPortLocator(parseInt(parent.getWidth()/2), parent.getHeight());
                 break;
@@ -154,6 +155,15 @@ htwg.spray.ShapeFactory = function($){
             
             //TODO: port should grow with the parent
             //port.attachResizeListener(true);
+        } else {
+            anchor_topmiddle.setScalable(parent);
+            anchor_leftmiddle.setScalable(parent);
+            anchor_rightmiddle.setScalable(parent);
+            anchor_bottommiddle.setScalable(parent);
+            parent.createPort("hybrid", anchor_topmiddle);
+            parent.createPort("hybrid", anchor_leftmiddle);
+            parent.createPort("hybrid", anchor_rightmiddle);
+            parent.createPort("hybrid", anchor_bottommiddle);
         }
     },
     
