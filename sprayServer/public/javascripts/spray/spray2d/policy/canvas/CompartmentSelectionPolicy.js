@@ -234,6 +234,8 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                 canvas.getCommandStack().commitTransaction();
             }
 
+            this.mouseDraggingElement.onDrop(canvas.currentDropTarget);
+            
             if (excludes.indexOf(this.mouseDraggingElement.NAME) < 0) {
                 if(canvas.currentDropTarget!==null){
                     console.log("dropTargetName : " + canvas.currentDropTarget.NAME);
