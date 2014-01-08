@@ -99,9 +99,12 @@ spray2d.command.CommandCompart = draw2d.command.Command.extend({
 
         function createdRemovedElementsFromFactory() {
             //var fNew = htwg.spray.commandHelper.makeAndExecuteShapeCommandAdd(this.figure['sprayName'], 10, 10, htwg.spray.view);
-            // TODO update command which created this shape (update reference)
             var fNew = htwg.spray.shapeFactory.drawShape(this.figure['sprayName']);
             htwg.spray.view.addFigure(fNew);
+
+            // update the commandAdd in order for undo to work
+            this.figure.getCommandAdd().updateFigure(fNew);
+
             this.figure = fNew;
         }
         createdRemovedElementsFromFactory.call(this);

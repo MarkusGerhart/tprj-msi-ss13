@@ -1662,7 +1662,15 @@ draw2d.Figure = Class.extend({
         }
         
         return this;
-    }  
+    },
+
+    setCommandAdd : function(commandAdd) {
+        this.commandAdd = commandAdd;
+    },
+
+    getCommandAdd : function() {
+        return this.commandAdd;
+    }
 
 });
 
