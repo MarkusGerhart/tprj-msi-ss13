@@ -296,5 +296,7 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
 
         this.mouseDownElement = null;
         this.mouseMovedDuringMouseDown  = false;
+
+        $("#drawArea").css("cursor","default");
     }
 });
