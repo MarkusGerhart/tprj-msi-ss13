@@ -13,7 +13,7 @@ var spray2d = spray2d || {};
 spray2d.command = spray2d.command || {};
 
 spray2d.command.CommandCompart = draw2d.command.Command.extend({
-
+    NAME : 'spray2d.command.CommandCompart',
     /**
      * @constructor
      * Create a add command for the given figure.

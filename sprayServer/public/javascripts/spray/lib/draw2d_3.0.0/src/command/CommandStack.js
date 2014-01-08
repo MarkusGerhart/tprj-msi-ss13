@@ -169,8 +169,6 @@ draw2d.command.CommandStack = Class.extend({
           this.notifyListeners(command, draw2d.command.CommandStack.PRE_UNDO);
           this.redostack.push(command);
           command.undo();
-           console.log("undo label: " + command.getUndoLabel());
-           console.log("label: " + command.getLabel());
           this.notifyListeners(command, draw2d.command.CommandStack.POST_UNDO);
        }
     },
@@ -189,8 +187,6 @@ draw2d.command.CommandStack = Class.extend({
           this.notifyListeners(command, draw2d.command.CommandStack.PRE_REDO);
           this.undostack.push(command);
           command.redo();
-           console.log("redo label: " + command.getRedoLabel());
-           console.log("label: " + command.getLabel());
           this.notifyListeners(command, draw2d.command.CommandStack.POST_REDO);
        }
     },
@@ -317,6 +313,10 @@ draw2d.command.CommandStack = Class.extend({
 
     getPreviousCommandFromUndoStack:function() {
         return this.undostack[this.undostack.length-1];
+    },
+
+    getNextCommandFromRedoStack: function() {
+        return this.redostack[this.redostack.length-1];
     }
 });
 
