@@ -10,71 +10,94 @@ import play.api.templates._
 import Ecore._  // Our Ecore Model Implementation
 
 object Application extends Controller {
-  
-  var out: Enumerator.Pushee[JsValue] = _
-  
+
   def index = Action { implicit request =>
-    // Test ECore
-    /*val factory: WebToEcoreFactory = WebToEcoreFactoryImpl.getInstance();
-    factory.createEObject("Place");
-    factory.createEObject("Transition");
-    factory.createEObject("Transition");
-    factory.createEObject("PTEdge", "Place", "Transition", 0, 1);
-    factory.createEObject("PTEdge", "Place", "Transition", 0, 2);
-    factory.removeEObject("Transition",2);*/
     Ok(
       views.html.index("Welcome to spray ")
     )
   }
 
-  def websocket = WebSocket.async[JsValue] { request =>
 
-    val in = Iteratee.foreach[JsValue](this.commandHandling)
+  def websocket = WebSocket.using[JsValue] { request =>
 
-    val out = Enumerator.pushee[JsValue] {
-      pushee => pushee.push(
-        JsObject(Seq(
-          "type" -> JsString("editor"),
-          "command" -> JsString("load"),
-          "text" -> JsString("Happy Coding!"))
-        ).as[JsValue])
-      this.out = pushee
+    val (out, channel) = Concurrent.broadcast[JsValue]
+
+    val in = Iteratee.foreach[JsValue] { msg =>
+        println("Got from WebSocket: " + msg)
+        this.commandHandling(msg, channel)
     }
 
-    Promise.pure((in,out))
+    (in, out)
   }
 
-  
-  def loadError = JsObject(Seq(
-      "type" -> JsString("ecore"),
-      "command" -> JsString("error"),
-      "text" -> JsString("Something went wrong while storing to ecore!"))
-    ).as[JsValue];
-  
-// 	public abstract void createEObject(String domainObj);
-/*  def createEObject(domainObj: String) = {
-    val factory: WebToEcoreFactory = WebToEcoreFactoryImpl.getInstance()
-    factory.createEObject(domainObj)
-  } */
 
-  
-  /*****
-*
-* TODO 1. Mapping in eine model class auslagern
-*
-*/
+  def message(typ: String, command: String, text: String) = JsObject(Seq(
+      "type" -> JsString(typ),
+      "command" -> JsString(command),
+      "text" -> JsString(text))
+    ).as[JsValue]
 
-  def commandHandling(msg: JsValue) = {
-    //TODO: ERROR when js key not exists or IO Exception
+
+  def loadError = message (
+    "server", "unkown", "Unknown command for the server.")
+
+
+  def commandHandling(msg: JsValue, websocket: Concurrent.Channel[JsValue]) = {
+
     val command = (msg \ "command").as[String]
+    val factory = WebToEcoreFactoryImpl.getInstance()
 
     command match {
-      /*case "create" => {
-        val param0 = (msg \ "param0").as[String]
-        println(param0)
-        createEObject(param0)
-      } */
-      case "" => out.push(loadError)
+      case "createObj" => {
+        val domainObj = (msg \ "domainObj").as[String]
+        factory.createEObject(domainObj)
+        websocket.push(this.message("server", "createObj", "ok"))
+      }
+      case "createConnection" => {
+        val domainObj = (msg \ "domainObj").as[String]
+        val fromObj = (msg \ "fromObj").as[String]
+        val toObj = (msg \ "toObj").as[String]
+        val fromID = (msg \ "fromID").as[String].toInt
+        val toID = (msg \ "toID").as[String].toInt
+        factory.createEObject(domainObj, fromObj, toObj, fromID, toID)
+        websocket.push(this.message("server", "createConnection", "ok"))
+      }
+      case "createCompartment" => {
+        val domainObj = (msg \ "domainObj").as[String]
+        val parentObj = (msg \ "parentObj").as[String]
+        val parentID = (msg \ "parentID").as[String].toInt
+        factory.createEObject(domainObj, parentObj, parentID)
+        websocket.push(this.message("server", "createCompartment", "ok"))
+      }
+      case "removeObj" => {
+        val domainObj = (msg \ "domainObj").as[String]
+        val id = (msg \ "ID").as[String].toInt
+        factory.removeEObject(domainObj, id)
+        websocket.push(this.message("server", "removeObj", "ok"))
+      }
+      case "removeConnection" => {
+        val domainObj = (msg \ "domainObj").as[String]
+        val fromObj = (msg \ "fromObj").as[String]
+        val toObj = (msg \ "toObj").as[String]
+        val fromID = (msg \ "fromID").as[String].toInt
+        val toID = (msg \ "toID").as[String].toInt
+        factory.removeEObject(domainObj, fromObj, toObj, fromID, toID)
+        websocket.push(this.message("server", "removeConnection", "ok"))
+      }
+      case "removeObjFromParent" => {
+        val domainObj = (msg \ "domainObj").as[String]
+        val id = (msg \ "ID").as[String].toInt
+        val parentObj = (msg \ "parentObj").as[String]
+        val parentID = (msg \ "parentID").as[String].toInt
+        factory.removeEObject(domainObj, id, parentObj, parentID)
+        websocket.push(this.message("server", "removeObjFromParent", "ok"))
+      }
+      case _ => {
+        println("Ecore Error")
+        websocket.push(this.loadError)
+      }
     }
+
   }
+
 }
