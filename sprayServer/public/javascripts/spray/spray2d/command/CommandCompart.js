@@ -23,15 +23,9 @@ spray2d.command.CommandCompart = draw2d.command.Command.extend({
      */
     init: function(parent, figure, x, y)
     {
-        this._super("Add Figure");
+        this._super("Compart Command");
         this.figure = figure;
         this.parent = parent;
-
-        var p = parent;
-        while (p.getParent() != null) { p = p.getParent() }
-
-        console.log("parent x/y" + p.getX() + "/" +p.getY());
-        console.log("x: " + x + " y: " + y);
 
         this.x = x;
         this.y = y;
@@ -50,7 +44,7 @@ spray2d.command.CommandCompart = draw2d.command.Command.extend({
         locator.setPos(p, this.x, this.y);
         this.parent.addFigure(this.figure, locator);
         this.figure.setDraggable(true);
-        
+
         console.log("add " + this.figure.NAME + " to " + this.parent.NAME);
         console.log("add " + this.figure['sprayName'] + " to " + this.parent['sprayName']);
         console.log("allowed childs: " + this.parent.allowedCompartmentChilds);
@@ -111,6 +105,31 @@ spray2d.command.CommandCompart = draw2d.command.Command.extend({
             this.figure = fNew;
         }
         createdRemovedElementsFromFactory.call(this);
+
+        var myFigure = this.figure;
+        function updateFigureInCommandMove() {
+            var previousCmd = htwg.spray.view.getCommandStack().getPreviousCommandFromUndoStack();
+            if (typeof previousCmd.NAME === 'undefined' || previousCmd.NAME != 'draw2d.command.CommandCollection') {
+                console.log("Internal ERROR : unexpected command. Expected 'draw2d.command.CommandCollection'");
+                return;
+            }
+            var oldCmds = previousCmd.getCommands();
+            if (oldCmds.getSize() != 1) {
+                console.log("WARN : command collection size is not 1");
+            }
+            var oldCmd = oldCmds.get(0);
+            console.log("oldCmd.NAME : " + oldCmd.NAME);
+            if (typeof oldCmd.NAME === 'undefined' || oldCmd.NAME != "draw2d.command.CommandMove") {
+                console.log("Internal ERROR : unexpected command. Expected 'draw2d.command.CommandMove'");
+                return;
+            }
+
+            oldCmd.updateFigure(this.figure);
+        }
+        updateFigureInCommandMove.call(this);
+
+        // undo the move figure (so the compartment goes back to it's old position
+        htwg.spray.view.getCommandStack().undo();
     }
 
 });

@@ -109,6 +109,7 @@ draw2d.command.CommandStack = Class.extend({
     
        this.undostack.push(command);
        command.execute();
+        console.log("Execute command with label: " + command.getLabel());
     
        // cleanup the redo stack if the user execute a new command.
        // I think this will create a "clean" behaviour of the unde/redo mechanism.
@@ -168,6 +169,8 @@ draw2d.command.CommandStack = Class.extend({
           this.notifyListeners(command, draw2d.command.CommandStack.PRE_UNDO);
           this.redostack.push(command);
           command.undo();
+           console.log("undo label: " + command.getUndoLabel());
+           console.log("label: " + command.getLabel());
           this.notifyListeners(command, draw2d.command.CommandStack.POST_UNDO);
        }
     },
@@ -186,6 +189,8 @@ draw2d.command.CommandStack = Class.extend({
           this.notifyListeners(command, draw2d.command.CommandStack.PRE_REDO);
           this.undostack.push(command);
           command.redo();
+           console.log("redo label: " + command.getRedoLabel());
+           console.log("label: " + command.getLabel());
           this.notifyListeners(command, draw2d.command.CommandStack.POST_REDO);
        }
     },
@@ -308,6 +313,10 @@ draw2d.command.CommandStack = Class.extend({
       var size = this.eventListeners.getSize();
       for (var i = 0; i < size; i++)
          this.eventListeners.get(i).stackChanged(event);
+    },
+
+    getPreviousCommandFromUndoStack:function() {
+        return this.undostack[this.undostack.length-1];
     }
 });
 

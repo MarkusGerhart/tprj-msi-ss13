@@ -220,6 +220,8 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
 
         if (this.mouseDraggingElement !== null) {
             //console.log("mouseDraggingElementName : " + this.mouseDraggingElement.NAME);
+
+            // TODO check this if / else with comparments (example goes to else which is probably wrong)
             var sel =canvas.getSelection().getAll();
             if(!sel.contains(this.mouseDraggingElement)){
                 //console.log("sel does NOT cotain mouseDraggingElement");
@@ -235,7 +237,7 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
             }
 
             this.mouseDraggingElement.onDrop(canvas.currentDropTarget);
-            
+
             if (excludes.indexOf(this.mouseDraggingElement.NAME) < 0) {
                 if(canvas.currentDropTarget!==null){
                     console.log("dropTargetName : " + canvas.currentDropTarget.NAME);

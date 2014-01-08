@@ -521,6 +521,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         if(command!==null){
         	if ( !(source && target) ){
 				$("#drawArea").css("cursor","not-allowed");
+                console.log("connection not allowed - src: " + source + " target: " + target);
 			}
         }
 
@@ -557,6 +558,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      **/
     onDrop:function(dropTarget)
     {
+        console.log("onDrop");
+
     	// Ports accepts only Ports as DropTarget
     	//
     	if(!(dropTarget instanceof draw2d.Port)){
@@ -587,7 +590,11 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         if(command!==null){
         	if ( source && target ){
 				this.parent.getCanvas().getCommandStack().execute(command);
+            } else {
+                console.log("connection not allowed - src: " + source + " target: " + target);
             }
+        } else {
+            console.log("command is null");
         }
         
         this.setGlow(false);
