@@ -31,6 +31,19 @@ draw2d.Figure = Class.extend({
         }
     },
 
+    testCompartmentAllowed:function( draggedFigure ) {
+        if (this.allowedCompartmentChilds === null) {
+            $("#drawArea").css("cursor","not-allowed");
+            return;
+        }
+
+        if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0 || this.allowedCompartmentChilds.indexOf(draggedFigure['sprayName']) >= 0) {
+            //console.log("compartment allowed");
+        } else {
+            $("#drawArea").css("cursor","not-allowed");
+        }
+    },
+
     setAllowedCompartmentChilds: function(_allowedCompartmentChilds) {
         this.allowedCompartmentChilds = _allowedCompartmentChilds;
     },
@@ -764,6 +777,8 @@ draw2d.Figure = Class.extend({
      **/
     onDragEnter : function( draggedFigure )
     {
+        this.testCompartmentAllowed(draggedFigure);
+
     	return null;
     },
  
@@ -776,6 +791,7 @@ draw2d.Figure = Class.extend({
      **/
     onDragLeave:function( draggedFigure )
     {
+        $("#drawArea").css("cursor","default");
     },
 
     

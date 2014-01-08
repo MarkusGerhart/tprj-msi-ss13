@@ -109,7 +109,7 @@ draw2d.command.CommandStack = Class.extend({
     
        this.undostack.push(command);
        command.execute();
-        console.log("Execute command with label: " + command.getLabel());
+       //console.log("Execute command with label: " + command.getLabel());
     
        // cleanup the redo stack if the user execute a new command.
        // I think this will create a "clean" behaviour of the unde/redo mechanism.

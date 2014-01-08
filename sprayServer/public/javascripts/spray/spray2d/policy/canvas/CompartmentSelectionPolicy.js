@@ -65,12 +65,12 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
 
         var figure = canvas.getBestFigure(x, y);
 
-        if (figure !== null) {
+        /*if (figure !== null) {
             console.log("figure name: " + figure.NAME);
             console.log("figure ID: " + figure.getId());
         }  else {
             console.log("figure is null");
-        }
+        }*/
 
         // check if the user click on a child shape. DragDrop and movement must redirect
         // to the parent
@@ -187,13 +187,22 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                     canvas.currentDropTarget = null;
                 }
                 if (target !== null) {
-                    //console.log("taget name: " + target.NAME);
-                    //console.log("this.mouseDraggingElement name: " + this.mouseDraggingElement.NAME);
-                    //canvas.currentDropTarget = target.onDragEnter(this.mouseDraggingElement);
                     canvas.currentDropTarget = target;
-                    //console.log("canvas.currentDropTarget: " + canvas.currentDropTarget);
+
+                    console.log("current trop taget.NAME: " + target.NAME);
+
+                    // we can not use onDragEnter for ports (method is private)
+                    if(!(this.mouseDraggingElement instanceof draw2d.Port) && (target instanceof draw2d.Port)){
+                        console.log("dragged figure is no port")
+                        $("#drawArea").css("cursor","not-allowed");
+                    }
+                    target.onDragEnter(this.mouseDraggingElement);
                 } else {
-                    //console.log("target is null");
+                    // console.log("target is null");
+                    // console.log("canvas.currentDropTarget : " + canvas.currentDropTarget)
+                    if ($("#drawArea").css('cursor') == 'not-allowed') {
+                        $("#drawArea").css("cursor","default");
+                    }
                 }
             } else {
                 //console.log("target == canva.currentDropTarget");
