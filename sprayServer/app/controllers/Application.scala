@@ -48,6 +48,9 @@ object Application extends Controller {
     val factory = WebToEcoreFactoryImpl.getInstance()
 
     command match {
+      case "clear" =>{
+        factory.clear();
+      }
       case "createObj" => {
         val domainObj = (msg \ "domainObj").as[String]
         factory.createEObject(domainObj)

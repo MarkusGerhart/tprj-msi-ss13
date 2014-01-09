@@ -294,5 +294,15 @@ public class WebToEcoreFactoryImpl implements WebToEcoreFactory {
 	    Object obj1 = m.getDeclaringClass().getConstructor().newInstance();
 	    return (T) m.invoke(obj1);
 	}
+
+	public void clear(){
+        Resource resource = this.getResource();
+        try {
+			resource.delete(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

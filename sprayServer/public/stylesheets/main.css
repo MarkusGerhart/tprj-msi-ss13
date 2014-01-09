@@ -122,6 +122,11 @@ header #right select{
     height: 40px;
 }
 
+#toolbar .new{
+    background-image: url("../images/toolbar.png");
+    background-position: -42px 0px;
+}
+
 #toolbar .undo{
     background-image: url("../images/toolbar.png");
     background-position: 135px -131px;

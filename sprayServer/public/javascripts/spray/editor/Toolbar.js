@@ -48,6 +48,14 @@ htwg.spray.Toolbar = function($){
 
         // Inject the UNDO Button and the callbacks
         //
+        this.newButton  = $("#new");
+        this.newButton.click($.proxy(function(){
+            that.view.clear();
+            if ( htwg.spray.utils.notifyEcore ){
+                htwg.spray.websocketEcore.send({"type":"ecore", "command":"clear"});
+            }
+        },this));
+
         this.undoButton  = $("#undo");
         this.undoButton.click($.proxy(function(){
             that.view.getCommandStack().undo();

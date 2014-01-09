@@ -23,4 +23,5 @@ public interface WebToEcoreFactory {
 	/* object within compartment */
 	public abstract void removeEObject(String domainObj, int ID, String parentObj, int parentID );
 
+    public abstract void clear();
 }
