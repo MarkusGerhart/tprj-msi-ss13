@@ -4,7 +4,7 @@ MAINTEX = Document
 CHAPTER = Chapters/
 TITLEPAGES = Titlepages/
 BUILDPATH = _build/
-BUILDNAME = SprayJS_S.Hodapp-T.Niehues-S.Schneeberger_2014
+BUILDNAME = SprayWeb_S.Hodapp-T.Niehues-S.Schneeberger_2014
 
 pdf:
 	$(MAKE) once
