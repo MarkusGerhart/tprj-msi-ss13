@@ -5,44 +5,47 @@
 
 @main(title) {
 
-    <header>
-        <div id="left">
-            <a href="@routes.Application.index" id="logo"><h1>Spray<span style="color:#7d9dcd">JS</span></h1></a>
+    <div id="wrapper">
+        <header>
+            <div id="left">
+                <a href="@routes.Application.index" id="logo"><h1>Spray<span style="color:#7d9dcd">JS</span></h1></a>
+            </div>
+            <div id="right">
+                <span class="username">ATuser</span>
+                <span class="username">User: Editor</span>
+                <span>Theme: </span>
+                <select name="theme" id="theme-changer">
+                    <option value="eclipse">Eclipse</option>
+                    <option value="pastel_on_dark">Dark</option>
+                </select>
+                <ul>
+                    <li>
+                        <a id="logout" href="#">Logout</a>
+                        <!--<a id="logout" href="ATroutes.Authentication.logout">Logout</a>-->
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"> </div>
+        </header>
+
+        <div id="contentwrap" class="clearfix">
+            @includes.toolbar()
+
+            @includes.editor()
+
+            @includes.menu()
+            <div class="clear"> </div>
         </div>
-        <div id="right">
-            <span class="username">ATuser</span>
-            <span class="username">User: Editor</span>
-            <span>Theme: </span>
-            <select name="theme" id="theme-changer">
-                <option value="eclipse">Eclipse</option>
-                <option value="pastel_on_dark">Dark</option>
-            </select>
-            <ul>
-                <li>
-                    <a id="logout" href="#">Logout</a>
-                    <!--<a id="logout" href="ATroutes.Authentication.logout">Logout</a>-->
-                </li>
-            </ul>
-        </div>
-        <div class="clear"> </div>
-    </header>
+        <div class="spacer"></div>
 
-    <div id="contentwrap">
-        @includes.toolbar()
+        @includes.footer()
 
-        @includes.editor()
-
-        @includes.menu()
-        <div class="clear"> </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                htwg.spray.websocketEcore = new htwg.spray.WebSocket("@routes.Application.websocket().webSocketURL()");
+                // htwg.spray.websocketEcore = new htwg.spray.WebSocket("ws://127.0.0.1:8080/");
+            });
+        </script>
     </div>
-
-    @includes.footer()
-
-    <script type="text/javascript">
-        jQuery(document).ready(function(){
-            htwg.spray.websocketEcore = new htwg.spray.WebSocket("@routes.Application.websocket().webSocketURL()");
-            // htwg.spray.websocketEcore = new htwg.spray.WebSocket("ws://127.0.0.1:8080/");
-        });
-    </script>
 
 }
