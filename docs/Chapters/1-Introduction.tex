@@ -10,6 +10,7 @@ HTML, CSS, JavaScript und einer Webservertechnologie.
 Spray soll also später in der Lage sein, auch genau diesen Spray
 Web Editor zu generieren (parallel zu dem gewöhnlichen Graphiti Editor).
 
+
 \subsection{Einführung in Spray}
 
 \begin{quote}
@@ -40,11 +41,40 @@ Auf Abbildung \ref{fig.sprayArchi} ist der prinzipelle Spray zu Editor Ablauf.
   \caption{Prinzipelle Architektur von Spray. \citep[aus][S.~3]{sprayPaper}}\label{fig.sprayArchi}
 \end{figure}
 
-\subsection{Ziel von „Spray Web“}
 
-Das hier Forschungsarbeit: „Wie könnte man die Sache prinzipiell angehen?“
+\subsection{Ziele von „Spray Web“}
 
-\subsection{Ecore Metamodell}
+Die Hauptaufgabe dieses Projekts ist herauszufinden, wie man diese
+Editoren möglichst generisch mit Webtechnologie umsetzen kann.
+Dazu gehört, dass die Shapes sowie Connections nach den von Spray
+vorgegebenen (Layout) Definitionen dargestellt werden können.
+
+Spray gibt auch (Logik) Definitionen vor,
+was für Shapes miteinander über welche Connection verbunden werden darf.
+Es sollte also über den Edior abgefangen werden können, wenn versucht wird
+falsche Connections zu knüpfen.
+
+Aus den Shapes und deren Connections entsteht ein konkretes Modell,
+welches vom Benutzer so modelliert wurde. Dieses Modell ist die Instanz
+des darüberliegenden Metamodells.
+Das Metamodell entsteht also implizit aus den druch Spray vorgegebene
+Logikdefinitionen. Genauer gesagt ensteht ein Ecore Metamodell,
+dazu mehr im Abschnitt \ref{sec.ecore}.
+Diese Modellinstanz entsteht aus dem was der Benutzer „zusammenklickt“,
+dies muss durch den Web Editor ebenfalls persisiert werden.
+
+Dieses Teamprojekt ist als Forschungsarbeit zu verstehen
+auf deren Erkenntnisse und Fundamente aufgesetzt werden kann.
+Die Hauptziele zusammengefasst sind:
+
+\begin{itemize}
+  \item Shapes gemäß den Definitionen produzieren,
+  \item Modellüberprüfung auf Korrektheit,
+  \item Persistierung der Modellinstanz (sowie Koordinaten der gesetzten Shapes).
+\end{itemize}
+
+
+\subsection{Ecore Metamodell}\label{sec.ecore}
 
 \subsection{Graphiti}
 
