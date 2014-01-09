@@ -110,5 +110,9 @@ draw2d.command.CommandMove = draw2d.command.Command.extend({
     redo:function()
     {
        this.figure.setPosition(this.newX, this.newY);
+    },
+
+    updateFigure:function(figure) {
+        this.figure = figure;
     }
 });

@@ -55,6 +55,10 @@ draw2d.command.CommandAdd = draw2d.command.Command.extend({
     undo:function()
     {
         this.canvas.removeFigure(this.figure);
+    },
+
+    updateFigure : function (figure) {
+        this.figure = figure;
     }
     
 });

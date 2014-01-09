@@ -58,6 +58,11 @@ htwg.spray.Toolbar = function($){
         this.redoButton  = $("#redo");
         this.redoButton.click($.proxy(function(){
             that.view.getCommandStack().redo();
+
+            var cmd = that.view.getCommandStack().getNextCommandFromRedoStack();
+            if (typeof cmd.NAME !== 'undefined' && cmd.NAME == 'spray2d.command.CommandCompart') {
+                that.view.getCommandStack().redo();
+            }
         },this));
 
         // Inject the SAVE Button and the callback

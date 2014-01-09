@@ -99,5 +99,9 @@ draw2d.command.CommandCollection = draw2d.command.Command.extend({
             cmd.undo();
         });
         this.commands.reverse();
+    },
+
+    getCommands:function() {
+        return this.commands;
     }
 });

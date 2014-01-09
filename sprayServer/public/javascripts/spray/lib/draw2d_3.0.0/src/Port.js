@@ -482,9 +482,11 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      **/
     onDragEnter : function( draggedFigure )
     {
-    	// Ports accepts only Ports as DropTarget
+        // Ports accepts only Ports as DropTarget
     	//
     	if(!(draggedFigure instanceof draw2d.Port)){
+            console.log("dragged figure is no port")
+            $("#drawArea").css("cursor","not-allowed");
     		return null;
     	}
     	
@@ -557,6 +559,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      **/
     onDrop:function(dropTarget)
     {
+        console.log("onDrop");
+
     	// Ports accepts only Ports as DropTarget
     	//
     	if(!(dropTarget instanceof draw2d.Port)){
@@ -587,7 +591,11 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         if(command!==null){
         	if ( source && target ){
 				this.parent.getCanvas().getCommandStack().execute(command);
+            } else {
+                console.log("connection not allowed - src: " + source + " target: " + target);
             }
+        } else {
+            console.log("command is null");
         }
         
         this.setGlow(false);

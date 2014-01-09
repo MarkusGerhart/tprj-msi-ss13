@@ -57,17 +57,6 @@ htwg.spray.View = draw2d.Canvas.extend({
     onDrop : function(droppedDomNode, x, y)
     {
         var type = $(droppedDomNode).attr('id')
-        var figure = htwg.spray.shapeFactory.drawShape(type);
-
-        figure.setPosition(x,y);
-        this.addFigure(figure);
-
-        // create a command for the undo/redo support
-        var command = new draw2d.command.CommandAdd(this, figure, x, y);
-        this.getCommandStack().execute(command);
-
-        if ( htwg.spray.utils.notifyEcore ){
-            htwg.spray.websocketEcore.send({"type":"ecore", "command":"createObj", "domainObj":type});
-        }
+        htwg.spray.commandHelper.makeAndExecuteShapeCommandAdd(type, x, y, this);
     }
 });

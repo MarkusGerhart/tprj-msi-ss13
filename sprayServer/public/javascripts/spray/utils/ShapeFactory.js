@@ -30,7 +30,7 @@ htwg.spray.ShapeFactory = function($){
         root = that.createBoundingBox(shapeDef, classDef);
         if ( shapeDef.hasOwnProperty("shapes")){
             $.each(shapeDef.shapes, function(i,childShapeDef){
-                 that.drawChild(childShapeDef, root, root);
+                 that.drawChild(childShapeDef, root, root, classDef);
             });
         }
         
@@ -40,7 +40,7 @@ htwg.spray.ShapeFactory = function($){
                 that.drawAnchor(anchorDef, root);
             });
         }else if ( this.checkForConnectionReference(name) ){
-        	var anchorDef = {"type":"free"};
+        	var anchorDef = {"type":"default"};
             that.drawAnchor(anchorDef, root);
         }
 
@@ -48,7 +48,7 @@ htwg.spray.ShapeFactory = function($){
         return root;
     },
 
-    this.drawChild = function(shapeDef, parent, root){
+    this.drawChild = function(shapeDef, parent, root, classDef){
         var shape = null;
         switch( shapeDef.name ){
             case "RoundedRectangle":
@@ -76,12 +76,18 @@ htwg.spray.ShapeFactory = function($){
         }
 
         if ( shape != null ){
-            /*console.log("shape is not null");
-
             if ( shapeDef.hasOwnProperty("params") && shapeDef.params.hasOwnProperty("compartment")){
-                shape.setDraggable(true);
-                console.log("set draggable for compartment");
-            }*/
+                //shape.setDraggable(true);
+
+                var allowedChilds = new Array();
+                for (var i=0; i<classDef.compartments.length; i++) {
+                    console.log("class: " + classDef.compartments[i].atLocationId + " shape: " + shapeDef.params.compartment.locationId);
+                    if (classDef.compartments[i].atLocationId == shapeDef.params.compartment.locationId) {
+                        allowedChilds.push(classDef.compartments[i].canContain);
+                    }
+                }
+                shape.setAllowedCompartmentChilds(allowedChilds);
+            }
 
             if ( shapeDef.hasOwnProperty("shapes")){
                 $.each(shapeDef.shapes, function(i,childShapeDef){
@@ -111,8 +117,9 @@ htwg.spray.ShapeFactory = function($){
                 var anchor_topright = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), 0);
                 var anchor_bottomleft = new spray2d.layout.locator.CustomPortLocator(0, parent.getHeight());
                 var anchor_bottomright = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), parent.getHeight());
+            default:
                 var anchor_topmiddle = new spray2d.layout.locator.CustomPortLocator(parseInt(parent.getWidth()/2), 0);
-                var anchor_leftmiddle = new spray2d.layout.locator.CustomPortLocator(0, parseInt(parent.getHeight/2));
+                var anchor_leftmiddle = new spray2d.layout.locator.CustomPortLocator(0, parseInt(parent.getHeight()/2));
                 var anchor_rightmiddle = new spray2d.layout.locator.CustomPortLocator(parent.getWidth(), parseInt(parent.getHeight()/2));
                 var anchor_bottommiddle = new spray2d.layout.locator.CustomPortLocator(parseInt(parent.getWidth()/2), parent.getHeight());
                 break;
@@ -154,6 +161,15 @@ htwg.spray.ShapeFactory = function($){
             
             //TODO: port should grow with the parent
             //port.attachResizeListener(true);
+        } else {
+            anchor_topmiddle.setScalable(parent);
+            anchor_leftmiddle.setScalable(parent);
+            anchor_rightmiddle.setScalable(parent);
+            anchor_bottommiddle.setScalable(parent);
+            parent.createPort("hybrid", anchor_topmiddle);
+            parent.createPort("hybrid", anchor_leftmiddle);
+            parent.createPort("hybrid", anchor_rightmiddle);
+            parent.createPort("hybrid", anchor_bottommiddle);
         }
     },
     
@@ -410,16 +426,13 @@ htwg.spray.ShapeFactory = function($){
             }
         }
 
-        if (classDef.hasOwnProperty("compartments")) {
+        /*if (classDef.hasOwnProperty("compartments")) {
             var allowedChilds = classDef.compartments[0].canContain;
             for (i=1; i<classDef.compartments.length; i++) {
                 allowedChilds.push(classDef.compartments[i].canContain);
             }
-            console.log("set allowed compartment childs: " + allowedChilds);
             bbox.setAllowedCompartmentChilds(allowedChilds);
-        } else {
-            console.log("NO compartment childs allowed");
-        }
+        }*/
 
         return bbox;
     }

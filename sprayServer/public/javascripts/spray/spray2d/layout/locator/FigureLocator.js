@@ -31,12 +31,12 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
     },
 
     setPos:function(parent, x, y) {
-        //console.log(this.NAME + " total x:" + x);
-        //console.log(this.NAME + " total y:" + y);
+        /*console.log(" total x:" + x);
+        console.log(" total y:" + y);*/
         this.x = x - parent.getX();
         this.y = y - parent.getY();
-        //console.log(this.NAME + " relativ x:" + this.x);
-        //console.log(this.NAME + " relativ y:" + this.y);
+        /*console.log(" relativ x:" + this.x);
+        console.log(" relativ y:" + this.y);*/
     },
 
     /**
@@ -69,6 +69,7 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
                     case "Ellipse":
                         var positionX = target.getPosition().x;
                         var positionY = target.getPosition().y;
+                        //console.log("ELLIPSE set pos: " + parseInt(target.parent.getWidth()/target.getPositionRatioRoot().x) + " " + parseInt(target.parent.getHeight()/target.getPositionRatioRoot().y));
                         target.setPosition(parseInt(target.parent.getWidth()/target.getPositionRatioRoot().x),
                                            parseInt(target.parent.getHeight()/target.getPositionRatioRoot().y));
                         break;
@@ -77,6 +78,7 @@ spray2d.layout.locator.FigureLocator= draw2d.layout.locator.Locator.extend({
             }
         }
         else{
+            //console.log("ELSE set pos: " + target.getPosition().x + " " + target.getPosition().y);
             target.setPosition(target.getPosition().x,target.getPosition().y);
             target.repaint();
         }

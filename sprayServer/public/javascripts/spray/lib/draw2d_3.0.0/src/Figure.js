@@ -14,55 +14,33 @@ draw2d.Figure = Class.extend({
     
 	MIN_TIMER_INTERVAL: 50, // minimum timer interval in milliseconds
 
-    updateCompartment:function( draggedFigure ) {
+    updateCompartment:function( draggedFigure, x, y ) {
         if (this.allowedCompartmentChilds === null) {
             console.log("allowed child list is not defined");
             return;
         }
 
         if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0 || this.allowedCompartmentChilds.indexOf(draggedFigure['sprayName']) >= 0) {
-            /*var cmdCol = new draw2d.command.CommandCollection();
-            //this.addFigure(draggedFigure, new spray2d.layout.locator.FigureLocator());
-            var command = new draw2d.command.CommandAddFigure(this, draggedFigure, new spray2d.layout.locator.FigureLocator(), draggedFigure.getParent(), null)
-            cmdCol.add(command);
-            //this.getCanvas().getCommandStack().execute(command);
-
-            draggedFigure.setDraggable(true);
-
-            console.log("add " + draggedFigure.NAME + " to " + this.NAME);
-            console.log("add " + draggedFigure['sprayName'] + " to " + this['sprayName']);
-            console.log("allowed childs: " + this.allowedCompartmentChilds);
-
-            var myFigure = this;
-            draggedFigure.children.each(function(i,e){
-                if (typeof(e.figure.NAME) != "undefined") {
-                    console.log("e.figure.Name : " + e.figure.NAME);
-
-                    //myFigure.addFigure(e.figure, new spray2d.layout.locator.FigureLocator());
-                    var command = new draw2d.command.CommandAddFigure(myFigure, e.figure, new spray2d.layout.locator.FigureLocator(), e.figure.getParent(), e.locator)
-                    cmdCol.add(command);
-                    //myFigure.getCanvas().getCommandStack().execute(command);
-
-                    e.figure.setDraggable(true);
-                    e.figure['sprayName'] = draggedFigure['sprayName'];
-                    e.figure['groupId'] = draggedFigure.id;
-                    console.log("groupId: " + e.figure['groupId']);
-                } else {
-                    console.log("e.figure.NAME is undefined");
-                    console.log("e : " + e);
-                }
-            });
-
-            this.getCanvas().getCommandStack().execute(cmdCol);*/
-            //var cmd = new spray2.command.CommandCompart(this, draggedFigure);
-            var cmd = new spray2d.command.CommandCompart(this, draggedFigure);
-            this.getCanvas().getCommandStack().execute(cmd);
+            htwg.spray.commandHelper.makeAndExecuteShapeCompartment(this, draggedFigure, this.getCanvas(), x, y);
         } else {
             console.log("figure " + draggedFigure.NAME + " is not in the allowed child list");
             console.log("allowed childs: " + this.allowedCompartmentChilds);
             if (draggedFigure.getParent() !== null) {
                 draggedFigure.getParent().removeChild(draggedFigure);
             }
+        }
+    },
+
+    testCompartmentAllowed:function( draggedFigure ) {
+        if (this.allowedCompartmentChilds === null) {
+            $("#drawArea").css("cursor","not-allowed");
+            return;
+        }
+
+        if (this.allowedCompartmentChilds.indexOf(draggedFigure.NAME) >= 0 || this.allowedCompartmentChilds.indexOf(draggedFigure['sprayName']) >= 0) {
+            //console.log("compartment allowed");
+        } else {
+            $("#drawArea").css("cursor","not-allowed");
         }
     },
 
@@ -799,6 +777,8 @@ draw2d.Figure = Class.extend({
      **/
     onDragEnter : function( draggedFigure )
     {
+        this.testCompartmentAllowed(draggedFigure);
+
     	return null;
     },
  
@@ -811,6 +791,7 @@ draw2d.Figure = Class.extend({
      **/
     onDragLeave:function( draggedFigure )
     {
+        $("#drawArea").css("cursor","default");
     },
 
     
@@ -1697,7 +1678,15 @@ draw2d.Figure = Class.extend({
         }
         
         return this;
-    }  
+    },
+
+    setCommandAdd : function(commandAdd) {
+        this.commandAdd = commandAdd;
+    },
+
+    getCommandAdd : function() {
+        return this.commandAdd;
+    }
 
 });
 
