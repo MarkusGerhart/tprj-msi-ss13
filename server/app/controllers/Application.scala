@@ -7,6 +7,8 @@ import play.api.libs.json._
 import play.api.mvc._
 import play.api.templates._
 
+import concurrent.ExecutionContext.Implicits.global  // needed for Iteratee.foreach
+
 import Ecore._  // Our Ecore Model Implementation
 
 object Application extends Controller {
