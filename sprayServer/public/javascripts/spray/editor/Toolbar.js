@@ -78,6 +78,7 @@ htwg.spray.Toolbar = function($){
         this.saveButton  = $("#save");
         this.saveButton.click($.proxy(function(){
             that.utils.getModel();
+            alert("saved!");
         },this));
 
         // Inject the SAVE Button and the callback
