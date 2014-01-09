@@ -1,8 +1,8 @@
 # Spray Editors as RIA
 
 MSI teamproject summer 2013 and winter 2013/2014 at
-Hochschule Konstanz Technik, Wirtschaft und Gestaltung
-University of Applied Sciences.
+University of Applied Sciences Konstanz (HTWG Konstanz),
+Department of Computer Science.
 
 ## Starting the server
 
