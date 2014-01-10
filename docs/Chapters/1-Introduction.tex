@@ -10,6 +10,47 @@ HTML, CSS, JavaScript und einer Webservertechnologie.
 Spray soll also später in der Lage sein, auch genau diesen Spray
 Web Editor zu generieren (parallel zu dem gewöhnlichen Graphiti Editor).
 
+Sämtlicher Quellcode ist im Git-Repositorium
+tprj-msi-ss13\footnote{Github Link: \url{TODO}} zu finden.
+Es gliedert sich in:
+
+\begin{itemize}
+  \item {\tt archive} \\
+  Hier befindet sich alter Code, der hauptsächlich aus Experimenten besteht.
+  Aus diesem Code ist zum Großteil der Produktionscode hervorgegangen,
+  könnte aber noch nützlich sein für künftige Weiterentwicklungen.
+  \item {\tt docs} \\
+  Der Quellcode dieser Dokumentation als LaTeX bzw. XeLaTeX Code.
+  \item {\tt generators} \\
+  Dort befinden sich die Generatoren um Shapes und Spray-Logik in JSON umzuwandeln.
+  \item {\tt server} \\
+  Der komplette lauffähige Produktions-Code.
+  Ein {\tt play 2.2.1} Server stellt anhand der beispielhaft vorgegebenen
+  Spray-Defintionen den Spray Web Editor dar.
+  \begin{itemize}
+    \item {\tt public/javascripts/spray} \\
+    Der Hauptteil des Spray Web Editors (JavaScript Code).
+    \item {\tt app/controllers} \\
+    Hauptanwendung von Spray, stellt insbesondere einen WebSocket sowie die
+    Persistierung des vom Editor erstellten Modells bereit.
+    \item {\tt app/views} \\
+    Hier werden alle Spray Web Editor Komponenten als HTML-Tempaltes zusammengebracht.
+  \end{itemize}
+\end{itemize}
+
+\noindent Wenn das Playframework in Version 2.2.1 installiert ist,
+kann der Server wie folgt gestartet werden:
+
+\begin{verbatim}
+git clone TODO
+cd tprj-msi-ss13/server
+play run
+\end{verbatim}
+
+\noindent Danach kann die Webseite mit dem Spray Web Editor im
+Webbrowser\footnote{Getestet mit Google Chrome 32.x, Apple Safari 7.x oder Mozilla Firefox 26.x unter Windows 7 bzw. Mac OS X 10.9.}
+auf \url{http://localhost:9000/} betrachtet werden.
+
 
 \subsection{Einführung in Spray}
 
@@ -113,10 +154,11 @@ Rekursives Zeichnen der Shapes aus einer Definition
 
 \subsection{Code-Generierung}
 
-\subsubsection{Shape Definitionen}
+\subsubsection{Shape Layout Definitionen}
 
-\subsubsection{Definitionen für ein zulässiges Modell}
+\subsubsection{Spray Logik Definitionen}
 
+Definitionen für ein zulässiges Modell.
 
 \subsection{Validierung und Persistierung}
 
