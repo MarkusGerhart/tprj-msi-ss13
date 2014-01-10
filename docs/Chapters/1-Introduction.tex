@@ -11,7 +11,7 @@ Spray soll also später in der Lage sein, auch genau diesen Spray
 Web Editor zu generieren (parallel zu dem gewöhnlichen Graphiti Editor).
 
 Sämtlicher Quellcode ist im Git-Repositorium
-tprj-msi-ss13\footnote{Github Link: \url{TODO}} zu finden.
+tprj-msi-ss13\footnote{Github Link: \url{https://github.com/magerhar/tprj-msi-ss13}} zu finden.
 Es gliedert sich in:
 
 \begin{itemize}
@@ -42,7 +42,7 @@ Es gliedert sich in:
 kann der Server wie folgt gestartet werden:
 
 \begin{verbatim}
-git clone TODO
+git clone https://github.com/magerhar/tprj-msi-ss13.git
 cd tprj-msi-ss13/server
 play run
 \end{verbatim}
@@ -117,7 +117,43 @@ Die Hauptziele zusammengefasst sind:
 
 \subsection{Ecore Metamodell}\label{sec.ecore}
 
+Um modellgetriebene Softwareentwicklung besser zu verstehen,
+sollte grob bekannt sein was ein \emph{Modell} bzw. was ein
+\emph{Metamodell} ist.
+
+Laut \citep[][S.~2-1]{drachen} ist „Ein Modell [...] immer ein Abbild von etwas“,
+welches nur die Merkmale des Originals erfasst, welche dem Modellierer
+relevant erscheinen.
+Ein Modell „wird von bestimmten Nutzern innerhalb einer bestimmten Zeitspanne
+zu einem bestimmen Zweck für ein Original eingesetzt“.
+
+Weiterhin wird in \citep[][S.~2-5]{drachen} beschrieben, dass
+„ein Metamodell [...] ein Modell von Modellen” ist, wobei dies beschreibt
+„aus welchen Arten von Enitäten und [...] Beziehungen [...] konforme Modelle
+bestehen“.
+
+\emph{Ecore} ist ein in der Eclipse Welt beliebtes Format für Metamodelle.
+Es kann in XMI\footnote{XMI steht für XML Metadata Interchange} serialisiert
+werden. Das Spray Framework fabriziert aus der Spray DSL ein Ecore Metamodell,
+mit diesem ist es somit möglich zu prüfen, ob das Modell welches vom
+Benutzer modelliert wurde korrekt ist.
+
+
 \subsection{Graphiti}
+
+Mit Graphiti\footnote{Webseite: \url{http://www.eclipse.org/graphiti/}}
+ist es möglich grafische Editoren, die innerhalb von Eclipse laufen, zu bauen.
+Intern setzt es auf das \emph{Graphical Editing
+Framework\footnote{Webseite: \url{http://www.eclipse.org/gef/}}} (GEF)
+und Draw2d, wobei Graphiti diese Frameworks komplett hinter seiner API
+versteckt. Spray generiert schlussendlich Graphiti-Quellcode.
+\citep[sinngemäß aus][S.~2]{sprayPaper}
+
+\underline{Achtung:}
+Draw2d nicht mit \emph{\dd} verwechseln! Ersters ist für Java,
+letzteres für JavaScript im Browser. Beide Frameworks haben nichts miteinander
+zu tun, außer dass \dd~versucht die API von Draw2d nach Möglichkeit
+nachzuahmen.
 
 
 \section{Anforderungen}
