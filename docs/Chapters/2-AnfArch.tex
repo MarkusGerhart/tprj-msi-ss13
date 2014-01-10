@@ -1,12 +1,205 @@
 \section{Anforderungen}
 
-\subsection{Primitive Shapes}
+Die Anforderungsanalyse spezifiziert die Anforderungen an das
+Browser Shape Tool. 
+Mithilfe einer Recherche und Brainstorming werden die Nutzungsanforderungen
+aufgestellt und daraus die funktionalen und nicht-funktionalen
+Anforderungen abgeleitet. Grafische Entwürfe der Benutzeroberfläche
+werden zeigen, wie die Nutzungsanforderungen aus Blackbox-Sicht
+umgesetzt werden können.
 
-\subsection{Connections}
+\paragraph{Projektvorgaben}
+Nachstehend sind die Vorgaben der Projektaufttraggeber definiert:
+\begin{itemize}
+  \item Implementation eines JS-Browser-Frameworks,
+  \item Spray Definition annehmen, verarbeiten, interpretieren, darstellen,
+  \item Darstellung ist Eclipse Graphiti-like,
+  \item Shape-Darstellungen bearbeiten können,
+  \item Diagramm-Modell muss validierbar und persistierbar sein.
+\end{itemize}
 
-\subsection{Compartments}
+\subsection{Nutzungsanforderungen}
+Um die Funktionen des Systems zu definieren, müssen zuerst die Nutzungsanforderungen
+identifiziert werden. Diese sind sogenannte Akzeptanzkriterien und werden
+im Abnahmetest, welcher am Ende des Projekts durchgeführt wird, validiert.
+Auf Tabelle \ref{tbl.nutz} werden die Nutzungsanforderungen gelistet,
+nummeriert und nach dem MoSCoW-Prinzip priorisiert:
 
-\subsection{Generalisierbarkeit}
+\begin{itemize}
+  \item Must  (M, unbedingt erforderlich)
+  \item Should (S, sollte umgesetzt werden)
+  \item Could (C, kann umgesetzt werden)
+  \item Won’t (W, wird nicht umgesetzt, aber für die Zukunft vorgemerkt)
+\end{itemize}
+
+\begin{table}[tbp]
+  \begin{tabular}{ | c | p{10cm} | c | }
+    \hline
+    \# & Anforderung & Prio. \\ \hline \hline
+    1  & Der Nutzer muss das Modell betrachten können ( “View Mode”). & C \\ \hline
+    2  & Der Nutzer muss das Modell z.B. als Dokumentation einbinden können. (d.h. der View Mode muss druckbar seitens eines Webbrowsers sein). & C \\ \hline
+    3  & Der Nutzer muss das Modell bearbeiten können (“Edit Mode”). & M \\ \hline
+    4  & Der Nutzer muss zwischen View und Edit Mode wechseln können. & M \\ \hline
+    5  & Das System muss eine Spray Shape Definition laden können. & M \\ \hline
+    6  & Das System muss die Semantik eines Shapes verstehen/abbilden können. & M \\ \hline
+    7  & Der Nutzer muss Shape-Elemente gemäß der zugrunde liegenden Spray Shape-DSL zeichnen können. Der Nutzer muss eine Aufzählung, Auswahl bzw. Übersicht aller ermöglichten Shape-Elemente erhalten. & M \\ \hline
+    8  & Der Nutzer muss die Bearbeitungssicht zoomen können. & C \\ \hline
+    9  & Der Nutzer muss den Zustand speichern können. (i) Koordinaten eines jeden Elements, (ii) Das eigentliche (semantische) Modell. & M \\ \hline
+    10 & Der Nutzer muss einen gespeicherten Zustand des Modells laden können.
+(i) Koordinaten eines jeden Elements, (ii)
+das eigentliche (semantische) Modell. & M \\ \hline
+    11 & Der Nutzer muss erkennen können, ob der Zustand valide ist oder nicht. & C \\ \hline
+    12 & Der Nutzer muss durch das System die Elemente automatisch ausrichten lassen können. „Ausrichtungsassistenz“ & W \\
+    \hline  
+  \end{tabular}
+  \caption{Nutzungsanforderungen für Spray Web,
+           nach dem MoSCoW-Prinzip priorisiert.}\label{tbl.nutz}
+\end{table}
+
+\subsection{Funktionale Anforderungen}
+
+Anhand von grafischen Entwürfen (siehe Abbildung
+\ref{fig.gui} und \ref{fig.guiAnker}) der Benutzeroberfläche wird dargestellt,
+wie die Nutzungsanforderungen aus Blackbox-Sicht umgesetzt werden sollen.
+Die Screens und die dazugehörigen Beschreibungen definieren, wie das Shape-Tool 
+funktioniert und wie es zu bedienen ist. Diese Systemanforderungen werden
+im Systemtest verifiziert.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1.0\textwidth]{Figures/Entwurf_GUI.pdf}
+  \caption{Entwurf GUI (Beispiel Modell: Petrinetz).}\label{fig.gui}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1.0\textwidth]{Figures/Entwurf_GUI_Anker.pdf}
+  \caption{Entwurf GUI: Ankerpuntek Auswahl (Beispiel Modell: Petrinetz).}\label{fig.guiAnker}
+\end{figure}
+
+\noindent Anforderungen an die Werkzeugleiste die auf Abbildung
+\ref{fig.gui} dargestellt wird:
+
+\begin{itemize}
+  \item Undo, Redo
+  \item Select,  damit kann ein oder mehrere Shapes selektioniert werden
+  \item Werkzeuge mit Hotkeys bedienbar (z.B. Undo mit CTRL+Z)
+  \item In Modellentitäten: Formen entsprechen der zur Verfügung stehenden Spray Elemente
+  \item In Modellentitäten: Die Formen können per Drag and Drop in die Fläche gezogen werden
+  \item Optional: Reihenfolge der Elemente bestimmbar (Vordergrund, Hintergrund)
+  \item Optional: Speichern, Laden
+\end{itemize}
+
+
+\paragraph{Primitive Shapes}
+
+Es ist essentiell dass folgende Shape Basistypen darstellt werden können,
+und ineinander verschachtelbar sind:
+
+\begin{itemize}
+  \item Line
+  \item PolyLine
+  \item Rectangle
+  \item RoundedRectangle
+  \item Polygon
+  \item Ellipse
+  \item Text
+  \item Anchor
+\end{itemize}
+
+\noindent Neben den visuellen Anforderungen gibt es noch weitere Anforderungen:
+
+\begin{itemize}
+  \item Die Texte der Shapes können editierbar sein.
+  \item Die Shapes sind per Maus positionierbar, drehbar, beliebig skalierbar, löschbar, bearbeitbar. Dafür werden Bearbeitungspunkte eingeblendet.
+  \item Interaktive Verschachtelung von Shapes (Compartments)
+    \begin{itemize}
+      \item Gruppieren, Entgruppieren
+      \item Compartments geben die Größe eines Shapes implizit vor. Ist vorgegeben von Shape-DSL. (z.B. Attribute die beim Klassendiagramm hinzukommen)
+    \end{itemize}
+  \item Allgemeine Verschachtelung von Shapes (statisch) z.B. bereits verschachtelte Shapes durch DSL-Definition
+  \item Eigenes Kontextmenü für Shapes
+    \begin{itemize}
+      \item Add → new Shapes (für statische Verschachtelung)
+      \item Cut
+      \item Remove
+      \item Copy
+      \item Rename (wenn benennbar)
+      \item Align
+      \item Properties: Anzeige von Eigenschaften
+    \end{itemize}
+  \item Eigenes Kontextmenü für Connections
+    \begin{itemize}
+      \item Rename
+      \item Remove
+      \item Align
+      \item Properties: Anzeige von Eigenschaften
+    \end{itemize}
+  \item Kontextmenüs mit Hotkeys bedienbar (z.B. Add mit Space)
+  \item Optional: Spezifische Kontextmenüerweiterung für jede Entity
+    \begin{itemize}
+      \item z.B. Randdicke oder Hintergrundfarbe bei Ellipse
+      \item z.B. Shapeumwandlung von Ellipse in Kreis
+    \end{itemize}
+  \item Ankerpunkte werden durch die Shape-DSL definiert, Anker sind also vorgegeben
+  \item Verbindungen zwischen Ankerpunkten werden vom Benutzer definiert
+  \item Bei einfachem Klick auf eine Verbindung (Connection) im Edit Menü erscheinen die möglichen Ankerpunkte als Auswahl. (Siehe Abbildung \ref{fig.guiAnker})
+  \item Bei einfachem Klick auf das Shape wird das Shape aktiv und die Bearbeitungspunkte (z.B zum Skalieren) werden angezeigt.
+  \item Bei Doppelklick auf das Shape passiert nichts
+  \item Bei Doppelklick auf das Label (z.B. Text) wird das Shape aktiv und das Label kann bearbeitet werden.
+  \item Defaultwert Label „Name des Shapes“
+  \item RapidButton bei onmouseover nur bei aktivem Shape, kann man auswählen welche Optionen zur Verfügung stehen. (Beispiel: bei einer UML-Assoziation kann man diese benennen, linke oder rechte Kardinalität setzen; bei z.B. einer Klasse Methoden, Properties hinzufügen/entfernen/ändern, ...)
+  \item Shapes müssen durch „Kasten“ markiert und gruppiert werden können.
+  \item Die Styles der Shapes sind dynamisch mit CSS konfigurierbar
+\end{itemize}
+
+\paragraph{Shape API}
+
+\begin{itemize}
+  \item Connections zwischen allen Shapes müssen möglich sein
+  \item Die Shape API muss die DSL interpretieren können und entsprechende Werkzeuge anbieten (z.B. Kreis zeichnen)
+  \item Die API muss eine Datenpersistierung anbieten, z.B. wird von der Klasse Kreis mehrere Kreise gezeichnet, müssen die Kreise in einer Datenstruktur festgehalten werden.
+  \item Die API muss das Modell gegen die DSL prüfen können und ggf. Fehlermeldungen darstellen.
+\end{itemize}
+
+\paragraph{Connections}
+
+Im einfachsten Fall sind Connections einfach Verbindungslinien zwischen
+zwei Shapes. Somit bilden Shapes (Knoten) und Connections (Kanten)
+eine gerichtete Graphenstruktur.
+Prinzipiell können jedoch die Endpunkte der Connections auch aus den gleichen
+primitiven Shape Arten zusammengesetzt werden, um ihre visuelle Bedeutung
+klar zu machen.
+
+\begin{itemize}
+  \item CDLine
+  \item CDPolyLine
+  \item CDRectangle
+  \item CDRoundedRectangle
+  \item CDPolygon
+  \item CDEllipse
+  \item CDText
+\end{itemize}
+
+\paragraph{Compartments}
+sind Shapes die zur Laufzeit in ein anderes Shape geschachtelt werden können,
+oder auch wieder entfernt werden können. Sie sind auch ein semantsicher Teil,
+neben Shapes und Connections, und werden somit auch im Modell gespeichert.
+Es muss also Unterstützung dafür geben, wärend der Benutzer modelliert, Shapes
+verschachteln zu können (via Drag and Drop).
+
+
+\paragraph{Generalisierbarkeit}
+Dadruch dass sämtlicher Code durch Spray-Generatoren automatisch produziert wird,
+ist es nötig dass das Spray Web Framework keinen „fest verdrateten“ Code
+aufweist, sondern vielmehr sehr generellen Code der mit verschiedensten
+Eingaben zurecht kommt.
+Beispielsweise in Petrinetz hat andere Shapes und Validierungsregeln,
+als ein Heizungssystem. Die Diagramme unterscheiden sind in Anzahl und
+Aufbau der Shapes, Connections, Compartments und Validierungsregeln
+gewaltung, daher soll der Code so generell wie möglich gehalten werden.
+(Stichwort Reflections)
+
 
 
 \section{Architektur}
