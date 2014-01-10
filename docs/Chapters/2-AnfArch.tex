@@ -200,6 +200,75 @@ Aufbau der Shapes, Connections, Compartments und Validierungsregeln
 gewaltung, daher soll der Code so generell wie möglich gehalten werden.
 (Stichwort Reflections)
 
+\subsection{Nicht-funktionale Anforderungen}
+
+Während funktionale Anforderungen definieren was das System leisten soll,
+müssen die Eigenschaften des Systems ebenfalls spezifiziert sein.
+Nicht-funktionale Anforderungen werden, wie die funktionalen Anforderungen, im
+Systemtest verifiziert und müssen daher messbar sein.
+Um nicht-funktionale Anforderungen zu spezifizieren,
+dient die ISO 25010 als Checkliste:
+
+\paragraph{Zuverlässigkeit}
+
+\begin{itemize}
+  \item Das System ist an mindestens 51 Wochen im Jahr erreichbar.
+  \item Bei unbeabsichtigtem Bearbeitungsende (durch Browserabsturz, etc.) soll der zuletzt gespeicherte Systemzustand wiederhergestellt werden.
+  \item Systemdaten sollen bei Verlust nach 24 Stunden wiederhergestellt werden können.
+\end{itemize}
+
+\paragraph{Benutzbarkeit}
+
+\begin{itemize}
+  \item Das System ist nicht barrierefrei optimiert.
+  \item Ein Nutzer mit guten Internetkenntnissen hat das System spätestens nach einer Stunde Schulung erlernt, verstanden und kann es selbständig fehlerfrei bedienen.
+\end{itemize}
+
+\paragraph{Sicherheit}
+
+\begin{itemize}
+  \item Das System muss den unauthorisierten Zugriff auf den Server verhindern.
+  \item Das System erlaubt nur registrierten Benutzern den Zugriff.
+  \item Das System muss Benutzerdaten vertraulich behandeln.
+\end{itemize}
+
+\paragraph{Leistung und Effizienz}
+
+\begin{itemize}
+  \item Die Übertragung der Signale vom Client an den Server und zurück ist maximal 1 Sekunde verzögert.
+  \item Das System muss in der Lage sein, bei einer Änderung eines Shapes, während einer Sekunde die Validität zu prüfen.
+  \item Das System muss in der Lage sein, auch komplexe Shape-Darstellungen, in maximal 10 Sekunden zu rendern.
+\end{itemize}
+
+\paragraph{Wartbarkeit}
+
+\begin{itemize}
+  \item Alle Modultests sollen automatisiert durchgeführt werden.
+  \item Jede Klasse soll testbar sein.
+  \item Alle Klassen und alle Methoden sind ausreichend dokumentiert.
+  \item McCabe-Mass soll nicht höher sein als 8.
+\end{itemize}
+
+\paragraph{Übertragbarkeit}
+
+\begin{itemize}
+  \item Die Software ist mit einem Aufwand von maximal einem Tag auf ein System, z.B. Windows Server oder Linux, installierbar.
+  \item Die Software ist auf ein anderes System, z.B. Windows Server, anpassbar.
+\end{itemize}
+
+\paragraph{Kompatibilität}
+
+\begin{itemize}
+  \item Die Software unterstützt alle aktuellen Browser, die auf der WebKit-Engine (Safari, Google Chrome) basieren.
+  \item Die Software ist kompatibel mit allen Geräten und Betriebssystemen, die die genannten Browser unterstützen.
+\end{itemize}
+
+\paragraph{Funktionale Tauglichkeit}
+
+\begin{itemize}
+  \item Mindestens 99.5\% aller Signale werden während einer Bearbeitung eines Shape-Diagramms übertragen.
+\end{itemize}
+
 
 
 \section{Architektur}
