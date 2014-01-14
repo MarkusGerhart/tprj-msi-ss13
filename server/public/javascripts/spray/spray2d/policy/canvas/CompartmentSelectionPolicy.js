@@ -79,12 +79,12 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
             figure = figure.getParent();
         }
 
-        if (figure == null) {
+        /*if (figure == null) {
             console.log("figure: " + figure);
         } else {
             console.log("figure.NAME: " + figure.NAME);
             console.log("figure: " + figure);
-        }
+        }*/
 
         if (figure !== null && figure.isDraggable()) {
             canDragStart = figure.onDragStart(x - figure.getAbsoluteX(), y - figure.getAbsoluteY());
@@ -189,11 +189,11 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                 if (target !== null) {
                     canvas.currentDropTarget = target;
 
-                    console.log("current trop taget.NAME: " + target.NAME);
+                    //console.log("current trop taget.NAME: " + target.NAME);
 
                     // we can not use onDragEnter for ports (method is private)
                     if(!(this.mouseDraggingElement instanceof draw2d.Port) && (target instanceof draw2d.Port)){
-                        console.log("dragged figure is no port")
+                        //console.log("dragged figure is no port")
                         $("#drawArea").css("cursor","not-allowed");
                     }
                     target.onDragEnter(this.mouseDraggingElement);
@@ -249,7 +249,7 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
 
             if (excludes.indexOf(this.mouseDraggingElement.NAME) < 0) {
                 if(canvas.currentDropTarget!==null){
-                    console.log("dropTargetName : " + canvas.currentDropTarget.NAME);
+                    //console.log("dropTargetName : " + canvas.currentDropTarget.NAME);
                     //this.mouseDraggingElement.onDrop(canvas.currentDropTarget);
                     //canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);
                     canvas.currentDropTarget.updateCompartment(this.mouseDraggingElement, x, y);
@@ -267,14 +267,14 @@ spray2d.policy.canvas.CompartmentSelectionPolicy =  draw2d.policy.canvas.Selecti
                         var draggingElement = this.mouseDraggingElement;
                         draggingElement.getParent().children.each(function(i,e){
                             if (typeof(e.figure['groupId']) != "undefined" && draggingElement['groupId'] == e.figure['groupId']) {
-                                console.log("e.figure.Name : " + e.figure.NAME);
-                                console.log("remove child width ID: " + e.figure['groupId']);
+                                //console.log("e.figure.Name : " + e.figure.NAME);
+                                //console.log("remove child width ID: " + e.figure['groupId']);
                                 draggingElement.removeChild(e.figure);
                             } else {
                                 if (typeof(e.figure['groupId']) == "undefined") {
-                                    console.log("e.figure['groupId'] is undefined");
+                                    //console.log("e.figure['groupId'] is undefined");
                                 } else {
-                                    console.log("e.figure['groupId'] : " + e.figure['groupId'] + " is different");
+                                    //console.log("e.figure['groupId'] : " + e.figure['groupId'] + " is different");
                                 }
                             }
                         });
