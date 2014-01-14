@@ -35,7 +35,9 @@ htwg.spray.Utils = function($){
 
         $.each(this.canvas.figures.data,function(i,figure){
 
-            if ( typeof figure == "object" ){
+            if ( figure != null && typeof figure == "object" ){
+                console.log("sprayName: " + figure['sprayName']);
+
                 var userData = figure.getUserData();
 
                 var params = { "x": figure.getX(),
@@ -52,8 +54,12 @@ htwg.spray.Utils = function($){
                     entity["labels"] = that.labels;
                 }
 
-                entity['children'] = new Array();
-                for (var j=0; j<figure.getChildren().getSize(); j++) {
+                entity['compartments'] = new Array();
+                //console.log(JSON.stringify("endity: " + entity));
+                that.getCompartments(figure, entity['compartments']);
+                //console.log(JSON.stringify("endity: " + entity));
+
+                /*for (var j=0; j<figure.getChildren().getSize(); j++) {
                     var child = figure.getChildren().get(j);
                     var element = child.getPersistentAttributes();
 
@@ -61,9 +67,11 @@ htwg.spray.Utils = function($){
                         element['sprayName'] = child['sprayName'];
                         element['groupId'] = child['groupId'];
                         entity['children'].push(element);
+
+                        console.log("child: " + JSON.stringify(element));
+                        console.log("child: " + JSON.stringify(entity));
                     }
-                    console.log("child: " + JSON.stringify(element));
-                }
+                }*/
 
                 that.model.entities.push(entity);
                 that.labels = [];
@@ -80,6 +88,26 @@ htwg.spray.Utils = function($){
         });
 
         console.log(JSON.stringify(this.model));
+    },
+
+    // This method is only necessary because the generator does not use set/getPersistentAttributes
+    // Thorsten Niehues recommended strongly to use that function but the idea was rejected by Simon Schneeberger
+    // The method is very dirty but in case the project is used then the generator should be rewritten anyway
+    this.getCompartments = function(figure, compartments) {
+        for (var j=0; j<figure.getChildren().getSize(); j++) {
+            var child = figure.getChildren().get(j);
+            this.getCompartments(child, compartments);
+
+            var element = child.getPersistentAttributes();
+
+            if (typeof child['sprayName'] !== 'undefined' && child['groupId'] !== 'undefined') {
+                element['sprayName'] = child['sprayName'];
+                element['groupId'] = child['groupId'];
+                compartments.push(element);
+
+                //console.log("compartments: " + JSON.stringify(compartments));
+            }
+        }
     },
 
     this.getConnectionAsJSON = function(conn, figure){
@@ -144,19 +172,12 @@ htwg.spray.Utils = function($){
         var oldSelectedConn = $("#selectedConnection").val();
 
         $.each(entities,function(i,entity){
+            console.log("add figure to model");
 
             var figure = htwg.spray.shapeFactory.drawShape(entity.name);
             figure.setPosition(entity.params.x,entity.params.y);
             figure.setDimension(entity.params.width, entity.params.height);
             figure.setId(entity.id);
-
-            /*for (var j=0; j<entity['children'].length; j++) {
-                var child = entity['children'][j];
-                var o = eval("new " + child['type'] + "()");
-                o.setPersistentAttributes(child);
-                figure.addFigure(o, new spray2d.layout.locator.FigureLocator());
-                o.setDraggable(true);
-            }*/
 
             that.canvas.addFigure(figure);
 
@@ -185,6 +206,19 @@ htwg.spray.Utils = function($){
         });
 
         $("#selectedConnection").val(oldSelectedConn);
+
+        $.each(entities,function(i,entity){
+            var figure = that.canvas.getFigure(entity.id);
+            for (var j=0; j<entity['compartments'].length; j++) {
+                var child = entity['compartments'][j];
+                var o = eval("new " + child['type'] + "()");
+                o.setPersistentAttributes(child);
+                o.setBackgroundColor("#ffffff");
+                figure.addFigure(o, new spray2d.layout.locator.FigureLocator());
+                o.setDraggable(true);
+            }
+        });
+
         this.notifyEcore = true;
     },
 
