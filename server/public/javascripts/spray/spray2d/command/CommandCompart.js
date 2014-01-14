@@ -38,6 +38,8 @@ spray2d.command.CommandCompart = draw2d.command.Command.extend({
      **/
     execute:function()
     {
+        //htwg.spray.view.removeFigureFromList(this.figure);
+        htwg.spray.view.figures.remove(this.figure);
         var p = this.parent;
         while (p.getParent() != null) { p = p.getParent() }
         var locator = new spray2d.layout.locator.FigureLocator(p);
@@ -45,15 +47,13 @@ spray2d.command.CommandCompart = draw2d.command.Command.extend({
         this.parent.addFigure(this.figure, locator);
         this.figure.setDraggable(true);
 
-        console.log("add " + this.figure.NAME + " to " + this.parent.NAME);
-        console.log("add " + this.figure['sprayName'] + " to " + this.parent['sprayName']);
-        console.log("allowed childs: " + this.parent.allowedCompartmentChilds);
-
         var p = this.parent;
         var f = this.figure;
         this.figure.children.each(function(i,e){
             if (typeof(e.figure.NAME) != "undefined") {
+                f.removeChild(e.figure); // remove figure from current parent - does not help for saving compartments
                 p.addFigure(e.figure, new spray2d.layout.locator.FigureLocator());
+
                 e.figure.setDraggable(true);
                 e.figure['sprayName'] = f['sprayName'];
                 e.figure['groupId'] = f.id;
