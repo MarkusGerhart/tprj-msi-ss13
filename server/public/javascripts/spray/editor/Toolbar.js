@@ -77,11 +77,8 @@ htwg.spray.Toolbar = function($){
         //
         this.saveButton  = $("#save");
         this.saveButton.click($.proxy(function(){
-            console.log('before getModel');
             that.utils.getModel();
-            console.log('before ecore');
             htwg.spray.websocketEcore.send({"type":"ecore", "command":"save", "domainObj":that.utils.model});
-            console.log('after ecore');
             alert("saved!");
         },this));
 
@@ -89,7 +86,8 @@ htwg.spray.Toolbar = function($){
         //
         this.loadButton  = $("#load");
         this.loadButton.click($.proxy(function(){
-            that.utils.setModel();
+            htwg.spray.websocketEcore.send({"type":"ecore", "command":"load", "domainObj":''});
+            //that.utils.setModel();
         },this));
 
     };

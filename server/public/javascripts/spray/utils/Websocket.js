@@ -18,7 +18,7 @@ htwg.spray.WebSocket = function (wsURI) {
 
 htwg.spray.WebSocket.prototype.onopen = function (event) {
   this.ready = true;
-  console.log("WebSocket connected.");
+  //console.log("WebSocket connected.");
 }
 
 htwg.spray.WebSocket.prototype.onclose = function (event) {
@@ -27,7 +27,16 @@ htwg.spray.WebSocket.prototype.onclose = function (event) {
 }
 
 htwg.spray.WebSocket.prototype.onmessage = function (evt) {
-  console.log("WebSocket got: " + evt.data);
+    // console.log("WebSocket got evt.data: " + evt.data);
+
+    var json1 = JSON.parse(evt.data);
+
+    if (json1.command == "load") {
+        var json2 = JSON.parse(json1.text);
+        htwg.spray.utils.model = json2.domainObj
+        htwg.spray.utils.setModel();
+    }
+
   //this.sock.close();
 }
 
@@ -37,7 +46,7 @@ htwg.spray.WebSocket.prototype.onerror = function (event) {
 
 htwg.spray.WebSocket.prototype.send = function (message) {
   try{
-      console.log("WebSocket send: " + JSON.stringify(message));
+      //console.log("WebSocket send: " + JSON.stringify(message));
       this.sock.send(JSON.stringify( message ));
       return message;
   }catch(e){

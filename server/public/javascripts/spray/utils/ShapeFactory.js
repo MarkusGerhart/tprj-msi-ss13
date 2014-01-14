@@ -81,7 +81,7 @@ htwg.spray.ShapeFactory = function($){
 
                 var allowedChilds = new Array();
                 for (var i=0; i<classDef.compartments.length; i++) {
-                    console.log("class: " + classDef.compartments[i].atLocationId + " shape: " + shapeDef.params.compartment.locationId);
+                    //console.log("class: " + classDef.compartments[i].atLocationId + " shape: " + shapeDef.params.compartment.locationId);
                     if (classDef.compartments[i].atLocationId == shapeDef.params.compartment.locationId) {
                         allowedChilds.push(classDef.compartments[i].canContain);
                     }

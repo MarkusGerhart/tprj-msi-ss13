@@ -98,14 +98,10 @@ object Application extends Controller {
         websocket.push(this.message("server", "removeObjFromParent", "ok"))
       }
       case "load" => {
-        val str:String = ""
-        val f = scala.io.Source.fromFile("model.json")
-        for (line <- f.getLines()) {
-          printf("%4d %s\n", line.length, line)
-          str.concat(line);
-        }
-        f.close()
-        // TODO websocket.push(this.message("server", "removeObjFromParent", "ok"))
+        val fileContent = io.Source.fromFile("model.json").getLines.mkString
+
+        println("msg to client: " + fileContent)
+        websocket.push(this.message("server", "load", fileContent))
       }
       case "save" => {
         import java.io.PrintWriter

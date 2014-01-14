@@ -55,23 +55,7 @@ htwg.spray.Utils = function($){
                 }
 
                 entity['compartments'] = new Array();
-                //console.log(JSON.stringify("endity: " + entity));
                 that.getCompartments(figure, entity['compartments']);
-                //console.log(JSON.stringify("endity: " + entity));
-
-                /*for (var j=0; j<figure.getChildren().getSize(); j++) {
-                    var child = figure.getChildren().get(j);
-                    var element = child.getPersistentAttributes();
-
-                    if (typeof child['sprayName'] !== 'undefined' && child['groupId'] !== 'undefined') {
-                        element['sprayName'] = child['sprayName'];
-                        element['groupId'] = child['groupId'];
-                        entity['children'].push(element);
-
-                        console.log("child: " + JSON.stringify(element));
-                        console.log("child: " + JSON.stringify(entity));
-                    }
-                }*/
 
                 that.model.entities.push(entity);
                 that.labels = [];
@@ -87,7 +71,7 @@ htwg.spray.Utils = function($){
             }
         });
 
-        console.log(JSON.stringify(this.model));
+        //console.log(JSON.stringify(this.model));
     },
 
     // This method is only necessary because the generator does not use set/getPersistentAttributes
@@ -207,10 +191,16 @@ htwg.spray.Utils = function($){
 
         $("#selectedConnection").val(oldSelectedConn);
 
+        /* Add the compartments.
+         * This is very dirty but when the generator is rewritten then this method is not needed any more
+         * (rewrite the generator to read pure JSON and use setPersistentAttributes like in the JSON examples of draw2d)
+         * as strongly recommended by Thorsten Niehues
+         */
         $.each(entities,function(i,entity){
             var figure = that.canvas.getFigure(entity.id);
             for (var j=0; j<entity['compartments'].length; j++) {
                 var child = entity['compartments'][j];
+                if (child['type'] == 'spray2d.shape.basic.BoundingBox') continue;
                 var o = eval("new " + child['type'] + "()");
                 o.setPersistentAttributes(child);
                 o.setBackgroundColor("#ffffff");
