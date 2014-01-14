@@ -97,6 +97,22 @@ object Application extends Controller {
         factory.removeEObject(domainObj, id, parentObj, parentID)
         websocket.push(this.message("server", "removeObjFromParent", "ok"))
       }
+      case "load" => {
+        val str:String = ""
+        val f = scala.io.Source.fromFile("model.json")
+        for (line <- f.getLines()) {
+          printf("%4d %s\n", line.length, line)
+          str.concat(line);
+        }
+        f.close()
+        // TODO websocket.push(this.message("server", "removeObjFromParent", "ok"))
+      }
+      case "save" => {
+        import java.io.PrintWriter
+        val s = new PrintWriter("model.json")
+        s.print(msg)
+        s.close()
+      }
       case _ => {
         println("Ecore Error")
         websocket.push(this.loadError)

@@ -52,6 +52,19 @@ htwg.spray.Utils = function($){
                     entity["labels"] = that.labels;
                 }
 
+                entity['children'] = new Array();
+                for (var j=0; j<figure.getChildren().getSize(); j++) {
+                    var child = figure.getChildren().get(j);
+                    var element = child.getPersistentAttributes();
+
+                    if (typeof child['sprayName'] !== 'undefined' && child['groupId'] !== 'undefined') {
+                        element['sprayName'] = child['sprayName'];
+                        element['groupId'] = child['groupId'];
+                        entity['children'].push(element);
+                    }
+                    console.log("child: " + JSON.stringify(element));
+                }
+
                 that.model.entities.push(entity);
                 that.labels = [];
 
@@ -136,6 +149,15 @@ htwg.spray.Utils = function($){
             figure.setPosition(entity.params.x,entity.params.y);
             figure.setDimension(entity.params.width, entity.params.height);
             figure.setId(entity.id);
+
+            /*for (var j=0; j<entity['children'].length; j++) {
+                var child = entity['children'][j];
+                var o = eval("new " + child['type'] + "()");
+                o.setPersistentAttributes(child);
+                figure.addFigure(o, new spray2d.layout.locator.FigureLocator());
+                o.setDraggable(true);
+            }*/
+
             that.canvas.addFigure(figure);
 
             if ( entity.hasOwnProperty("labels") && entity.labels.length > 0 ){
