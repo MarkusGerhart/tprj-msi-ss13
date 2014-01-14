@@ -98,10 +98,13 @@ object Application extends Controller {
         websocket.push(this.message("server", "removeObjFromParent", "ok"))
       }
       case "load" => {
-        val fileContent = io.Source.fromFile("model.json").getLines.mkString
-
-        println("msg to client: " + fileContent)
-        websocket.push(this.message("server", "load", fileContent))
+        if ((new java.io.File("model.json")).exists()) {
+            val fileContent = io.Source.fromFile("model.json").getLines.mkString
+            println("msg to client: " + fileContent)
+            websocket.push(this.message("server", "load", fileContent))
+        } else {
+            websocket.push(this.message("server", "load", ""))
+        }
       }
       case "save" => {
         import java.io.PrintWriter

@@ -27,11 +27,11 @@ htwg.spray.WebSocket.prototype.onclose = function (event) {
 }
 
 htwg.spray.WebSocket.prototype.onmessage = function (evt) {
-    // console.log("WebSocket got evt.data: " + evt.data);
+    //console.log("WebSocket got evt.data: " + evt.data);
 
     var json1 = JSON.parse(evt.data);
 
-    if (json1.command == "load") {
+    if (json1.command == "load" && json1.text != '') {
         var json2 = JSON.parse(json1.text);
         htwg.spray.utils.model = json2.domainObj
         htwg.spray.utils.setModel();
