@@ -92,6 +92,31 @@ Die Generatoren sind in Xtend geschrieben, dieses ist wiederrum Teil
 der Language Workbench
 \emph{Xtext}\footnote{Siehe \url{http://www.eclipse.org/Xtext/}}.
 
+Diese Generatoren sind noch nicht ins Spray-Projekt integiert, und müssen
+daher noch in die Spray Projektstruktur eingebracht werden.
+Man kann den Shape-Generator als Standalone Xtext Projekt zum laufen bekommen,
+der Spray-Generator (Logik) muss jedoch in der Eclipse-Umgebung direkt
+im Spray-Projekt eingebunden werden, da die Spray-Grammatik nicht ohne
+weiteres als Standalone Xtext Projekt extrahiert werden kann.
+Um Eclipse Spray (Developer) lauffähig zu bekommen, sind ggf. die fogenden
+Links hilfreich:
+
+\begin{itemize}
+  \item \url{http://stackoverflow.com/questions/13575695/}
+  \item \url{http://stackoverflow.com/questions/17527096/}
+  \item \url{http://stackoverflow.com/questions/15374697/}
+\end{itemize}
+
+\noindent In der ersten Spray Eclipse-Instanz liegt der eigentliche
+Spray-Quellcode. Auf dieser Ebene liegen auch sämtliche Generatoren.
+Aus diesem Quellcode kann eine zweite Eclipse-Instanz generiert werden,
+in dieser Instanz werden z.B. die Shape- und Spray-Grammatik geschrieben
+und Eclipse stößt die entsprechenden Code-Generatoren an um Graphiti-Code
+zu generieren -- bzw. für Spray Web: JSON Code.
+Dieser Graphiti Code kann wiederum als Eclipse-Instanz ausgeführt werden;
+dort ist dann der eigentliche grafische Editor auf Elcipse-Basis -- eben
+der gewollte Graphiti Editor.
+
 \subsubsection{Shape Layout Definitionen}
 
 Es soll JSON-Code aus der Shape Grammatik \citep[gemäß][]{sprayUser}
@@ -283,7 +308,95 @@ zugelassen ist. Diese kommen auch nur in \emph{nicht} verschachtelter Form vor:
 
 \subsubsection{Spray Logik Definitionen}
 
-Definitionen für ein zulässiges Modell.
+Es soll JSON-Code aus der Spray Grammatik generiert werden.
+Mit diesen Definitionen kann Spray Web die Benutzereingaben überprüfen,
+ob diese zu ein zulässiges Modell führen.
+Der Code dazu befindet sich im Repositorium in
+{\tt generators/spray\_dsl/SprayJsonGenerator.xtend}.
+Ziel ist es z.b. aus folgender Spray-Logik-Grammatik:
+
+\begin{verbatim}
+class Place {
+  shape PlaceShape {
+    name into placeText
+    reference tokens into tokensCompartment
+  }
+  behavior {
+    create into mapelements palette "Shapes"
+  }
+} 
+\end{verbatim}
+
+\noindent Solch ein JSON zu generieren:
+
+\begin{verbatim}
+{
+  name: "Place",
+  shape: "PlaceShape",
+  compartments: [
+    {
+      canContain: "Token",
+      atLocationId: "tokensCompartment",
+    },
+  ],
+  palette: "Shapes",
+}
+\end{verbatim}
+
+\paragraph{JSON Spray (Logik) Spezifikation} Die Spray Grammatik definiert
+ein Diagramm, welches sich in einzelne Klassen gliedert.
+Die Klassen spezifizieren welches Verhalten, welchem Shape zugeordnet wird
+bzw. welche Connections zwischen Shapes zulässig sind.
+
+Diese Logik Definitionen werden in einer Datei {\tt genspray.js} abgelegt.
+Die Datei enthält eine Variable, worin die einzelnen Klassendefinitionen
+in einer Liste gespeichert werden:
+
+\begin{verbatim}
+var classdefs = [
+  {...},
+  {...},
+  ...
+]
+\end{verbatim}
+
+\noindent Es gibt zwei Sorten von \verb|{...}|-Objekten.
+Die erste Sorte verbindet Shape und Klasse und kann
+folgende Eigenschaften besitzen:
+
+\begin{verbatim}
+  name: String
+  shape: String
+  compartments: [ {...}, ... ]
+\end{verbatim}
+
+\noindent Das {\tt compartments} Property enthält die die Referenz,
+welches Shape in das Compartment gelegt werden darf, sowie das
+Shape welches der Compartment-Behälter sein soll:
+
+\begin{verbatim}
+  canContain: String
+  atLocationId: String
+\end{verbatim}
+
+\noindent Die zweite Sorte definiert, welche Klassen mit welchem
+Connection-Shape verbunden werden dürfen. Es kann folgende Eigenschaften
+besitzen:
+
+\begin{verbatim}
+  name: String
+  connection: String
+  from: String
+  to: String
+\end{verbatim}
+
+\noindent Wobei {\tt connection} auf das Connectionshape referenziert,
+{\tt from} referenziert von welcher Klasse aus die Connection ausgehen darf
+und {\tt to} referenziert zu der Klasse zu der die Connection führen darf.
+
+Jede der beiden Sorten muss das {\tt palette} Propterty enthalten.
+Dieses definiet, unter welcher Auswahlpalette die Klasse im grafischen Editor
+zur Verfügung gestellt wird.
 
 \subsection{Validierung und Persistierung}
 
