@@ -1,13 +1,48 @@
 \section{Umsetzung}
 
+In diesem Kapitel wird beschrieben, wie die Anforderungen praktisch
+umgesetzt wurden. Zunächst wird darauf eingegangen, wie Shapes gezeichnet
+werden, danach wie Spray passenden Code für Spray Web generieren kann
+und zuguterletzt wie Spray Web Modelle validiert und persistiert.
 
 \subsection{Shapes zeichnen}
 
+Es ist essentiell dass die Basisshapes gezeichnet werden können.
+Zudem sollen die Basisshapes die in Kapitel \ref{sec.primitivShapes}
+beschrieben sind, auch ineinander verschachtelbar sein.
+Da die Shapes auch u.a. Textfelder enthalten können, um z.B. das Shape
+zu benennen, ist es nötig dass der Benutzer diese verändern kann auch
+innerhalb eines verschachtelten Shapes.
+Da die Shapes mit Connections zusammen eine Graphstruktur bilden,
+müssen die Shapes über Connections miteinander verbunden werden können.
+
+Es wäre ideal, wenn ein Toolkit existieren würde, welches all diese
+Anforderungen erfüllt. Falls ein solches Toolkit nicht existiert,
+müsste selbst eines mit den in Kapitel \ref{sec.funcAnforderung}
+gestellten Anforderungen gebaut werden.
+
 \subsubsection{Toolkits}
+
+Folgende Toolkits haben wir auf ihre Tauglichkeit überprüft:
+
+\begin{itemize}
+  \item d3.js
+  \item kinetic.js
+  \item \dd
+\end{itemize}
+
+TODO Liste erweitern und kurz Toolkit beschreiben.
 
 \subsubsection{\dd}
 
-\citep{dd}
+Erst relativ spät haben wir das \dd Toolkit gefunden.
+Es erfüllt quasi alle Anforderungen und ist damit der Gewinner:
+
+TODO Tabelle aus Google einfügen.
+
+\dd~wurde von \citep{dd} entwickelt und steht u.a. unter der GNU General
+Public Lizenz (GPL) und ist daher auch rein rechtlich geeignet für
+das ebenfalls unter einer Open Source Lizenz stehende Spray-Projekt.
 
 \subsubsection{Shape Factory}
 
@@ -17,6 +52,11 @@ Rekursives Zeichnen der Shapes aus einer Definition
 
 
 \subsection{Code-Generierung}
+
+Spray Web ist so aufgebaut, dass es von Spray generierten Code annimmt
+und verarbeitet. Da Spray intern um eigene Generator-Implementierungen
+erweiterbar ist, ist es auch möglich, dass wir ideal für Spray Web
+zugeschnittenen Code erzeugen können.
 
 \subsubsection{Shape Layout Definitionen}
 
