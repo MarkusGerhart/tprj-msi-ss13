@@ -80,6 +80,20 @@ Rekursives Zeichnen der Shapes aus einer Definition
 
 \subsubsection{Compartments}
 
+Compartments sind Verschachtelung einzelner Shapes (oder Gruppen von Shapes).
+
+Draw2d bietet bereits die Möglichkeit zur Verschachtelung von Shapes.
+Wenn allerdings Gruppen von Shapes verschachtelt werden sollen müssen alle Elemente einzeln dem neuen Parent hinzugefügt werden.
+
+Auch die Commands für Undo und Redo mussten implementiert werden.
+Dieser Prozess ist etwas aufwändiger weil bereits auf abeschlossene Commands zugegriffen werden muss. 
+Manche Commands we Move werden automatisch erstellt, ausgeführt und auf den CommandStack gelegt)
+Insbesondere der Move und Create Command müssen modifiert / ausgeführt werden.
+Hier wurden viele Fälle bereits implementiert.
+
+Beim Laden einer abgespeichereten Zeichenfläche werden Compartments aktuell nur sehr rudimentär unterstützt.
+Bevor hier Compartments vollständig unterstützt werden sollte der Shape-Generator neu gestaltet werden.
+(nach dem Vorbild des JSON marshal / unmarshal welches im Framework vorhanden ist und für einfache Shapes bereits funktioniert)
 
 \subsection{Code-Generierung}
 
