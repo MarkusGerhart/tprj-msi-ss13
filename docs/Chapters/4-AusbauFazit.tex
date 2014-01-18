@@ -1,27 +1,91 @@
 \section{Nächste Ausbaustufen}
 
-\subsection{Alternative Zeichentoolkits}
+Hier werden für ggf. künftige Teamprojekte interessante Aufgaben
+im Bezug zu Spray Web vorgestellt und kurz beschrieben.
 
-go.js oder digaram.js sind eleganter?
-Unsere bisherigen Erkenntnisse einbringen.
+\paragraph{Zeichentoolkits}
 
-\subsection{Pflege Codebasis}
+Obwohl \dd~ viele Vorteile bietet wie Open Source Lizenz, ein umfassendes
+Framework und eine z.Z. aktive Entwicklung, gibt es auch ärgerliche Aspekte,
+wie z.B. fehlende Funktionalitäten oder Bugs oder auch dass die Software
+nicht öffenltich von einer Gemeinschaft gepflegt wird, sondern nur von
+Andreas Herz.
 
-Bisheriges verbessern, stabilisieren und testen.
+Gibt es besseren Alternativen? Wäre eine nicht Open Source Lösung denkbar?
+Folgende Kandidaten: go.js, diagram.js. Oder gibt es andere potentielle
+Frameworks? Oder eine schlanke Eigenentwicklung die genau auf Sprays
+Bedürfnisse zugeschnitten ist?
 
-\subsection{Kollobarationsfähigkeit}
+Alternativ dazu, könnte man die Änderungen wieder vernünftig in den regulären
+\dd~ Quellcode-Baum einpflegen oder eine Kooperation mit Andreas Herz eingehen,
+um das Framework von sich noch stärker an die Bedürfnisse von Spray auszurichten.
 
-\subsection{Validierung ausbauen}
+\paragraph{Pflege Codebasis}
+
+Die bisherige Codebasis ausbauen, verbessern, stabilisieren und testen bzw.
+allgemeine Vergesserungen der Architektur insbesondere auf JavaScript-seite.
+Ein automatisiertes Testsystem\footnote{jasmine.js, vows.js, grunt.js,
+phantom.js, testling.com, yeoman.io} aufbauen, sowie eine solide Dokumentation
+auf Basis von z.B. Sphinx oder Docco.
+
+Portierung des Codes von \dd~ Version 3.0.0 auf die akuellste Version.
+Können bessere Abstraktionen als bisher gefunden werden, um den
+Draw2d-Patchcode leichter in neue Versionen zu überführen?
+Oder kann man sich den Patchcode gänzlich sparen bzw. komplett von extern
+injizieren?
+
+Wie könnte eine neue Funktion wie Zooming eingebaut werden? Am besten so,
+dass man sich wie in Google Maps durch das Modell hangeln und zoomen kann.
+
+\paragraph{Standalone}
+
+Wenn das Modell mit z.B. ecore.js als JSON gespeichert werden würde,
+könnte der Spray Web Editor vollkommen ohne Server, d.h. auch ohne
+Kommunikationsoverhead, auskommen.
+
+Das hat den Vorteil, dass ein solcher Modellierungseditor ganz leicht
+in Webseiten integriert werden kann, ohne irgendwelche
+Konfigurationsorgien. Ein Webseitenbetreiber müsste auch nur seinen existierenden
+Server pflegen und könnte mit diesem auf dem bevorzugten Weg direkt mit
+dem Editor kommunizieren. Aber gleichzeitig bleibt der Editor so portabel,
+dass er einfach auf ein USB-Stick geladen werden kann und quasi ohne irgendwelche
+Hilfsmittel ausgeführt werden kann.
+
+Beim Modellieren mit einem grafischen Editor kann es passieren, dass das
+Modell sehr groß wird, es wäre daher sehr sinnvoll wenn das Modell
+gut dokumentiert werden kann. Daher könnte ein Spray Web Editor in einem
+\emph{Nur-Anzeige-Modus}, der standalone auf einer Dokumentationswebseite
+läuft, sehr nützlich sein.
+Für Dokumentationszwecke wäre es sicher auch sinnvoll, wenn der Editor
+auch nur \emph{Teilmengen des Modells} anzeigen kann.
+
+
+\paragraph{Kollaborationsfähigkeit}
+
+Den Server so ausbauen, dass echte Kollaboration an einem gleichzeitig
+Modell möglich wird.
+Dazu können mehrere Benutzer auf dem Server angelegt werden, die einen
+Speicherplatz für ihre Modelle haben, aber auch das Modell gleichzeitig
+mit einem anderen Benutzer bearbeiten können.
+Also quasi ein Google Docs für Modelle!
+
+Die andere Möglichkeit wäre mit der Together.js JavaScript-Bibliothek,
+eine Kollaboration zu verwirklichen.
+
+\paragraph{Validierung ausbauen}
 
 Gibt es andere Möglichkeiten zu validieren oder zu persistieren?
-Reine Client-Validierung, also Standalone im Browser oder doch Server?
+Ist es möglich und wäre es sinnvoll den Client komplett standalone
+zu machen?
+Wie kann man Modelle importieren, exportieren bzw. wie unter
+Versionskontrolle stellen?
 
-\subsection{Spray Integration}
+\paragraph{Spray Integration}
 
-Den bisherigen Code in Spray vernünftige integrieren, mit Tests, sowie
-den Dev und User Guide entsprechend erweitern.
-Generator der Spray Grammatik übersetzt auf die neue Grammatik von Thomas u.a.
-portieren?
+Den bisherigen Code in Spray vernünftig integrieren, mit Tests versehen, sowie
+den Developer- bzw. User-Guide entsprechend erweitern.
+Ein anderes Teamprojekt hat bereits die Spray-Grammatik verbessert,
+hier könnte man den Generator auf die neue Spray-Grammatik portieren.
 
 
 \section{Zusammenfassung}
