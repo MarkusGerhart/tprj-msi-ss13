@@ -274,17 +274,19 @@ dient die ISO 25010 als Checkliste:
 
 \section{Architektur}
 
-Das Design der Architektur ergibt sich aus den Anforderungen:
+Das Design der Architektur, veranschaulicht auf
+der Architekturskizze Abb. \ref{fig.ComponentOverview},
+ergibt sich aus den Anforderungen.
 
 Ein Editor soll alle Formen zeichnen welche von einer Shape-Definition vorgegeben sind.
 Weitere Regeln werden über die Shape Grammatik definiert. Diese Regeln werden vom Editor beachtet.
 Der Editor soll ohne installieren von Plug-Ins von einem Browser aus gestartet werden können.
 
 Die Shape und Grammatik-Definitionen kommen von Spray. Ein Generator in Spray generiert eine JSON-Datei welche die Regeln enthält.
-Anhand dieser JSON-Datei generiert der Shape-Generator entsprechende Figuren mit Hilfe des Frameworks Draw2d.
+Anhand dieser JSON-Datei generiert der Shape-Generator entsprechende Figuren mit Hilfe des Frameworks \dd.
 
-Damit Draw2d auch die Grammatik Regeln beachtet werden diese an Draw2d übergeben.
-In Draw2d gibt es Funktionen die bei bestimmten Events aufgerufen werden (Listener-Funktionen). Dazu gehören unter anderem die Policy-Funktionen.
+Damit \dd~ auch die Grammatik Regeln beachtet werden diese an \dd~ übergeben.
+In \dd~ gibt es Funktionen die bei bestimmten Events aufgerufen werden (Listener-Funktionen). Dazu gehören unter anderem die Policy-Funktionen.
 In diesen Funktionen wir sofort überprüft ob die gegebene Grammatik verletzt wird. Ist dies der Fall wird die entsprechende Aktion nicht ausgeführt.
 
 Damit der Nutzer eine nicht erlaubte Aktion erkennt wird der das Cursor Symbol zu einem Stop-Symbol geändert.
@@ -295,6 +297,18 @@ Ob die Aktion erlaubt ist wird bereits auf dem Client geprüft und muss deshalb 
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1.0\textwidth]{Figures/ComponentOverview.png}
-  \caption{Component Overview.}\label{fig.ComponentOverview}
+  \includegraphics[width=1.0\textwidth]{Figures/ComponentOverview.pdf}
+  \caption{Übersicht über die wichtigsten Spray Web Komponenten.}\label{fig.ComponentOverview}
 \end{figure}
+
+\paragraph{spray.js} Dort befinden sich die der hauptsächliche Teil des Codes.
+Es befindet sich im Repositorium in {\tt server/public/javascripts/spray}.
+Da \dd~ nicht allen Anforderungen genügt wird es um entsprechende Klassen erweitert,
+diese speziellen \dd~ Klassen werden in {\tt spray2d} gepflegt.
+Der {\tt spray2d} Ordner ist somit der Struktur von \dd~ nachempfunden -- Ordner
+als auch Namespaces.
+
+Leider musste auch direkt Quellcode von \dd~ angepasst werden, da manche Änderungen
+über einfache Klassenvererbung oder Delegation nicht losbar sind.
+Das heißt bei einem Update von \dd~ müssen diese Änderungen unbedingt wieder
+eingefügt werden.
