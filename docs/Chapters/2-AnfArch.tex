@@ -273,3 +273,28 @@ dient die ISO 25010 als Checkliste:
 
 
 \section{Architektur}
+
+Das Design der Architektur ergibt sich aus den Anforderungen:
+
+Ein Editor soll alle Formen zeichnen welche von einer Shape-Definition vorgegeben sind.
+Weitere Regeln werden über die Shape Grammatik definiert. Diese Regeln werden vom Editor beachtet.
+Der Editor soll ohne installieren von Plug-Ins von einem Browser aus gestartet werden können.
+
+Die Shape und Grammatik-Definitionen kommen von Spray. Ein Generator in Spray generiert eine JSON-Datei welche die Regeln enthält.
+Anhand dieser JSON-Datei generiert der Shape-Generator entsprechende Figuren mit Hilfe des Frameworks Draw2d.
+
+Damit Draw2d auch die Grammatik Regeln beachtet werden diese an Draw2d übergeben.
+In Draw2d gibt es Funktionen die bei bestimmten Events aufgerufen werden (Listener-Funktionen). Dazu gehören unter anderem die Policy-Funktionen.
+In diesen Funktionen wir sofort überprüft ob die gegebene Grammatik verletzt wird. Ist dies der Fall wird die entsprechende Aktion nicht ausgeführt.
+
+Damit der Nutzer eine nicht erlaubte Aktion erkennt wird der das Cursor Symbol zu einem Stop-Symbol geändert.
+
+Damit in Zukunft auch Kollaboration möglich ist schickt der Client bei jeder Aktion eine Nachricht an den Server.
+Die Nachricht an den Server enthält die genaue Beschreibung der Aktion.
+Ob die Aktion erlaubt ist wird bereits auf dem Client geprüft und muss deshalb nicht mehr validiert werden.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1.0\textwidth]{Figures/ComponentOverview.png}
+  \caption{Component Overview.}\label{fig.ComponentOverview}
+\end{figure}
