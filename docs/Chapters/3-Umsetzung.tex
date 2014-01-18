@@ -414,12 +414,77 @@ zur Verfügung gestellt wird.
 
 \subsection{Validierung und Persistierung}
 
-\subsubsection{Anwendung der abgeleiteten Modell Regeln}
+Mit dem Spray Framework kann über drei Grammatiken ein grafischer DSL
+Editor definiert werden. Mit der Spray Grammatik wird spezifiziert,
+wie ein gültiges Modell aussieht.
 
-Regeln abgeleitet aus dem Modell mit \dd abfangen.
+Der Benutzer des so entstandenen grafischen Editors möchte eine Instanz
+dieses Modells erstellen, welche er speichern bzw. laden kann;
+zudem sollte von Editor gewährleistet werden, dass der Benutzer nur
+gültige Modelle produzieren kann.
 
-\subsubsection{EMF REST}
+\subsubsection{Validierung im Client}
 
-\subsubsection{Ecore.js}
+Der Client erhält die Regeln für ein gültiges Modell im JSON-Format
+({\tt classdefs}). Mit diesen Informationen wird die Shape Factory gefüttert
+und kann somit schon bei der Erstellung eines Shapes bzw. einer Connection
+überprüfen, ob dies eine zulässig Aktion ist.
 
-\subsubsection{Ecore mit Server}
+\subsubsection{Persistierungsverfahren}
+
+In diesem Kapitel werden drei Verfahren diskutiert, mit denen Modellinstanzspeicherung
+ermöglicht werden kann.
+Ein Verfahren wurde exemplarisch Programmiert, da die anderen Verfahren ggf. noch
+Mängel aufweisen.
+
+\paragraph{EMF-REST}
+
+\begin{quote}
+EMF-REST generates truly RESTful APIs for your EMF models. EMF-REST complements the existing (Java-based) API generation facilities EMF already provides and extends them to the Web.
+
+Thanks to EMF-REST, web developers can quickly get a JSON-based RESTful API derived from their models plus a JavaScript library to simplify the interaction with the API.\footnote{EMF-REST Webseite: \url{http://emf-rest.com/index.html}}
+\end{quote}
+
+\noindent EMF-REST stellt ein Eclipse-Plugin bereit, welches aus einem Ecore Metamodell
+Quellcodedateien generieren kann, die mit einem Tomcat Server lauffähig sind.
+Neben der RESTful API wird auch noch ein passenden JavaScript-Binding generiert.
+
+Bisher kann man jedoch nur eine schon existierende XMI Modellinstanz via
+RESTful Abruf \emph{lesen}; das \emph{Schreiben} mit z.B. einem HTTP-PUT
+ist noch nicht möglich.
+
+Dazu schrieben wird eine E-Mail an das Entwicklerteam, Camilo Alvarez antwortete:
+
+\begin{quote}
+[...] we are implementing the PUT/POST/DELETE methods to complete the API. There will be an option to save the changes in the XMI file.
+We plan to release it in february of the next year.
+\end{quote}
+
+\noindent Das bedeutet diese wichtigen Funktionen stehen vorr. erst Februar 2014
+bereit. Daher haben wir uns vorerst gegen EMF-REST entschieden, auch wenn es
+ein sehr vielversprechender Ansatz gewesen wäre.
+
+\paragraph{Ecore.js}
+
+Ecore.js ist eine Ecore (EMOF) Implementierung in JavaScript von Guillaume Hillairet.
+Der Quellcode ist verfügbar auf GitHub unter
+\url{https://github.com/ghillairet/ecore.js}.
+Ecore.js läuft sowohl als JavaScript Clientcode (Browser), als auch als
+node.js Servercode.
+
+Der Vorteil hier ist, dass quasi keinerlei Kommunikation zu einem Server nötig ist.
+Es ist möglich aus den Ecore Objekten die in JavaScript gehalten werden,
+direkt ein XMI oder JSON erstellen zu lassen.
+Das würde bedeuten Spray Web könnte komplett autonom, also ohne externe
+Abhängigkeiten oder Synchronisierungsprobleme, im Browser arbeiten.
+Eine Kollaboration könnte dennoch mit z.B.
+Together.js\footnote{\url{https://togetherjs.com/}} erfolgen.
+
+Beispielcode der durch unsere Nachforschungen entstanden ist, wird im Repositorium
+unter {\tt archive/ecore\_js} festgehalten.
+
+Schussendlich habe wir uns dagegen entschieden, da die Kollaboration
+über den Server von den Projektaufttraggebern bevorzugt wurde und
+Ecore für die Java-Platform von einer starken Gemeinschaft gepflegt wird.
+
+\paragraph{Ecore mit Server}
