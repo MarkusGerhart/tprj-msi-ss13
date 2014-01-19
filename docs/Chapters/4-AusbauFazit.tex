@@ -90,4 +90,28 @@ hier könnte man den Generator auf die neue Spray-Grammatik portieren.
 
 \section{Zusammenfassung}
 
-Fazi und Zusammenfassung der Ergebnisse.
+Spray ist ein Framework mit dem automatisiert grafische Editoren für quasi
+beliebige Domänen produziert werden können. Das bedeutet, dass der Spray Web Editor
+eine gewisse Flexibilität mitbringen muss, um anhand eines von
+Spray automatisch generierten Regelwerk alle essentiellen Editoreigenschaften
+bereitstellen zu können.
+
+Ziel der Projektaufttraggeber war es einen funktionierenden grafischen Spray Web
+Editor zu erhalten. Dazu müssen Shapes gemäß vorgegebener Definitionen
+gezeichnet werden können.
+Der Bentuzer des Spray Web Editors kann aus den Shapes und Connections ein Modell
+„zusammenklicken“. Dieses Modell wird nach einem vorgegebenen Regelwerk auf
+Korrektheit überprüft, d.h. der Benutzer ist nur in der Lage valide Modelle
+zu erstellen. Zudem kann das so entstandene Modell auch gespeichert werden.
+
+All diese Anforderungen wurden im Zuge dieses Teamprojekts erfasst und konkretisiert.
+Es wurden Nachforschungen angestellt, wie man die gesammelten Anforderungen
+umsetzten kann. Dabei hat sich das \dd-Framework auf Basis von JavaScript als
+geeignet herausgestellt. Dieses dient nun als Basis für Spray Web.
+Es übernimmt hauptsächlich die Aufgabe Shapes und Connections zu zeichnen.
+
+Zudem mussten Generatoren, die aus den Spray Grammatiken JSON Dateien
+generieren, programmiert werden. Diese JSON Dateien dienen als Regelwerk,
+anhand dessen Spray Web sämtliche Shapes, Connections und die Modellvalidierung
+ableitet.
+
