@@ -508,3 +508,15 @@ Ebenso kann das Ecore-Interface Objekte löschen. Alle Fälle sind berücksichti
 auf erster Ebene, sowie auf allen nachfolgenden Ebenen (Compartment) und das Löschen von Connections. Wird ebenso 
 ein Objekt gelöscht, was als Start oder Zielobjekt einer Connection agiert, so wird auch die Connection aus dem
 Ecore-Modell gelöscht.
+
+Der Web Editor schickt per Websocket bei Erstellen eines Objekts, eines Compartments, einer
+Connection, sowie Löschen dieser Elemente eine Benachrichtigung an das Ecore-Interface. Das Interface verarbeitet
+die Benachrichtigung und aktualisiert entsprechend das Ecore-Modell.
+
+Da nur valide Modelle in Spray Web gezeichnet werden können, ist auch das Ecore-Modell stets valide.
+Das Ecore-Modell wird als XMI-Dokument abgespeichert und enthält lediglich die Objekte ohne
+Eigenschaften zur Zeichenfläche. Die Zeichenfläche muss zusätzlich zum Ecore-Modell auf dem Server persistiert werden.
+Wenn der Web Editor neu geladen wird, so muss der letzte Zustand der Zeichenfläche vom Server im Editor dargestellt
+werden. Ansonsten wäre das Ecore-Modell nicht mehr mit der Zeichenfläche persistent. Zukünftig muss an dieser Stelle
+eine sinnvollere Synchronisierung stattfinden.
+
