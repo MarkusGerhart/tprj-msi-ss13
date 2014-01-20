@@ -4,11 +4,10 @@ Diese Ausarbeitung ist neben dem produzierten Quellcode das Resultat des
 Master Informatik Teamprojekts von \autor im Sommersemester 2013 bis
 Wintersemester 2013/2014.
 
-Es geht darum den visuellen Editor der durch Spray generiert wird
-von Eclipse Graphiti ins Web zu bringen, also mit den Webtechnologien
-HTML, CSS, JavaScript und einer Webservertechnologie.
-Spray soll also später in der Lage sein, auch genau diesen Spray
-Web Editor zu generieren (parallel zu dem gewöhnlichen Graphiti Editor).
+Der grafische Editor, der durch Spray und Graphiti generiert wird, soll als Weblösung implementiert werden.
+Das Ziel von Spray ist es den Web Editor automatisiert zu generieren. Der Web Editor soll eine Alternative
+zum parallel funktionierenden grafischen Editor sein. Durch die Verwendung von Webtechnologien kann der Webeditor
+Multikollaboration unterstützen und soll zukünftig ein wesentlicher Funktionsbestandteil sein.
 
 Sämtlicher Quellcode ist im Git-Repositorium
 tprj-msi-ss13\footnote{Github Link: \url{https://github.com/magerhar/tprj-msi-ss13}} zu finden.
@@ -34,7 +33,7 @@ Es gliedert sich in:
     Hauptanwendung von Spray, stellt insbesondere einen WebSocket sowie die
     Persistierung des vom Editor erstellten Modells bereit.
     \item {\tt app/views} \\
-    Hier werden alle Spray Web Editor Komponenten als HTML-Tempaltes zusammengebracht.
+    Hier werden alle Spray Web Editor Komponenten als HTML-Templates zusammengebracht.
   \end{itemize}
 \end{itemize}
 
@@ -85,20 +84,20 @@ Auf Abbildung \ref{fig.sprayArchi} ist der prinzipelle Spray zu Editor Ablauf.
 
 \subsection{Ziele von „Spray Web“}
 
-Die Hauptaufgabe dieses Projekts ist herauszufinden, wie man diese
-Editoren möglichst generisch mit Webtechnologie umsetzen kann.
+Die Hauptaufgabe dieses Projekts ist herauszufinden, wie man ein solcher Editor
+möglichst generisch mit Webtechnologien umsetzen kann.
 Dazu gehört, dass die Shapes sowie Connections nach den von Spray
 vorgegebenen (Layout) Definitionen dargestellt werden können.
 
 Spray gibt auch (Logik) Definitionen vor,
 was für Shapes miteinander über welche Connection verbunden werden darf.
-Es sollte also über den Edior abgefangen werden können, wenn versucht wird
+Es sollte also über den Editor abgefangen werden können, wenn versucht wird
 falsche Connections zu knüpfen.
 
 Aus den Shapes und deren Connections entsteht ein konkretes Modell,
 welches vom Benutzer so modelliert wurde. Dieses Modell ist die Instanz
 des darüberliegenden Metamodells.
-Das Metamodell entsteht also implizit aus den druch Spray vorgegebene
+Das Metamodell entsteht also implizit aus den durch Spray vorgegebene
 Logikdefinitionen. Genauer gesagt ensteht ein Ecore Metamodell,
 dazu mehr im Abschnitt \ref{sec.ecore}.
 Diese Modellinstanz entsteht aus dem was der Benutzer „zusammenklickt“,
@@ -134,15 +133,15 @@ bestehen“.
 
 \emph{Ecore} ist ein in der Eclipse Welt beliebtes Format für Metamodelle.
 Es kann in XMI\footnote{XMI steht für XML Metadata Interchange} serialisiert
-werden. Das Spray Framework fabriziert aus der Spray DSL ein Ecore Metamodell,
-mit diesem ist es somit möglich zu prüfen, ob das Modell welches vom
+werden. Das Spray Framework fabriziert aus der Spray DSL ein Ecore Metamodell.
+Damit ist es möglich zu prüfen, ob das Modell welches vom
 Benutzer modelliert wurde korrekt ist.
 
 
 \subsection{Graphiti}
 
 Mit Graphiti\footnote{Webseite: \url{http://www.eclipse.org/graphiti/}}
-ist es möglich grafische Editoren, die innerhalb von Eclipse laufen, zu bauen.
+ist es möglich grafische Editoren, die innerhalb von Eclipse laufen, zu erstellen.
 Intern setzt es auf das \emph{Graphical Editing
 Framework\footnote{Webseite: \url{http://www.eclipse.org/gef/}}} (GEF)
 und Draw2d, wobei Graphiti diese Frameworks komplett hinter seiner API

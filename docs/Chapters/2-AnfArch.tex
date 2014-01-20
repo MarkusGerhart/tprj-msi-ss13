@@ -36,20 +36,19 @@ nummeriert und nach dem MoSCoW-Prinzip priorisiert:
   \begin{tabular}{ | c | p{10cm} | c | }
     \hline
     \# & Anforderung & Prio. \\ \hline \hline
-    1  & Der Nutzer muss das Modell betrachten können ( “View Mode”). & C \\ \hline
+    1  & Der Nutzer muss das Modell betrachten können. & C \\ \hline
     2  & Der Nutzer muss das Modell z.B. als Dokumentation einbinden können. (d.h. der View Mode muss druckbar seitens eines Webbrowsers sein). & C \\ \hline
-    3  & Der Nutzer muss das Modell bearbeiten können (“Edit Mode”). & M \\ \hline
-    4  & Der Nutzer muss zwischen View und Edit Mode wechseln können. & M \\ \hline
-    5  & Das System muss eine Spray Shape Definition laden können. & M \\ \hline
-    6  & Das System muss die Semantik eines Shapes verstehen/abbilden können. & M \\ \hline
-    7  & Der Nutzer muss Shape-Elemente gemäß der zugrunde liegenden Spray Shape-DSL zeichnen können. Der Nutzer muss eine Aufzählung, Auswahl bzw. Übersicht aller ermöglichten Shape-Elemente erhalten. & M \\ \hline
-    8  & Der Nutzer muss die Bearbeitungssicht zoomen können. & C \\ \hline
-    9  & Der Nutzer muss den Zustand speichern können. (i) Koordinaten eines jeden Elements, (ii) Das eigentliche (semantische) Modell. & M \\ \hline
-    10 & Der Nutzer muss einen gespeicherten Zustand des Modells laden können.
+    3  & Der Nutzer muss das Modell bearbeiten können. & M \\ \hline
+    4  & Das System muss eine Spray Shape Definition laden können. & M \\ \hline
+    5  & Das System muss die Semantik eines Shapes verstehen/abbilden können. & M \\ \hline
+    6  & Der Nutzer muss Shape-Elemente gemäß der zugrunde liegenden Spray Shape-DSL zeichnen können. Der Nutzer muss eine Aufzählung, Auswahl bzw. Übersicht aller ermöglichten Shape-Elemente erhalten. & M \\ \hline
+    7  & Der Nutzer muss die Bearbeitungssicht zoomen können. & C \\ \hline
+    8  & Der Nutzer muss den Zustand speichern können. (i) Koordinaten eines jeden Elements, (ii) Das eigentliche (semantische) Modell. & M \\ \hline
+    9 & Der Nutzer muss einen gespeicherten Zustand des Modells laden können.
 (i) Koordinaten eines jeden Elements, (ii)
 das eigentliche (semantische) Modell. & M \\ \hline
-    11 & Der Nutzer muss erkennen können, ob der Zustand valide ist oder nicht. & C \\ \hline
-    12 & Der Nutzer muss durch das System die Elemente automatisch ausrichten lassen können. „Ausrichtungsassistenz“ & W \\
+    10 & Der Nutzer muss erkennen können, ob der Zustand valide ist oder nicht. & C \\ \hline
+    11 & Der Nutzer muss durch das System die Elemente automatisch ausrichten lassen können. „Ausrichtungsassistenz“ & W \\
     \hline  
   \end{tabular}
   \caption{Nutzungsanforderungen für Spray Web,
@@ -93,7 +92,7 @@ im Systemtest verifiziert.
 
 \paragraph{Primitive Shapes}\label{sec.primitivShapes}
 
-Es ist essentiell dass folgende Shape Basistypen darstellt werden können,
+Es ist essentiell, dass folgende Shape Basistypen dargestellt werden können,
 und ineinander verschachtelbar sind
 \citep[siehe Kapitel \emph{The Shape grammar}][]{sprayUser}:
 
@@ -165,7 +164,7 @@ und ineinander verschachtelbar sind
 
 \paragraph{Connections}
 
-Im einfachsten Fall sind Connections einfach Verbindungslinien zwischen
+Im einfachsten Fall sind Connections Verbindungslinien zwischen
 zwei Shapes. Somit bilden Shapes (Knoten) und Connections (Kanten)
 eine gerichtete Graphenstruktur.
 Prinzipiell können jedoch die Endpunkte der Connections auch aus den gleichen
@@ -184,21 +183,21 @@ klar zu machen.
 
 \paragraph{Compartments}
 sind Shapes die zur Laufzeit in ein anderes Shape geschachtelt werden können,
-oder auch wieder entfernt werden können. Sie sind auch ein semantsicher Teil,
+oder auch wieder entfernt werden können. Sie sind auch ein semantischer Teil,
 neben Shapes und Connections, und werden somit auch im Modell gespeichert.
 Es muss also Unterstützung dafür geben, wärend der Benutzer modelliert, Shapes
 verschachteln zu können (via Drag and Drop).
 
 
 \paragraph{Generalisierbarkeit}
-Dadruch dass sämtlicher Code durch Spray-Generatoren automatisch produziert wird,
-ist es nötig dass das Spray Web Framework keinen „fest verdrateten“ Code
+Dadurch, dass sämtlicher Code durch Spray-Generatoren automatisch produziert wird,
+ist es nötig, dass das Spray Web Framework keinen „fest verdrahteten“ Code
 aufweist, sondern vielmehr sehr generellen Code der mit verschiedensten
 Eingaben zurecht kommt.
-Beispielsweise in Petrinetz hat andere Shapes und Validierungsregeln,
-als ein Heizungssystem. Die Diagramme unterscheiden sind in Anzahl und
-Aufbau der Shapes, Connections, Compartments und Validierungsregeln
-gewaltung, daher soll der Code so generell wie möglich gehalten werden.
+Beispielsweise ein Petrinetz hat andere Shapes und Validierungsregeln,
+als ein Heizungssystem. Die Diagramme unterscheiden sich in Anzahl und
+Aufbau der Shapes, Connections, Compartments und Validierungsregeln,
+daher soll der Code so generell wie möglich gehalten werden.
 (Stichwort Reflections)
 
 \subsection{Nicht-funktionale Anforderungen}
@@ -287,11 +286,11 @@ Anhand dieser JSON-Datei generiert der Shape-Generator entsprechende Figuren mit
 
 Damit \dd~ auch die Grammatik Regeln beachtet werden diese an \dd~ übergeben.
 In \dd~ gibt es Funktionen die bei bestimmten Events aufgerufen werden (Listener-Funktionen). Dazu gehören unter anderem die Policy-Funktionen.
-In diesen Funktionen wir sofort überprüft ob die gegebene Grammatik verletzt wird. Ist dies der Fall wird die entsprechende Aktion nicht ausgeführt.
+In diesen Funktionen wird überprüft ob die gegebene Grammatik verletzt wird. Ist dies der Fall wird die entsprechende Aktion nicht ausgeführt.
 
-Damit der Nutzer eine nicht erlaubte Aktion erkennt wird der das Cursor Symbol zu einem Stop-Symbol geändert.
+Damit der Nutzer eine nicht erlaubte Aktion erkennt, wird das Cursor Symbol zu einem Stop-Symbol geändert.
 
-Damit in Zukunft auch Kollaboration möglich ist schickt der Client bei jeder Aktion eine Nachricht an den Server.
+Damit in Zukunft auch Kollaboration möglich ist, schickt der Client bei jeder Aktion eine Nachricht an den Server.
 Die Nachricht an den Server enthält die genaue Beschreibung der Aktion.
 Ob die Aktion erlaubt ist wird bereits auf dem Client geprüft und muss deshalb nicht mehr validiert werden.
 
@@ -301,14 +300,13 @@ Ob die Aktion erlaubt ist wird bereits auf dem Client geprüft und muss deshalb 
   \caption{Übersicht über die wichtigsten Spray Web Komponenten.}\label{fig.ComponentOverview}
 \end{figure}
 
-\paragraph{spray.js} Dort befinden sich die der hauptsächliche Teil des Codes.
+\paragraph{spray.js} Dort befinden sich der hauptsächliche Teil des Codes.
 Es befindet sich im Repositorium in {\tt server/public/javascripts/spray}.
-Da \dd~ nicht allen Anforderungen genügt wird es um entsprechende Klassen erweitert,
-diese speziellen \dd~ Klassen werden in {\tt spray2d} gepflegt.
+Da \dd~ nicht allen Anforderungen genügt wird es um entsprechende Klassen erweitert.
+Diese \dd~ Klassen werden in {\tt spray2d} gepflegt.
 Der {\tt spray2d} Ordner ist somit der Struktur von \dd~ nachempfunden -- Ordner
 als auch Namespaces.
 
 Leider musste auch direkt Quellcode von \dd~ angepasst werden, da manche Änderungen
-über einfache Klassenvererbung oder Delegation nicht losbar sind.
-Das heißt bei einem Update von \dd~ müssen diese Änderungen unbedingt wieder
-eingefügt werden.
+über einfache Klassenvererbung oder Delegation nicht lösbar sind.
+Das heißt bei einem Update von \dd~ müssen diese Änderungen unbedingt migriert werden.
