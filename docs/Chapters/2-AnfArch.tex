@@ -273,34 +273,42 @@ dient die ISO 25010 als Checkliste:
 
 \section{Architektur}
 
-Das Design der Architektur, veranschaulicht auf
-der Architekturskizze Abb. \ref{fig.ComponentOverview},
-ergibt sich aus den Anforderungen.
+Das Design der Architektur ergibt sich aus den Anforderungen
+und wird auf der Architekturskizze Abb. \ref{fig.ComponentOverview}
+veranschaulicht.
 
-Ein Editor soll alle Formen zeichnen welche von einer Shape-Definition vorgegeben sind.
-Weitere Regeln werden über die Shape Grammatik definiert. Diese Regeln werden vom Editor beachtet.
-Der Editor soll ohne installieren von Plug-Ins von einem Browser aus gestartet werden können.
+Der Editor im Browser soll alle Shapes zeichnen,
+welche von einer Shape-Definition vorgegeben sind.
+Die Shape und Logik-Definitionen (class definitions) im JSON-Format kommen von Spray.
+Ein Generator in Spray generiert eine JSON-Datei welche die Regeln enthält.
+Der Server liefert diese JSON-Dateien statisch an den Browser aus.
+Anhand dieser JSON-Datei generiert die Shape Factory entsprechende Figuren
+mit Hilfe des \dd~ Frameworks.
 
-Die Shape und Grammatik-Definitionen kommen von Spray. Ein Generator in Spray generiert eine JSON-Datei welche die Regeln enthält.
-Anhand dieser JSON-Datei generiert der Shape-Generator entsprechende Figuren mit Hilfe des Frameworks \dd.
-
-Damit \dd~ auch die Grammatik Regeln beachtet werden diese an \dd~ übergeben.
+Damit \dd~ auch die Regeln (die vorgeben wie in valides Modell aussieht) beachtet,
+werden diese an \dd~ übergeben.
 In \dd~ gibt es Funktionen die bei bestimmten Events aufgerufen werden (Listener-Funktionen). Dazu gehören unter anderem die Policy-Funktionen.
-In diesen Funktionen wird überprüft ob die gegebene Grammatik verletzt wird. Ist dies der Fall wird die entsprechende Aktion nicht ausgeführt.
+In diesen Funktionen wird überprüft ob die gegebene „Grammatik“ des Modells
+verletzt wird. Ist dies der Fall wird die entsprechende Aktion nicht ausgeführt.
+Damit der Nutzer eine nicht erlaubte Aktion erkennt,
+wird das Cursor Symbol zu einem Stop-Symbol geändert.
 
-Damit der Nutzer eine nicht erlaubte Aktion erkennt, wird das Cursor Symbol zu einem Stop-Symbol geändert.
-
-Damit in Zukunft auch Kollaboration möglich ist, schickt der Client bei jeder Aktion eine Nachricht an den Server.
+Damit in Zukunft auch Kollaboration möglich ist, schickt der Client bei jeder Aktion eine Nachricht via Websocket an den Server.
 Die Nachricht an den Server enthält die genaue Beschreibung der Aktion.
-Ob die Aktion erlaubt ist wird bereits auf dem Client geprüft und muss deshalb nicht mehr validiert werden.
+Aus dieser Beschreibung kann der Server eine Ecore Modellinstanz pflegen,
+diese wird zur Laufzeit als XMI peristiert. Bei jeder Nachricht aktualisert
+der Server die XMI Datei.
+Ob die Aktion erlaubt ist wird bereits auf dem Client geprüft und muss deshalb nicht mehr auf dem Server validiert werden.
+\\\\
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1.0\textwidth]{Figures/ComponentOverview.pdf}
-  \caption{Übersicht über die wichtigsten Spray Web Komponenten.}\label{fig.ComponentOverview}
+  \includegraphics[width=1.0\textwidth]{Figures/ComponentOverview.draw.io.pdf}
+  \caption{Übersicht über die wichtigsten Spray Web Komponenten.}
+  \label{fig.ComponentOverview}
 \end{figure}
 
-\paragraph{spray.js} Dort befinden sich der hauptsächliche Teil des Codes.
+\paragraph{spray.js} Dort befindet sich der hauptsächliche Teil des Codes.
 Es befindet sich im Repositorium in {\tt server/public/javascripts/spray}.
 Da \dd~ nicht allen Anforderungen genügt wird es um entsprechende Klassen erweitert.
 Diese \dd~ Klassen werden in {\tt spray2d} gepflegt.
