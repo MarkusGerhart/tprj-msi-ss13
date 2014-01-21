@@ -5,6 +5,18 @@ umgesetzt wurden. Zunächst wird darauf eingegangen, wie Shapes gezeichnet
 werden, danach wie Spray passenden Code für Spray Web generieren kann
 und zuletzt wie Spray Web Modelle validiert und persistiert.
 
+Hier zunächst eine Bildschirmaufnahme des entgültigen Resultats
+auf Abbildung \ref{fig.screenshot}.
+Diese hat zur Zeit das Regelwerk für Petrinetze geladen.
+Man beachte insbesondere die Ähnlichkeit zum GUI Entwurf auf Abbildung
+\ref{fig.gui} die aus den Anforderungen hervorgegangen ist.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1.0\textwidth]{Figures/Screenshot.png}
+  \caption{Screenshot vom gegenwärtigen Stand von Spray Web mit geladenem Petrinetz.}\label{fig.screenshot}
+\end{figure}
+
 \subsection{Shapes zeichnen}
 
 Es ist essentiell, dass die Basisshapes gezeichnet werden können.
@@ -98,8 +110,6 @@ Insbesondere der Move und Create Command müssen modifiziert/ausgeführt werden.
 Hier wurden viele Fälle bereits implementiert.
 
 Beim Laden einer abgespeichereten Zeichenfläche werden Compartments aktuell nur sehr rudimentär unterstützt.
-Bevor hier Compartments vollständig unterstützt werden sollte der Shape-Generator neu gestaltet werden.
-(nach dem Vorbild des JSON marshal / unmarshal welches im Framework vorhanden ist und für einfache Shapes bereits funktioniert)
 
 Alternativ kann auch das nur das Laden der Compartments angepasst werden.
 
