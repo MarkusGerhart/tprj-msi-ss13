@@ -101,6 +101,19 @@ Beim Laden einer abgespeichereten Zeichenfläche werden Compartments aktuell nur
 Bevor hier Compartments vollständig unterstützt werden sollte der Shape-Generator neu gestaltet werden.
 (nach dem Vorbild des JSON marshal / unmarshal welches im Framework vorhanden ist und für einfache Shapes bereits funktioniert)
 
+Alternativ kann auch das nur das Laden der Compartments angepasst werden.
+
+Compartments / Verschachtelungen / Komplexe Shapes können durch die Methode Canvas.addFigure(child, locator); erstellt werden.
+
+\begin{verbatim}
+var locator = new spray2d.layout.locator.FigureLocator(p);
+locator.setPos(p, this.x, this.y);
+this.parent.addFigure(this.figure, locator);
+
+// Durch setDraggable(true) kann das hinzugefügt Shape eigenständig bewegt werden
+this.figure.setDraggable(true);
+\end{verbatim}
+
 \subsection{Code-Generierung}
 
 Spray Web ist so aufgebaut, dass es von Spray generierten Code annimmt
@@ -520,3 +533,13 @@ Wenn der Web Editor neu geladen wird, so muss der letzte Zustand der Zeichenflä
 werden. Ansonsten wäre das Ecore-Modell nicht mehr mit der Zeichenfläche persistent. Zukünftig muss an dieser Stelle
 eine sinnvollere Synchronisierung stattfinden.
 
+\subsection{Änderungen am Framework (Patches)}
+
+An einigen Stellen reichen die Methoden des Frameworks draw2d nicht an unsere Anforderungen.
+Wenn möglich wurden Klassen abgeleitet um das Framework so wenig wie möglich zu verändern.
+
+Dies ist aber nicht immer möglich, insbesondere dann wenn das Framework intern Funktionen aufruft.
+
+Die Differenz von der Originalversion 3.0 und den Änderungen von uns kann mit dem Befehl 
+git diff 57a7d1327dd8119a30ab36cef467a630413e8080 ece9a39a1cd3bea59e878999713629292d08f36e -- sprayServer/public/javascripts/spray/lib/draw2d_3.0.0/src
+ermittelt und visualisiert werden (meld als externer Editor ist sehr zu empfehlen).
