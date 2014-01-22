@@ -89,27 +89,27 @@ das ebenfalls unter einer Open Source Lizenz stehende Spray-Projekt.
 \subsubsection{Shape Factory}
 
 Die eigens entwickelte Shape Factory erstellt gemäss der Shape Definition aus Spray das Spray Shape in der Zeichenfläche.
-Die Factory kann alle Basis Shapes wie Rectangle, Rounded-Rectangle, Label und weitere als \dd Shapes zeichnen.
+Die Factory kann alle Basis Shapes wie Rectangle, Rounded-Rectangle, Label und weitere als \dd~ Shapes zeichnen.
 Sie unterstützt auch die Erzeugung von Anchors. Durch rekursive Iteration der Spray Definition des Shapes wird
-das Spray Shape für die Zeichenfläche generisch aufgebaut. So können \dd Shapes beliebig ineinander verschachtelt werden
-und das gewünsche Spray Shape erzeugt werden. Als Mutterobjekt des Shapes wird ein Rechteck als Boundingbox verwendet.
-Alle weiteren Shapes werden dieser Boundingbox untergeordnet. Jedes so erzeugte Spray Shape erhält eine \dd ID und kann somit
+das Spray Shape für die Zeichenfläche generisch aufgebaut. So können \dd~ Shapes beliebig ineinander verschachtelt werden.
+Als Mutterobjekt des Shapes wird ein Rechteck als Boundingbox verwendet.
+Alle weiteren Shapes werden dieser Boundingbox untergeordnet. Jedes so erzeugte Spray Shape erhält eine \dd~ ID und kann somit
 für weitere Zwecke angesteuert werden.
 
 \subsubsection{Compartments}
 
-Compartments sind Verschachtelung einzelner Shapes (oder Gruppen von Shapes).
+Compartments sind Verschachtelungen einzelner Shapes (oder Gruppen von Shapes).
 
 Draw2d bietet bereits die Möglichkeit zur Verschachtelung von Shapes.
-Wenn allerdings Gruppen von Shapes verschachtelt werden sollen müssen alle Elemente einzeln dem neuen Parent hinzugefügt werden.
+Wenn allerdings Gruppen von Shapes verschachtelt werden sollen, müssen alle Elemente einzeln dem neuen Parent hinzugefügt werden.
 
 Auch die Commands für Undo und Redo mussten implementiert werden.
 Dieser Prozess ist etwas aufwändiger weil bereits auf abgeschlossene Commands zugegriffen werden muss. 
-Manche Commands we Move werden automatisch erstellt, ausgeführt und auf den CommandStack gelegt)
+Manche Commands we Move werden automatisch erstellt, ausgeführt und auf den CommandStack gelegt.
 Insbesondere der Move und Create Command müssen modifiziert/ausgeführt werden.
 Hier wurden viele Fälle bereits implementiert.
 
-Beim Laden einer abgespeichereten Zeichenfläche werden Compartments aktuell nur sehr rudimentär unterstützt.
+Beim Laden einer abgespeicherten Zeichenfläche werden Compartments aktuell nur sehr rudimentär unterstützt.
 
 Alternativ kann auch das nur das Laden der Compartments angepasst werden.
 
@@ -157,7 +157,7 @@ in dieser Instanz werden z.B. die Shape- und Spray-Grammatik geschrieben
 und Eclipse stößt die entsprechenden Code-Generatoren an um Graphiti-Code
 zu generieren -- bzw. für Spray Web: JSON Code.
 Dieser Graphiti Code kann wiederum als Eclipse-Instanz ausgeführt werden;
-dort ist dann der eigentliche grafische Editor auf Elcipse-Basis -- eben
+dort ist dann der eigentliche grafische Editor auf Eclipse-Basis -- eben
 der gewollte Graphiti Editor.
 
 \subsubsection{Shape Layout Definitionen}
@@ -266,7 +266,7 @@ In {\tt params} können wieder folgende Attribute vorkommen:
   points : [{x: Int, y: Int, curveBefore: Int, curveAfter: Int}*]
 \end{verbatim}
 
-\noindent Nur in der obesteren Ebene der Hierarchie können Anker {\tt anchors} definiert werden,
+\noindent Nur in der obersten Ebene der Hierarchie können Anker {\tt anchors} definiert werden,
 diese betreffen also nur das gesamte komplexe Shape (Anker können also
 nicht verschachtelt werden). Es gibt diese Formen von Ankern:
 
@@ -294,8 +294,8 @@ der {\tt params}-Liste vorkommen:
   proportional: Bool
 \end{verbatim}
 
-\noindent Zudem wird immer für das insgesamte komplexe Shape eine Boundingbox berechnet,
-d.h. es existiert in der obestern Ebene immer ein {\tt size}-Objekt innerhalb
+\noindent Zudem wird immer für das gesamte komplexe Shape eine Boundingbox berechnet,
+d.h. es existiert in der obersten Ebene immer ein {\tt size}-Objekt innerhalb
 der {\tt params}.
 
 \paragraph{Compartments} sind spezielle Shapes, die andere Shapes wiederum
@@ -356,7 +356,7 @@ Mit diesen Definitionen kann Spray Web die Benutzereingaben überprüfen,
 ob diese zu ein zulässiges Modell führen.
 Der Code dazu befindet sich im Repositorium in
 {\tt generators/spray\_dsl/SprayJsonGenerator.xtend}.
-Ziel ist es z.b. aus folgender Spray-Logik-Grammatik:
+Ziel ist es z.B. aus folgender Spray-Logik-Grammatik:
 
 \begin{verbatim}
 class Place {
@@ -476,7 +476,7 @@ Thanks to EMF-REST, web developers can quickly get a JSON-based RESTful API deri
 
 \noindent EMF-REST stellt ein Eclipse-Plugin bereit, welches aus einem Ecore Metamodell
 Quellcodedateien generieren kann, die mit einem Tomcat Server lauffähig sind.
-Neben der RESTful API wird auch noch ein passenden JavaScript-Binding generiert.
+Neben der RESTful API wird auch noch ein passendes JavaScript-Binding generiert.
 
 Bisher kann man jedoch nur eine schon existierende XMI Modellinstanz via
 RESTful Abruf \emph{lesen}; das \emph{Schreiben} mit z.B. einem HTTP-PUT
@@ -512,18 +512,22 @@ Together.js\footnote{\url{https://togetherjs.com/}} erfolgen.
 Beispielcode der durch unsere Nachforschungen entstanden ist, wird im Repositorium
 unter {\tt archive/ecore\_js} festgehalten.
 
-Schussendlich habe wir uns dagegen entschieden, da die Kollaboration
-über den Server von den Projektaufttraggebern bevorzugt wurde und
+Schlussendlich haben wir uns dagegen entschieden, da die Kollaboration
+über den Server von den Projektauftraggebern bevorzugt wurde und
 Ecore für die Java-Platform von einer starken Gemeinschaft gepflegt wird.
 
 \paragraph{Ecore mit Server}
-Als Serverlösung wurde ein Ecore-Interface implementiert, welches durch Spray
-für jedes Modell generiert werden muss. Die Ecore Serverlösung ist mit Reflections weitgehend
-dynamisch gehalten und bedarf durch den Spray Generator nur wenigen Anpassungen hinsichtlich
-Modelltyps (z.B. Petrinet) und der Imports der generierten Implementierungsklassen des Ecore Modells.
+Als Serverlösung wurde ein Web2Ecore-Interface implementiert, welches durch Spray
+für jedes Modell automatisiert generiert werden muss. Die Ecore Serverlösung ist mit Reflections weitgehend
+dynamisch gehalten. Der Spray Generator muss nur einige wenige Anpassungen hinsichtlich
+Modelltyps (z.B. Petrinet) und der Imports der generierten Implementierungsklassen des Ecore Modells vornehmen.
+
+Jede Aktion im Webeditor betreffend Erstellen und Löschen, sei es ein Compartment, Connection oder ein einzelnes Shape, wird
+über eine Websocketnachricht dem Web2Ecore-Interface auf dem Server gemeldet. Das Interface verarbeitet die Benachrichtigung
+und aktualisiert entsprechend das Ecore-Modell auf dem Server.
 
 Das eigens entwickelte Ecore-Interface unterstützt das Erstellen von Ecore-Objekten auf allen Ebenen.
-Wird ein Objekt auf zweiter oder tieferer Ebene erstellt, sprich Compartment, so muss immer das Parentelement
+Wird ein Objekt auf zweiter oder tieferer Ebene erstellt, sprich Compartment, so muss immer das Elternelement
 mitangegeben werden. Das Ecore-Interface unterstützt auch die Erstellung von Connections. Dafür muss
 bekannt sein welche Connection erstellt werden soll und dessen Start und Zielobjekt.
 
@@ -532,23 +536,46 @@ auf erster Ebene, sowie auf allen nachfolgenden Ebenen (Compartment) und das Lö
 ein Objekt gelöscht, was als Start oder Zielobjekt einer Connection agiert, so wird auch die Connection aus dem
 Ecore-Modell gelöscht.
 
-Der Web Editor schickt per Websocket bei Erstellen eines Objekts, eines Compartments, einer
-Connection, sowie Löschen dieser Elemente eine Benachrichtigung an das Ecore-Interface. Das Interface verarbeitet
-die Benachrichtigung und aktualisiert entsprechend das Ecore-Modell.
+Damit das erstellte oder gelöschte Shape in der Weboberfläche auch dem Shape im Ecore-Modell entspricht, ist ein Mapping
+zwischen den beiden Elementen nötig. Das Mapping erfolgt über einen Index. Jedes Element in der Zeichenfläche besitzt einen Index
+welche der Erstellungsreihenfolge entspricht. Bei einem Compartment muss der Index des Elternelements mitangegeben werden. Wird ein Shape
+innerhalb eines Shapes erstellt (Compartment) so wird der Index wieder von vorne gezählt, dazu muss zusätzlich der Index ders Elternelements
+mitangegeben werden. Das Mapping ist keine triviale Angelegenheit und muss optimiert werden. Die Berechnung des Index kann unter
+Umständen unnötig viel Rechenzeit beanspruchen.
 
 Da nur valide Modelle in Spray Web gezeichnet werden können, ist auch das Ecore-Modell stets valide.
 Das Ecore-Modell wird als XMI-Dokument abgespeichert und enthält lediglich die Objekte ohne
-Eigenschaften zur Zeichenfläche. Die Zeichenfläche muss zusätzlich zum Ecore-Modell auf dem Server persistiert werden.
-Wenn der Web Editor neu geladen wird, so muss der letzte Zustand der Zeichenfläche vom Server im Editor dargestellt
-werden. Ansonsten wäre das Ecore-Modell nicht mehr mit der Zeichenfläche persistent. Zukünftig muss an dieser Stelle
-eine sinnvollere Synchronisierung stattfinden.
+Eigenschaften zur Zeichenfläche. Die Zeichenfläche wird in JSON festgehalten und beinhaltet alle Informationen
+die der User selbst ändern kann. Das umfasst die Position der Elemente, deren Skalierung, das Label und über welche Anker
+welche Connection gesetzt sind. Die Speicherung der Compartments sind an dieser Stelle
+noch nicht implementiert worden. Die Zeichenfläche muss zusätzlich zum Ecore-Modell auf dem Server persistiert werden.
+Die Persistierung der Zeichenfläche muss bei jeder Benutzeraktion erfolgen, die auch eine Aktualisierung des Ecore-Modells
+bewirkt. Wenn der Web Editor neu geladen wird, so muss der letzte Zustand der Zeichenfläche vom Server an den Client
+gesendet, im Editor geladen und somit dargestellt werden. Ansonsten würde der Benutzer beim Neuladen des Editors
+mit einer leeren Zeichenfläche starten, das zugrundeliegende Ecore-Modell ist aber in einem anderen Zustand.
+So wäre das Ecore-Modell nicht mehr mit der Zeichenfläche konsistent. Zukünftig muss an dieser Stelle
+eine sinnvolle Synchronisierung implementiert werden, so dass Ecore-Modell und Zeichenfläche auf dem Server zu jedem Zeitpunkt
+konsistent sind.
+
+In Spray Web wird die Zeichenfläche erst beim expliziten Speichern (Klick auf das Speichern-Icon) auf dem Server persisistiert.
+Unter Umständen kann es aber sein, dass der Benutzer nach dem Speichern noch Aktionen tätigt, die das Ecore-Modell aktualisiert.
+Wenn der Benutzer nun die Zeichenfläche neu lädt, so stimmt sie nicht mehr mit Ecore-Modell überein.
+
+Durch die umgesetzte Web2Ecore-Lösung bleibt das Ecore-Modell stets auf dem Server aktuell. Damit ist ein wesentlicher Baustein
+für Multikollaboration gesetzt. Jeder Benutzer der mit derselben Zeichenfläche arbeitet, verwendet so auch das gleiche
+zugrunde liegende Ecore-Modell.
 
 \subsection{Änderungen am Framework (Patches)}
 
-An einigen Stellen reichen die Methoden des Frameworks draw2d nicht an unsere Anforderungen.
-Wenn möglich wurden Klassen abgeleitet um das Framework so wenig wie möglich zu verändern.
+Draw2d deckt nicht alle Funktionen ab um die benötigten Anforderungen an Spray Web zu erfüllen.
+Aus dem Grund musste das \dd~ Framwork an einigen Stellen erweitert werden.
+So weit es das Framwork zugelassen hat, wurden Klassen abgeleitet um das Framework so wenig wie möglich unverändert zu lassen.
+Somit kann das Framework problemlos aktualisiert werden.
 
-Dies ist aber nicht immer möglich, insbesondere dann wenn das Framework intern Funktionen aufruft.
+An einigen Stellen ist komponentengetrenntes Entwickeln nicht realisierbar, da abstrakte Klassen auch
+implementierte Methoden besitzen und JavaScript keine vollständige objekt-orientierte Programmierung unterstützt. 
+Unter Umständen hätten ganze Vererbungshierarchien abgeleitet werden müssen um Basis-Funktionalität vom Framework
+getrennt zu erweiteren.
 
 Die Differenz von der Originalversion 3.0 und den Änderungen von uns kann mit dem Befehl 
 git diff 57a7d1327dd8119a30ab36cef467a630413e8080 ece9a39a1cd3bea59e878999713629292d08f36e -- sprayServer/public/javascripts/spray/lib/draw2d_3.0.0/src

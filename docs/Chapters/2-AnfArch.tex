@@ -73,7 +73,7 @@ im Systemtest verifiziert.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=1.0\textwidth]{Figures/Entwurf_GUI_Anker.pdf}
-  \caption{Entwurf GUI: Ankerpuntek Auswahl (Beispiel Modell: Petrinetz).}\label{fig.guiAnker}
+  \caption{Entwurf GUI: Ankerpunkte Auswahl (Beispiel Modell: Petrinetz).}\label{fig.guiAnker}
 \end{figure}
 
 \noindent Anforderungen an die Werkzeugleiste die auf Abbildung
@@ -168,7 +168,7 @@ Im einfachsten Fall sind Connections Verbindungslinien zwischen
 zwei Shapes. Somit bilden Shapes (Knoten) und Connections (Kanten)
 eine gerichtete Graphenstruktur.
 Prinzipiell können jedoch die Endpunkte der Connections auch aus den gleichen
-primitiven Shape Arten zusammengesetzt werden, um ihre visuelle Bedeutung
+primitiven Shape-Arten zusammengesetzt werden, um ihre visuelle Bedeutung
 klar zu machen.
 
 \begin{itemize}
@@ -285,7 +285,7 @@ Der Server liefert diese JSON-Dateien statisch an den Browser aus.
 Anhand dieser JSON-Datei generiert die Shape Factory entsprechende Figuren
 mit Hilfe des \dd~ Frameworks.
 
-Damit \dd~ auch die Regeln (die vorgeben wie in valides Modell aussieht) beachtet,
+Damit \dd~ auch die Regeln (die vorgeben wie ein valides Modell aussieht) beachtet,
 werden diese an \dd~ übergeben.
 In \dd~ gibt es Funktionen die bei bestimmten Events aufgerufen werden (Listener-Funktionen). Dazu gehören unter anderem die Policy-Funktionen.
 In diesen Funktionen wird überprüft ob die gegebene „Grammatik“ des Modells
@@ -296,7 +296,7 @@ wird das Cursor Symbol zu einem Stop-Symbol geändert.
 Damit in Zukunft auch Kollaboration möglich ist, schickt der Client bei jeder Aktion eine Nachricht via Websocket an den Server.
 Die Nachricht an den Server enthält die genaue Beschreibung der Aktion.
 Aus dieser Beschreibung kann der Server eine Ecore Modellinstanz pflegen,
-diese wird zur Laufzeit als XMI peristiert. Bei jeder Nachricht aktualisert
+diese wird zur Laufzeit als XMI persistiert. Bei jeder Nachricht aktualisiert
 der Server die XMI Datei.
 Ob die Aktion erlaubt ist wird bereits auf dem Client geprüft und muss deshalb nicht mehr auf dem Server validiert werden.
 \\\\

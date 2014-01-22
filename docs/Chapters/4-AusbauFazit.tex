@@ -8,11 +8,11 @@ im Bezug zu Spray Web vorgestellt und kurz beschrieben.
 Obwohl \dd~ viele Vorteile bietet wie Open Source Lizenz, ein umfassendes
 Framework und eine z.Z. aktive Entwicklung, gibt es auch ärgerliche Aspekte,
 wie z.B. fehlende Funktionalitäten oder Bugs oder auch dass die Software
-nicht öffenltich von einer Gemeinschaft gepflegt wird, sondern nur von
+nicht öffentlich von einer Gemeinschaft gepflegt wird, sondern nur von
 Andreas Herz.
 
 Gibt es besseren Alternativen? Wäre eine nicht Open Source Lösung denkbar?
-Folgende Kandidaten: go.js, diagram.js. Oder gibt es andere potentielle
+Die Frameworks go.js, diagram.js sind mit Sicherheit Alternativen. Oder gibt es andere potentielle
 Frameworks? Oder eine schlanke Eigenentwicklung die genau auf Sprays
 Bedürfnisse zugeschnitten ist?
 
@@ -23,7 +23,7 @@ um das Framework von sich noch stärker an die Bedürfnisse von Spray auszuricht
 \paragraph{Pflege Codebasis}
 
 Die bisherige Codebasis ausbauen, verbessern, stabilisieren und testen bzw.
-allgemeine Vergesserungen der Architektur insbesondere auf JavaScript-Seite.
+allgemeine Verbesserungen der Architektur insbesondere auf JavaScript-Seite.
 Ein automatisiertes Testsystem\footnote{jasmine.js, vows.js, grunt.js,
 phantom.js, testling.com, yeoman.io} aufbauen, sowie eine solide Dokumentation
 auf Basis von z.B. Sphinx oder Docco.
@@ -40,15 +40,15 @@ dass man sich wie in Google Maps durch das Modell hangeln und zoomen kann.
 \paragraph{Standalone}
 
 Wenn das Modell mit z.B. ecore.js als JSON gespeichert werden würde,
-könnte der Spray Web Editor vollkommen ohne Server, d.h. auch ohne
-Kommunikationsoverhead, auskommen.
+könnte der Spray Web Editor vollständig ohne Server, d.h. auch ohne
+Kommunikation zwischen Server und Client, auskommen.
 
 Das hat den Vorteil, dass ein solcher Modellierungseditor ganz leicht
-in Webseiten integriert werden kann, ohne irgendwelche
-Konfigurationsorgien. Ein Webseitenbetreiber müsste auch nur seinen existierenden
+in Webseiten integriert werden kann, ohne aufwändige
+Konfiguration und Installation. Ein Webseitenbetreiber müsste nur seinen existierenden
 Server pflegen und könnte mit diesem auf dem bevorzugten Weg direkt mit
 dem Editor kommunizieren. Aber gleichzeitig bleibt der Editor so portabel,
-dass er einfach auf ein USB-Stick geladen werden kann und quasi ohne irgendwelche
+dass er einfach auf ein USB-Stick geladen werden und ohne irgendwelche
 Hilfsmittel ausgeführt werden kann.
 
 Beim Modellieren mit einem grafischen Editor kann es passieren, dass das
@@ -62,12 +62,20 @@ auch nur \emph{Teilmengen des Modells} anzeigen kann.
 
 \paragraph{Kollaborationsfähigkeit}
 
-Den Server so ausbauen, dass echte Kollaboration an einem gleichzeitig
-Modell möglich wird.
-Dazu können mehrere Benutzer auf dem Server angelegt werden, die einen
+Eine weitere Ausbaustufe ist es den Server mit Kollaborationsfunktionalität auszubauen.
+Damit können mehrere Benutzer parallel auf der gleichen Zeichenfläche arbeiten. Die bisherige 
+Implementierung ist für Kollaboration in Grundzügen vorbereitet. Die Websocketkommunikation
+sorgt bisher für die Persistierung der Zeichenfläche auf dem Server und der Aktualisierung des Ecore-Modells.
+
+Eine Idee ist es mehrere Benutzer auf dem Server anzulegen, welche einen
 Speicherplatz für ihre Modelle haben, aber auch das Modell gleichzeitig
-mit einem anderen Benutzer bearbeiten können.
-Also quasi ein Google Docs für Modelle!
+mit anderen Benutzer zu bearbeiten. Dank dem verwendeten Webframework Play und Scala kann
+Akka verwendet werden. Mit Akka lassen sich verteilte und nebenläufige Applikationen entwickeln.
+Die implementierte Websocketkommunikation lässt sich hervorragend mit Akka verknüpfen.
+Die Herausforderung ist es die Synchronizität zwischen den Benutzer zu implementieren.
+\dd~ liefert einen Commandstack mit, der für diesen Zweck verwendet werden kann. Commands könnten
+zwischen den Benutzer geschickt werden um die Zeichenfläche auf allen Clients zu aktualisieren.
+Als Vorbild sei hier Google Docs erwähnt.
 
 Die andere Möglichkeit wäre mit der Together.js JavaScript-Bibliothek,
 eine Kollaboration zu verwirklichen.
@@ -83,9 +91,32 @@ Versionskontrolle stellen?
 \paragraph{Spray Integration}
 
 Den bisherigen Code in Spray vernünftig integrieren, mit Tests versehen, sowie
-den Developer- bzw. User-Guide entsprechend erweitern.
-Ein anderes Teamprojekt hat bereits die Spray-Grammatik verbessert,
+den Developer- bzw. User-Guide entsprechend erweitern sind weitere Aufgaben.
+Ein weiteres Teamprojekt hat bereits die Spray-Grammatik verbessert,
 hier könnte man den Generator auf die neue Spray-Grammatik portieren.
+
+\paragraph{Generierung und Integration der Styles}
+
+Die Grammatik der Spray Styles wird nicht vom Generator nach JSON konvertiert. Dieses 
+Feature fehlt komplett. Mit Ausnahme von Stricharten (dot, dash-dot, etc.) und Positionierung
+der Labels, vertikal sowie horizontal, sind keine Styles implementiert.
+
+\paragraph{Nicht umgesetzte Features}
+
+Einige Features sind nicht umgesetzt worden oder müssen optimiert werden. Die folgende Auflistung soll einen
+Überblick verschaffen.
+
+\begin{itemize}
+  \item Bedingt durch das \dd~ Framwork können Shapes, die zur Connection gehören, nicht rotiert werden.
+  \item Speichern/Laden der Compartments funktioniert experimentell. 
+  \item Bessere Synchronisierung zwischen Ecore-Modell und der Zeichenfläche.
+  \item Optimiertes Mapping zwischen Elementen des Ecore-Modells und der Zeichenfläche.
+  \item Die Persistierung des Zeichenflächenmodells könnte durch Commands gelöst werden. Anstatt die Zeichenfläche
+  vollständig zu übertragen, würden sich Commands besser eignen, da diese wesentlich kürzer sind.
+  \item Undo/Redo für Label ändern. Dieses Feature wird von \dd~ nicht unterstützt.
+  \item Im Petrinetz Beispiel ist ein Shape (Edge/Place) auch ein Anker. Dieser Umstand wurde mit 4 Ankern am Rand des Shapes gelöst.
+  \item Weitere fehlende Features z.B. Rapidbuttons.
+\end{itemize}
 
 
 \section{Zusammenfassung}
@@ -97,26 +128,26 @@ Spray automatisch generierten Regelwerk alle essentiellen Editoreigenschaften
 bereitstellen zu können.
 
 Ziel der Projektaufttraggeber war es einen funktionierenden grafischen Spray Web
-Editor zu erhalten. Dazu müssen Shapes gemäß vorgegebener Definitionen
-gezeichnet werden können.
-Der Benutzer des Spray Web Editors kann aus den Shapes und Connections ein Modell
+Editor zu erhalten. Das Modell soll nach vorgegebener Grammatik aus Spray im Web Editor gezeichnet werden.
+In einem ersten Schritt wurden Generatoren implementiert welche Spray-Grammatiken
+(Beispiele Petrinetz und Heizkesselsystem) via Xtext nach JSON konvertiert, damit
+der Webeditor die Grammatik lesen kann. Diese JSON Dateien dienen als Regelwerk,
+anhand dessen Spray Web sämtliche Shapes, Connections und die Modellvalidierung
+ableitet. Der Benutzer des Spray Web Editors kann aus den Shapes, Connections und Compartments ein Modell
 „zusammenklicken“. Dieses Modell wird nach einem vorgegebenen Regelwerk auf
 Korrektheit überprüft, d.h. der Benutzer ist nur in der Lage valide Modelle
-zu erstellen. Zudem kann das so entstandene Modell sowohl als Zeichenfläche als auch als Ecore-Modell
-auf dem Server gespeichert werden.
+zu erstellen. Zudem kann das so entstandene Modell sowohl als Zeichenfläche als auch als Ecore-Modell über
+das implementierte Web2Ecore-Interface auf dem Server gespeichert werden. Dazu ist eine Webserverkommunikation mit Websockets
+realisiert worden. Damit das Ecore-Modell tatsächlich mit der Zeichenfläche konsistent ist, muss jedes Ecore-Element
+eindeutig seinem Zeichenflächen-Element zuordenbar sein. Die Zuordnung wird mit einem Mapping des Index realisiert.
 
 All diese Anforderungen wurden im Zuge dieses Teamprojekts erfasst und konkretisiert.
 Es wurden Nachforschungen angestellt, wie man die gesammelten Anforderungen
 umsetzen kann. Dabei hat sich das \dd-Framework auf Basis von JavaScript als
-geeignet herausgestellt. Dieses dient nun als Basis für Spray Web.
-Es übernimmt hauptsächlich die Aufgabe Shapes und Connections zu zeichnen.
+geeignet herausgestellt. Dieses dient nun als Grundlage für Spray Web.
+Es übernimmt hauptsächlich die Aufgabe Shapes, Connections und Compartments zu zeichnen.
 
-Zudem mussten Generatoren, die aus den Spray Grammatiken JSON Dateien
-generieren, programmiert werden. Diese JSON Dateien dienen als Regelwerk,
-anhand dessen Spray Web sämtliche Shapes, Connections und die Modellvalidierung
-ableitet.
-
-Das Teamprojekt konnte all diese Schritte erfolgreich umsetzen. 
-Dazu gehörte das Erforschen der prinzipiellen Herangehensweise an die Materie,
-die praktsiche Erstellung eines funktionierenden Prototyps,
+Das Teamprojekt konnte all diese Schritte letztendlich erfolgreich umsetzen. 
+Dazu gehörte die Einarbeitung in die Thematik, Zusammentragen der Anforderungen,
+Recherchearbeit zu Technologien, Überlegungen zur Architektur, die praktische Erstellung eines funktionierenden Prototyps,
 sowie die entsprechende Dokumentation nach wissenschaftlichen Maßstäben.
