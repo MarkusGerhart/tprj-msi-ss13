@@ -113,14 +113,16 @@ Beim Laden einer abgespeicherten Zeichenfläche werden Compartments aktuell nur 
 
 Alternativ kann auch das nur das Laden der Compartments angepasst werden.
 
-Compartments / Verschachtelungen / Komplexe Shapes können durch die Methode Canvas.addFigure(child, locator); erstellt werden.
+Compartments / Verschachtelungen / Komplexe Shapes können durch die Methode
+\verb|Canvas.addFigure(child, locator)| erstellt werden.
 
 \begin{verbatim}
 var locator = new spray2d.layout.locator.FigureLocator(p);
 locator.setPos(p, this.x, this.y);
 this.parent.addFigure(this.figure, locator);
 
-// Durch setDraggable(true) kann das hinzugefügt Shape eigenständig bewegt werden
+// Durch setDraggable(true) kann das hinzugefügt Shape
+// eigenständig bewegt werden
 this.figure.setDraggable(true);
 \end{verbatim}
 
@@ -567,7 +569,7 @@ zugrunde liegende Ecore-Modell.
 
 \subsection{Änderungen am Framework (Patches)}
 
-Draw2d deckt nicht alle Funktionen ab um die benötigten Anforderungen an Spray Web zu erfüllen.
+\dd~ deckt nicht alle Funktionen ab um die benötigten Anforderungen an Spray Web zu erfüllen.
 Aus dem Grund musste das \dd~ Framwork an einigen Stellen erweitert werden.
 So weit es das Framwork zugelassen hat, wurden Klassen abgeleitet um das Framework so wenig wie möglich unverändert zu lassen.
 Somit kann das Framework problemlos aktualisiert werden.
@@ -577,6 +579,6 @@ implementierte Methoden besitzen und JavaScript keine vollständige objekt-orien
 Unter Umständen hätten ganze Vererbungshierarchien abgeleitet werden müssen um Basis-Funktionalität vom Framework
 getrennt zu erweiteren.
 
-Die Differenz von der Originalversion 3.0 und den Änderungen von uns kann mit dem Befehl 
-git diff 57a7d1327dd8119a30ab36cef467a630413e8080 ece9a39a1cd3bea59e878999713629292d08f36e -- sprayServer/public/javascripts/spray/lib/draw2d_3.0.0/src
-ermittelt und visualisiert werden (meld als externer Editor ist sehr zu empfehlen).
+Die Differenz von der Originalversion 3.0.0 und den Änderungen von uns kann mit dem Befehl 
+{\tt git diff 57a7d13 -- sprayServer/public/javascripts/spray/lib/draw2d\_3.0.0/src}
+ermittelt und visualisiert werden.
