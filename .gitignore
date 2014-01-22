@@ -44,7 +44,7 @@ runtime-EclipseXtext/*
 
 
 # TeX
-docs/_build/
+docs/src/_build/
 *.acn
 *.acr
 *.alg
